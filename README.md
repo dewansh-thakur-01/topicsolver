@@ -18,13 +18,9 @@ EduPulse is a comprehensive, responsive, single-page web application for academi
 - **CSS3 Design System:** Custom properties, glassmorphism backdrop filters, CSS animations.
 - **FontAwesome & Google Fonts (Outfit, Plus Jakarta Sans)**
 
-## 💻 Local Setup
+## 💻 Usage & Deployment
 
-Run any standard local web server from the project directory:
+Since EduPulse is built using standard HTML5, CSS3, and ES6 JavaScript modules, it requires no build steps or backend servers:
 
-```bash
-# Using Python
-python3 -m http.server 8080
-```
-
-Open `http://localhost:8080` in your web browser.
+- **Open Directly:** Open `index.html` directly in any modern web browser.
+- **GitHub Pages:** Enable GitHub Pages in your repository settings (`Settings -> Pages -> Branch: main`) for instant free web hosting.
