@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPulse | Next-Gen Student Management System</title>
+    <meta name="description" content="Comprehensive Student Management System for tracking students, courses, attendance, grades, GPA, and tuition fees.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app" class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="logo-text">
+                    <h2>EduPulse<span>.ai</span></h2>
+                    <p>Student Portal v2.5</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-section-title">MAIN MENU</span>
+                    <button class="nav-item active" data-view="dashboard">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button class="nav-item" data-view="students">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        <span>Students</span>
+                        <span class="badge badge-primary" id="student-count-badge">0</span>
+                    </button>
+                    <button class="nav-item" data-view="courses">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Courses & Classes</span>
+                    </button>
+                    <button class="nav-item" data-view="attendance">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <span>Attendance Log</span>
+                    </button>
+                    <button class="nav-item" data-view="grades">
+                        <i class="fa-solid fa-award"></i>
+                        <span>Gradebook & Transcripts</span>
+                    </button>
+                    <button class="nav-item" data-view="fees">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>Tuition & Fees</span>
+                    </button>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-section-title">INSIGHTS & DATA</span>
+                    <button class="nav-item" data-view="analytics">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <div class="status-indicator online"></div>
+                    <div class="status-info">
+                        <span class="status-title">Local Storage Active</span>
+                        <span class="status-sub" id="storage-usage">Auto-synced</span>
+                    </div>
+                </div>
+                <div class="quick-actions-sidebar">
+                    <button id="export-data-btn" class="btn-icon-label" title="Export Data to JSON">
+                        <i class="fa-solid fa-download"></i> Export
+                    </button>
+                    <button id="reset-data-btn" class="btn-icon-label warning" title="Reset Demo Data">
+                        <i class="fa-solid fa-rotate-left"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-wrapper">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <div class="nav-left">
+                    <button id="toggle-sidebar-btn" class="icon-btn" aria-label="Toggle Sidebar">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </button>
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="global-search-input" placeholder="Search students, ID, courses or email... (Press / to focus)">
+                        <kbd class="search-kbd">/</kbd>
+                    </div>
+                </div>
+
+                <div class="nav-right">
+                    <!-- Quick Add Student Button -->
+                    <button class="btn btn-primary btn-sm" id="global-add-student-btn">
+                        <i class="fa-solid fa-plus"></i> Add Student
+                    </button>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle-btn" class="icon-btn" title="Toggle Light/Dark Theme">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <!-- Live Date/Time Clock -->
+                    <div class="live-clock-badge">
+                        <i class="fa-solid fa-clock"></i>
+                        <span id="live-clock">--:--:--</span>
+                    </div>
+
+                    <!-- User Profile Avatar -->
+                    <div class="user-profile-badge">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Admin Avatar" class="user-avatar">
+                        <div class="user-info">
+                            <span class="user-name">Dean Administration</span>
+                            <span class="user-role">Super Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic View Container -->
+            <main id="view-container" class="view-container">
+                <!-- Dynamic views will render here -->
+            </main>
+        </div>
+    </div>
+
+    <!-- Global Modals Root -->
+    <div id="modal-root"></div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Application Script (ES Module) -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
