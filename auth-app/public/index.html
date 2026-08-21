@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusAuth — Modern Secure Authentication</title>
+  <meta name="description" content="Modern, responsive, secure authentication with bcrypt password security and instant dashboard access.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Ambient 3D Tech Background & Glow Orbs -->
+  <div class="ambient-background">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    
+    <!-- Floating 3D Graphic Badges -->
+    <div class="floating-3d-badge badge-1"><i class="fa-solid fa-cube"></i> Java & DSA</div>
+    <div class="floating-3d-badge badge-2"><i class="fa-brands fa-python"></i> Python Core</div>
+    <div class="floating-3d-badge badge-3"><i class="fa-solid fa-database"></i> MySQL DBMS</div>
+    <div class="floating-3d-badge badge-4"><i class="fa-solid fa-shield-halved"></i> Bcrypt Active</div>
+
+    <div class="grid-overlay"></div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Celebration Flower Shower Canvas Overlay -->
+  <canvas id="celebration-canvas" class="celebration-canvas"></canvas>
+
+  <!-- Main Container -->
+  <main class="app-wrapper">
+    
+    <!-- BRAND TOP BAR -->
+    <header class="app-header">
+      <div class="brand-logo">
+        <div class="logo-gem">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span class="pulse-dot"></span>
+        </div>
+        <div class="brand-title-group">
+          <span class="brand-name">Nexus<span>Auth</span></span>
+          <span class="brand-badge"><i class="fa-solid fa-lock"></i> bcrypt Protected</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CARD CONTAINER -->
+    <div class="glass-card-container">
+      
+      <!-- AUTH TABS SWITCHER (Visible when not on Dashboard) -->
+      <div class="auth-tabs-nav" id="auth-tabs-container">
+        <button type="button" class="tab-btn active" id="tab-btn-signin" data-tab="signin">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          <span>Sign In</span>
+        </button>
+        <button type="button" class="tab-btn" id="tab-btn-signup" data-tab="signup">
+          <i class="fa-solid fa-user-plus"></i>
+          <span>Sign Up</span>
+        </button>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- VIEW 1: SIGN IN FORM (Default for Returning)-->
+      <!-- ========================================== -->
+      <section id="signin-view" class="auth-view active">
+        <div class="card-header">
+          <h2>Welcome Back</h2>
+          <p>Sign in with your email and password to enter the website.</p>
+        </div>
+
+        <form id="signin-form" class="auth-form" novalidate>
+          
+          <div class="input-group">
+            <label for="signin-email">Email Address</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope input-icon"></i>
+              <input type="email" id="signin-email" placeholder="name@example.com" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="signin-password">Password</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="signin-password" placeholder="Enter your password" required autocomplete="current-password">
+              <button type="button" class="btn-toggle-password" id="toggle-signin-pwd" aria-label="Toggle password visibility">
+                <i class="fa-regular fa-eye" id="signin-pwd-icon"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="btn-signin-submit">
+            <span class="btn-text">Sign In & Open Dashboard</span>
+            <i class="fa-solid fa-arrow-right-to-bracket btn-icon"></i>
+            <div class="spinner" id="signin-spinner"></div>
+          </button>
+
+        </form>
+
+        <div class="card-footer">
+          <span>First time here?</span>
+          <button type="button" class="link-btn" id="go-to-signup">Create an Account</button>
+        </div>
+      </section>
+
+
+      <!-- ========================================== -->
+      <!-- VIEW 2: SIGN UP FORM                       -->
+      <!-- ========================================== -->
+      <section id="signup-view" class="auth-view">
+        <div class="card-header">
+          <h2>Create Your Account</h2>
+          <p>Sign up once. You can sign in anytime with your email & password.</p>
+        </div>
+
+        <form id="signup-form" class="auth-form" novalidate>
+          
+          <!-- Full Name Input -->
+          <div class="input-group">
+            <label for="signup-name">Full Name</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-user input-icon"></i>
+              <input type="text" id="signup-name" placeholder="Alex Morgan" required autocomplete="name">
+            </div>
+          </div>
+
+          <!-- Email Input -->
+          <div class="input-group">
+            <label for="signup-email">Email Address</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope input-icon"></i>
+              <input type="email" id="signup-email" placeholder="name@example.com" required autocomplete="email">
+            </div>
+            <span class="field-hint">Only one password will be registered for each email.</span>
+          </div>
+
+          <!-- Password Input with Show/Hide Toggle -->
+          <div class="input-group">
+            <label for="signup-password">Create Password</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="signup-password" placeholder="Minimum 6 characters" required autocomplete="new-password">
+              <button type="button" class="btn-toggle-password" id="toggle-signup-pwd" aria-label="Toggle password visibility">
+                <i class="fa-regular fa-eye" id="signup-pwd-icon"></i>
+              </button>
+            </div>
+
+            <!-- Dynamic Password Strength Meter -->
+            <div class="password-strength-container" id="pwd-strength-container">
+              <div class="strength-meter-bar">
+                <div class="strength-fill" id="strength-fill"></div>
+              </div>
+              <div class="strength-label-row">
+                <span class="strength-text" id="strength-text">Password Strength</span>
+                <span class="strength-score" id="strength-score"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary btn-block" id="btn-signup-submit">
+            <span class="btn-text">Create Account & Enter</span>
+            <i class="fa-solid fa-arrow-right btn-icon"></i>
+            <div class="spinner" id="signup-spinner"></div>
+          </button>
+
+        </form>
+
+        <div class="card-footer">
+          <span>Already signed up?</span>
+          <button type="button" class="link-btn" id="go-to-signin">Sign In with your password</button>
+        </div>
+      </section>
+
+
+      <!-- ========================================== -->
+      <!-- VIEW 3: AUTHENTICATED DASHBOARD / WEBSITE  -->
+      <!-- ========================================== -->
+      <section id="dashboard-view" class="auth-view dashboard-card">
+        
+        <div class="dashboard-banner">
+          <div class="user-avatar-badge">
+            <span id="dash-user-initial">A</span>
+            <div class="verified-check" title="Account Active">
+              <i class="fa-solid fa-check"></i>
+            </div>
+          </div>
+          <div class="dashboard-greeting">
+            <div class="status-pill"><span class="live-dot"></span> Authenticated Session</div>
+            <h2>Welcome, <span id="dash-user-name">Alex</span>!</h2>
+            <p id="dash-user-email">alex@example.com</p>
+          </div>
+        </div>
+
+        <!-- Security Summary Grid -->
+        <div class="stats-grid">
+          
+          <div class="stat-card">
+            <div class="stat-icon-wrapper icon-green">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-title">Account Status</span>
+              <span class="stat-value text-emerald">Active ✓</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper icon-purple">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-title">Password Security</span>
+              <span class="stat-value text-purple">bcrypt Hashed</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper icon-indigo">
+              <i class="fa-solid fa-key"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-title">Session Token</span>
+              <span class="stat-value text-indigo">JWT 7-Day Active</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Account Metadata Details -->
+        <div class="account-details-box">
+          <h3><i class="fa-solid fa-circle-info"></i> Your Account Information</h3>
+          <div class="details-row">
+            <span class="label">User ID</span>
+            <span class="val font-mono" id="dash-user-id">usr_981240</span>
+          </div>
+          <div class="details-row">
+            <span class="label">Registered Email</span>
+            <span class="val" id="dash-details-email">alex@example.com</span>
+          </div>
+          <div class="details-row">
+            <span class="label">Access Level</span>
+            <span class="val text-emerald font-semibold">Full Access Member</span>
+          </div>
+          <div class="details-row">
+            <span class="label">Account Created</span>
+            <span class="val" id="dash-created-at">Just now</span>
+          </div>
+        </div>
+
+        <!-- Topic Solver Platform Quick Launch Portal -->
+        <div class="topic-solver-hub">
+          <div class="hub-header">
+            <div class="hub-badge">🚀 Topic Solver Platform Ready</div>
+            <h3>Enter Topic Solver Learning Hub</h3>
+            <p>Access your 5 interactive courses, 444 adaptive MCQs, and sequential level unlocked paths.</p>
+          </div>
+
+          <a href="http://localhost:3000/courses" class="btn btn-primary btn-block hub-main-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Launch Topic Solver Full Platform</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+
+          <div class="course-quick-grid">
+            <a href="http://localhost:3000/courses/java" class="course-mini-card" target="_blank" rel="noopener noreferrer">
+              <span class="course-icon java">☕</span>
+              <span class="course-title">Java & DSA</span>
+              <span class="course-tag">600+ Problems</span>
+            </a>
+            <a href="http://localhost:3000/courses/sql" class="course-mini-card" target="_blank" rel="noopener noreferrer">
+              <span class="course-icon sql">🗄️</span>
+              <span class="course-title">MySQL Database</span>
+              <span class="course-tag">10 Levels</span>
+            </a>
+            <a href="http://localhost:3000/courses/c" class="course-mini-card" target="_blank" rel="noopener noreferrer">
+              <span class="course-icon c">⚡</span>
+              <span class="course-title">C Language</span>
+              <span class="course-tag">Accurate Titles</span>
+            </a>
+            <a href="http://localhost:3000/courses/python" class="course-mini-card" target="_blank" rel="noopener noreferrer">
+              <span class="course-icon python">🐍</span>
+              <span class="course-title">Python DSA</span>
+              <span class="course-tag">Beginner to Pro</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Dashboard Action Controls -->
+        <div class="dashboard-actions">
+          <button type="button" class="btn btn-secondary" id="btn-refresh-profile">
+            <i class="fa-solid fa-rotate"></i>
+            <span>Refresh Profile</span>
+          </button>
+          
+          <button type="button" class="btn btn-danger" id="btn-logout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Sign Out</span>
+          </button>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <p>&copy; <span id="current-year">2026</span> NexusAuth Systems. Protected with salted bcrypt password hashing.</p>
+    </footer>
+
+  </main>
+
+  <!-- Animations & App Logic -->
+  <script src="js/animations.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

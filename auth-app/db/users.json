@@ -1,0 +1,26 @@
+[
+  {
+    "id": "usr_1787333723347_dnuvb90kd",
+    "name": "Dewansh",
+    "email": "dewansh@example.com",
+    "hashedPassword": "$2a$10$Q5SII8wF0kqg6PugArtS2OXl1UMmJNRgtYh27VxBnk0IU7/tRQ4rG",
+    "createdAt": "2026-08-21T17:35:23.347Z",
+    "lastLoginAt": "2026-08-21T17:35:42.202Z"
+  },
+  {
+    "id": "usr_1787333840474_o6tuxajwe",
+    "name": "kailash",
+    "email": "kailashwar24@gmail.com",
+    "hashedPassword": "$2a$10$mi1ubqjT9Bf5JosbNB3R9ewV0tNb9J7cLB7svpvJMv8A6Z4tAt6Ny",
+    "createdAt": "2026-08-21T17:37:20.474Z",
+    "lastLoginAt": "2026-08-21T17:37:48.672Z"
+  },
+  {
+    "id": "usr_1787337517229_rz72nngl8",
+    "name": "Dewansh Singh",
+    "email": "swapnilthakur2004@gmail.com",
+    "hashedPassword": "$2a$10$oXSxxda0QvOpUcmNQXthyOzLtlxOAu4VLdZrddzH/EHs.FrRjRlyi",
+    "createdAt": "2026-08-21T18:38:37.229Z",
+    "lastLoginAt": "2026-08-21T18:38:37.229Z"
+  }
+]
