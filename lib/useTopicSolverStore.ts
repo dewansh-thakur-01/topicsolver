@@ -600,10 +600,6 @@ export const useTopicSolverStore = create<TopicSolverStore>()(
           }
         }));
 
-        if (isCorrect) {
-          get().markLessonComplete(topicId);
-        }
-
         return decision;
       },
 
