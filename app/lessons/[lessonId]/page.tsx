@@ -340,9 +340,12 @@ export default function LessonPlayerPage({ params }: PageProps) {
                   className="group relative block aspect-video w-full rounded-2xl overflow-hidden bg-slate-950 border border-[#DCE5F2] shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.01] dark:border-[#222B3D] cursor-pointer"
                   title={`Click to watch "${foundTopic.title}" on YouTube`}
                 >
-                  {/* YouTube High-Res Thumbnail Image */}
+                  {/* YouTube High-Res YouTuber Teaching Thumbnail Image */}
                   <img
-                    src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+                    src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                    }}
                     alt={foundTopic.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-90 group-hover:opacity-100"
                   />
