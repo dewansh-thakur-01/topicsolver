@@ -158,7 +158,7 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "main() method is the standard entry point of every standalone Java application"
               ],
               "youtubeVideoId": "IT2durkDCXM",
-              "youtubeUrl": "https://www.youtube.com/watch?v=IT2durkDCXM",
+              "youtubeUrl": "https://youtu.be/IT2durkDCXM",
               "youtubeDuration": "12:45"
             },
             "adaptiveQuestions": [
@@ -292,8 +292,8 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "JAVA_HOME points to your base JDK directory",
                 "PATH must include %JAVA_HOME%/bin or $JAVA_HOME/bin"
               ],
-              "youtubeVideoId": "iH8Y0_tWw18",
-              "youtubeUrl": "https://www.youtube.com/watch?v=iH8Y0_tWw18",
+              "youtubeVideoId": "XTkqv5y7Rjg",
+              "youtubeUrl": "https://youtu.be/XTkqv5y7Rjg",
               "youtubeDuration": "14:20"
             },
             "adaptiveQuestions": [
@@ -428,7 +428,7 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "JIT compiler compiles hot code into native CPU instructions on the fly"
               ],
               "youtubeVideoId": "gS7azO8ybEc",
-              "youtubeUrl": "https://www.youtube.com/watch?v=gS7azO8ybEc",
+              "youtubeUrl": "https://youtu.be/gS7azO8ybEc",
               "youtubeDuration": "11:15"
             },
             "adaptiveQuestions": [
@@ -562,8 +562,8 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Variable names should follow camelCase naming convention",
                 "Values must be initialized before they can be read"
               ],
-              "youtubeVideoId": "vV16wYm7v1A",
-              "youtubeUrl": "https://www.youtube.com/watch?v=vV16wYm7v1A",
+              "youtubeVideoId": "SkKJDwpMdvA",
+              "youtubeUrl": "https://youtu.be/SkKJDwpMdvA",
               "youtubeDuration": "15:30"
             },
             "adaptiveQuestions": [
@@ -697,8 +697,8 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Use nextLine() to capture strings with whitespace",
                 "Watch out for leftover newline characters after calling nextInt()"
               ],
-              "youtubeVideoId": "5A_3V34wzI0",
-              "youtubeUrl": "https://www.youtube.com/watch?v=5A_3V34wzI0",
+              "youtubeVideoId": "oMmAdViiVr8",
+              "youtubeUrl": "https://youtu.be/oMmAdViiVr8",
               "youtubeDuration": "13:50"
             },
             "adaptiveQuestions": [
@@ -831,8 +831,8 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Use double or float when formulas involve decimal precision",
                 "Follow operator precedence (PEMDAS) or use parentheses"
               ],
-              "youtubeVideoId": "p1fE0uP9J0U",
-              "youtubeUrl": "https://www.youtube.com/watch?v=p1fE0uP9J0U",
+              "youtubeVideoId": "EH3r4cGWKqs",
+              "youtubeUrl": "https://youtu.be/EH3r4cGWKqs",
               "youtubeDuration": "16:10"
             },
             "adaptiveQuestions": [
@@ -3271,8 +3271,8 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Any code written directly after an unconditional return is unreachable (compiler error)",
                 "Methods returning non-void must guarantee a return on all execution paths"
               ],
-              "youtubeVideoId": "8v1a-H5x0-I",
-              "youtubeUrl": "https://www.youtube.com/watch?v=8v1a-H5x0-I",
+              "youtubeVideoId": "1lx5V2Ywtmc",
+              "youtubeUrl": "https://youtu.be/1lx5V2Ywtmc",
               "youtubeDuration": "15:10"
             },
             "adaptiveQuestions": [
@@ -3539,8 +3539,8 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Overloading is resolved at compile time (Static Polymorphism)",
                 "Return type does NOT differentiate overloaded methods"
               ],
-              "youtubeVideoId": "6u9a-F3x0-G",
-              "youtubeUrl": "https://www.youtube.com/watch?v=6u9a-F3x0-G",
+              "youtubeVideoId": "Mzlddw0AOkY",
+              "youtubeUrl": "https://youtu.be/Mzlddw0AOkY",
               "youtubeDuration": "16:50"
             },
             "adaptiveQuestions": [

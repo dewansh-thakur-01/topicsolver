@@ -70,6 +70,7 @@ export default function LessonPlayerPage({ params }: PageProps) {
 
   const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationScore, setCelebrationScore] = useState<{ correct: number; total: number } | undefined>(undefined);
+  const [isPlayingVideo, setIsPlayingVideo] = useState(false);
 
   // Determine sequential module & level locking
   const currentCourse = Object.values(SUBJECT_COURSES).find(c => c.id === foundTopic?.subjectId);
@@ -312,7 +313,7 @@ export default function LessonPlayerPage({ params }: PageProps) {
           </div>
         )}
 
-        {/* YouTube Video Tutorial - Interactive Video Thumbnail Card */}
+        {/* YouTube Video Tutorial - Interactive Video Player & Thumbnail */}
         {!lowBandwidthMode && (foundTopic.content.youtubeVideoId || foundTopic.content.youtubeUrl) && (
           <div className="space-y-3 pt-4 border-t border-[#DCE5F2] dark:border-[#222B3D]">
             <div className="flex items-center justify-between">
@@ -320,25 +321,67 @@ export default function LessonPlayerPage({ params }: PageProps) {
                 <Video className="h-4 w-4 text-rose-600" />
                 <span>Supplementary Video Tutorial</span>
               </span>
-              {foundTopic.content.youtubeDuration && (
-                <span className="text-xs font-mono text-[#687385] dark:text-[#94A3B8]">
-                  Duration: ~{foundTopic.content.youtubeDuration}
-                </span>
-              )}
+              <div className="flex items-center space-x-3">
+                {foundTopic.content.youtubeDuration && (
+                  <span className="text-xs font-mono text-[#687385] dark:text-[#94A3B8]">
+                    Duration: ~{foundTopic.content.youtubeDuration}
+                  </span>
+                )}
+                {isPlayingVideo && (
+                  <button
+                    onClick={() => setIsPlayingVideo(false)}
+                    className="text-xs text-[#687385] hover:text-[#16191D] font-semibold underline dark:text-[#94A3B8] dark:hover:text-white cursor-pointer"
+                  >
+                    Show Thumbnail Preview
+                  </button>
+                )}
+              </div>
             </div>
 
-            {/* Clickable High-Resolution YouTube Video Thumbnail Card */}
             {(() => {
               const videoId = foundTopic.content.youtubeVideoId || 'IT2durkDCXM';
               const targetUrl = foundTopic.content.youtubeUrl || `https://www.youtube.com/watch?v=${videoId}`;
 
+              if (isPlayingVideo) {
+                // Interactive In-Website Video Player Mode (Plays directly inside website on click)
+                return (
+                  <div className="space-y-2.5 animate-in fade-in zoom-in-95 duration-200">
+                    <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-slate-950 border border-[#DCE5F2] shadow-2xl dark:border-[#222B3D]">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
+                        title={foundTopic.title}
+                        className="h-full w-full border-0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                    <div className="flex items-center justify-between px-1 text-xs">
+                      <button
+                        onClick={() => setIsPlayingVideo(false)}
+                        className="text-[#687385] hover:text-[#16191D] font-medium transition-colors dark:text-[#94A3B8] dark:hover:text-white cursor-pointer"
+                      >
+                        ✕ Close In-App Player
+                      </button>
+                      <a
+                        href={targetUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1.5 text-rose-600 hover:text-rose-700 font-semibold transition-colors dark:text-rose-400 dark:hover:text-rose-300"
+                      >
+                        <Play className="h-3 w-3 fill-current" />
+                        <span>Watch on YouTube ↗</span>
+                      </a>
+                    </div>
+                  </div>
+                );
+              }
+
+              // High-Resolution YouTuber Teaching Thumbnail Card Mode (Click to play inside website)
               return (
-                <a
-                  href={targetUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <div
+                  onClick={() => setIsPlayingVideo(true)}
                   className="group relative block aspect-video w-full rounded-2xl overflow-hidden bg-slate-950 border border-[#DCE5F2] shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.01] dark:border-[#222B3D] cursor-pointer"
-                  title={`Click to watch "${foundTopic.title}" on YouTube`}
+                  title={`Click to play "${foundTopic.title}" directly inside website`}
                 >
                   {/* YouTube High-Res YouTuber Teaching Thumbnail Image */}
                   <img
@@ -364,7 +407,7 @@ export default function LessonPlayerPage({ params }: PageProps) {
                   <div className="absolute top-4 left-4 flex items-center space-x-2">
                     <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-rose-600 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-md">
                       <Play className="h-3 w-3 fill-white" />
-                      <span>YouTube Tutorial</span>
+                      <span>Click to Play in Website</span>
                     </span>
                     {foundTopic.content.youtubeDuration && (
                       <span className="px-2 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[10px] font-mono font-bold text-white border border-white/20">
@@ -385,11 +428,11 @@ export default function LessonPlayerPage({ params }: PageProps) {
                     </div>
 
                     <span className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white text-[#16191D] hover:bg-slate-100 text-xs font-bold shadow-md transition-all group-hover:bg-rose-600 group-hover:text-white shrink-0">
-                      <span>Watch on YouTube</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
+                      <Play className="h-3.5 w-3.5 fill-current" />
+                      <span>Play Video</span>
                     </span>
                   </div>
-                </a>
+                </div>
               );
             })()}
           </div>
