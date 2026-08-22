@@ -35,12 +35,12 @@ function GlowingTorusKnot({ mouse }) {
         <MeshWobbleMaterial
           factor={0.3}
           speed={1.5}
-          color="#00f3ff"
-          emissive="#7928ca"
-          emissiveIntensity={0.8}
+          color="#00e5ff"
+          emissive="#0055ff"
+          emissiveIntensity={0.9}
           wireframe={true}
           transparent
-          opacity={0.65}
+          opacity={0.7}
         />
       </mesh>
     </Float>
@@ -89,10 +89,10 @@ function ParticleCloud({ mouse }) {
     const col = new Float32Array(count * 3);
     
     const colorChoices = [
-      new THREE.Color('#00f3ff'), // Neon Cyan
-      new THREE.Color('#ff007f'), // Neon Pink
-      new THREE.Color('#7000ff'), // Electric Purple
-      new THREE.Color('#39ff14'), // Neon Green
+      new THREE.Color('#00e5ff'), // Neon Cyan
+      new THREE.Color('#0070f3'), // Electric Blue
+      new THREE.Color('#38bdf8'), // Sky Cyber Blue
+      new THREE.Color('#2563eb'), // Security Cobalt Blue
     ];
 
     for (let i = 0; i < count; i++) {

@@ -106,20 +106,22 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
       });
       toast.success(getTranslation(language, 'quiz.correctChoice'));
     } else {
-      // Record failed question ID so subsequent retakes or replacements avoid it
+      // Record failed question ID
       setFailedQuestionIds(prev => Array.from(new Set([...prev, question.id])));
       
       // Generate non-spoiler mistake clue
       const clue = generateMistakeClue(question, selectedOption);
       setMistakeClue(clue);
-      toast.error(getTranslation(language, 'quiz.retakePrompt'));
+      toast.error('Incorrect! Review the clue below and solve a new question on this topic.');
     }
 
     const decision = recordQuizResult(topicId, topicName, isCorrect, question.difficulty);
     setLastDecision(decision);
   };
 
-  // Dynamically swap the failed question with a fresh question from the same topic
+  // CRITICAL REQUIREMENT:
+  // When an answer is incorrect, do NOT move forward to the next question.
+  // Remain on the same question slot (e.g. Question 1 of 5) and load another question from the same topic!
   const handleSwapFailedQuestion = () => {
     const currentBatchIds = activeQuizQuestions.map(q => q.id);
     const replacement = getReplacementQuestion(rawQuestions, currentBatchIds, question.id);
@@ -134,10 +136,15 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
       setMistakeClue(null);
       toast.info(getTranslation(language, 'quiz.swappedNotice'));
     } else {
-      toast.info('No additional question variations available for this topic.');
+      // Fallback if question pool exhausted: reset question state so student can try again
+      setSelectedOption(null);
+      setIsSubmitted(false);
+      setMistakeClue(null);
+      toast.info('Try again on this question!');
     }
   };
 
+  // Move forward to the next question number ONLY when answer was correct
   const handleNext = () => {
     const isLastQuestion = currentQIndex >= activeQuizQuestions.length - 1;
     
@@ -404,7 +411,7 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
                   {isSubmitted && selectedOption === idx && !isCorrect && (
                     <span className="flex items-center gap-1 text-[11px] font-bold text-rose-600 dark:text-rose-400">
                       <XCircle className="h-4 w-4" />
-                      Incorrect
+                      Incorrect Choice
                     </span>
                   )}
                 </button>
@@ -440,13 +447,13 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
 
           {!isCorrect && (
             <div className="pt-2 border-t border-amber-200/60 dark:border-amber-800/40 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-[11px] text-amber-800 dark:text-amber-300">
-              <span className="font-medium">Direct answer concealed. Want to try a different question on this topic?</span>
+              <span className="font-medium">Direct answer concealed. Solve a new question on this topic to proceed!</span>
               <button
                 onClick={handleSwapFailedQuestion}
-                className="inline-flex items-center space-x-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white px-3.5 py-1.5 font-bold shadow-xs transition-all hover:scale-105 active:scale-95 shrink-0"
+                className="inline-flex items-center space-x-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 font-bold shadow-md transition-all hover:scale-105 active:scale-95 shrink-0"
               >
                 <RefreshCw className="h-3.5 w-3.5" />
-                <span>{getTranslation(language, 'quiz.swapQuestion')}</span>
+                <span>{getTranslation(language, 'quiz.swapQuestion')} (Q{currentQIndex + 1}/5)</span>
               </button>
             </div>
           )}
@@ -473,23 +480,28 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
           </button>
         ) : (
           <div className="w-full sm:w-auto flex items-center gap-2.5">
-            {!isCorrect && (
+            {/* 
+              CRITICAL REQUIREMENT:
+              If the answer is incorrect, do NOT move forward to the next question.
+              Remain on the same question slot (Q${currentQIndex + 1}/5) with another question from the same topic!
+            */}
+            {!isCorrect ? (
               <button
                 onClick={handleSwapFailedQuestion}
-                className="flex items-center space-x-1.5 rounded-xl bg-white border border-[#DCE5F2] hover:bg-[#F7F9FC] text-[#16191D] px-4 py-2.5 text-xs font-semibold transition-all dark:bg-[#0E121C] dark:border-[#222B3D] dark:text-white"
+                className="w-full sm:w-auto flex items-center justify-center space-x-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white px-6 py-2.5 text-xs font-bold shadow-md transition-all hover:scale-105 active:scale-95"
               >
-                <RefreshCw className="h-3.5 w-3.5 text-amber-500" />
-                <span>{getTranslation(language, 'quiz.swapQuestion')}</span>
+                <RefreshCw className="h-3.5 w-3.5" />
+                <span>{getTranslation(language, 'quiz.swapQuestion')} (Q{currentQIndex + 1}/5)</span>
+              </button>
+            ) : (
+              <button
+                onClick={handleNext}
+                className="w-full sm:w-auto flex items-center justify-center space-x-2 rounded-xl bg-[#2B6FF3] hover:bg-[#1557D6] px-6 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:scale-105 dark:bg-[#3B82F6] dark:hover:bg-[#2563EB]"
+              >
+                <span>{currentQIndex < activeQuizQuestions.length - 1 ? `${getTranslation(language, 'quiz.nextQuestion')} (Q${currentQIndex + 2}/5)` : getTranslation(language, 'quiz.viewResults')}</span>
+                <ArrowRight className="h-4 w-4 ml-1" />
               </button>
             )}
-
-            <button
-              onClick={handleNext}
-              className="flex-1 sm:flex-none flex items-center justify-center space-x-2 rounded-xl bg-[#2B6FF3] hover:bg-[#1557D6] px-6 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:scale-105 dark:bg-[#3B82F6] dark:hover:bg-[#2563EB]"
-            >
-              <span>{currentQIndex < activeQuizQuestions.length - 1 ? `${getTranslation(language, 'quiz.nextQuestion')} (Q${currentQIndex + 2}/5)` : getTranslation(language, 'quiz.viewResults')}</span>
-              <ArrowRight className="h-4 w-4 ml-1" />
-            </button>
           </div>
         )}
 

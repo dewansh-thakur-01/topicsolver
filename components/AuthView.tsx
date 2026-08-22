@@ -28,7 +28,10 @@ import {
   Layers,
   Compass,
   KeyRound,
-  Check
+  Check,
+  Shield,
+  Fingerprint,
+  Activity
 } from 'lucide-react';
 
 export const AuthView: React.FC = () => {
@@ -67,10 +70,10 @@ export const AuthView: React.FC = () => {
   // Password Strength Calculation
   const pwdStrength = React.useMemo(() => {
     const len = signUpPassword.length;
-    if (len === 0) return { score: 0, label: '', color: 'bg-slate-300' };
-    if (len < 6) return { score: 1, label: 'Too short (min 6 chars)', color: 'bg-rose-500' };
+    if (len === 0) return { score: 0, label: '', color: 'bg-slate-700' };
+    if (len < 6) return { score: 1, label: 'Weak (min 6 chars)', color: 'bg-rose-500' };
     if (len < 9) return { score: 2, label: 'Moderate strength', color: 'bg-amber-500' };
-    return { score: 3, label: 'Strong & Secure', color: 'bg-emerald-500' };
+    return { score: 3, label: 'Cyber-Grade Strong', color: 'bg-cyan-400' };
   }, [signUpPassword]);
 
   const handleSignInSubmit = (e: React.FormEvent) => {
@@ -135,152 +138,162 @@ export const AuthView: React.FC = () => {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 overflow-hidden bg-[#F7F9FC] dark:bg-[#090C12] selection:bg-[#2B6FF3] selection:text-white card-3d-perspective py-12"
+      className="relative min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 overflow-hidden bg-[#030712] selection:bg-[#00E5FF] selection:text-black card-3d-perspective py-12 text-slate-100"
+      style={{
+        backgroundColor: '#040916' // Cyber Security Deep Navy Blue
+      }}
     >
       
-      {/* ================= 3D BACKGROUND GRAPHICS & HOLOGRAPHIC ENVIRONMENT ================= */}
+      {/* ================= CYBER SECURITY BLUE 3D BACKGROUND & LASER GRID ================= */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
         
-        {/* 3D Rotating Glowing Laser Grid Base */}
+        {/* Cyber Security Radiant Glow Canvases */}
+        <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full bg-radial from-[#0055FF]/30 via-[#002288]/15 to-transparent blur-3xl animate-pulse [animation-duration:8s]" />
+        <div className="absolute -bottom-40 -right-40 w-[750px] h-[750px] rounded-full bg-radial from-[#00E5FF]/25 via-[#0044CC]/15 to-transparent blur-3xl animate-pulse [animation-duration:10s]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-radial from-[#1E40AF]/20 to-transparent blur-3xl" />
+        
+        {/* 3D Rotating Cyber Security Holographic Ring Base */}
         <div 
-          className="absolute w-[650px] sm:w-[950px] h-[650px] sm:h-[950px] rounded-full border border-[#2B6FF3]/25 bg-gradient-to-tr from-[#2B6FF3]/15 via-purple-600/10 to-cyan-500/15 shadow-2xl backdrop-blur-sm dark:border-[#3B82F6]/35 dark:from-[#3B82F6]/15 dark:via-purple-900/20 dark:to-cyan-900/15"
+          className="absolute w-[650px] sm:w-[950px] h-[650px] sm:h-[950px] rounded-full border border-[#00E5FF]/30 bg-gradient-to-tr from-[#0033AA]/25 via-[#0066FF]/15 to-[#00E5FF]/20 shadow-2xl backdrop-blur-xs"
           style={{
             transform: `rotateX(72deg) rotateY(${tilt.x * 0.4}deg) rotateZ(0deg)`,
-            boxShadow: '0 50px 120px -20px rgba(43, 111, 243, 0.35)'
+            boxShadow: '0 0 120px 20px rgba(0, 112, 243, 0.35), inset 0 0 80px rgba(0, 229, 255, 0.2)'
           }}
         >
-          {/* Concentric 3D Holographic Orbit Rings */}
-          <div className="absolute inset-8 rounded-full border-2 border-[#2B6FF3]/40 border-dashed animate-spin [animation-duration:60s]" />
-          <div className="absolute inset-20 rounded-full border border-purple-400/50 animate-spin [animation-duration:40s] [animation-direction:reverse]" />
-          <div className="absolute inset-36 rounded-full border border-cyan-400/40 border-dotted animate-spin [animation-duration:25s]" />
-          <div className="absolute inset-52 rounded-full border border-[#DCE5F2] dark:border-slate-700/60" />
-          <div className="absolute inset-0 m-auto w-32 h-32 rounded-full bg-[#2B6FF3]/30 blur-3xl animate-pulse" />
+          {/* Concentric Cyber Orbit Rings */}
+          <div className="absolute inset-6 rounded-full border-2 border-[#00E5FF]/40 border-dashed animate-spin [animation-duration:50s]" />
+          <div className="absolute inset-16 rounded-full border border-[#3B82F6]/60 animate-spin [animation-duration:35s] [animation-direction:reverse]" />
+          <div className="absolute inset-28 rounded-full border border-cyan-300/40 border-dotted animate-spin [animation-duration:20s]" />
+          <div className="absolute inset-44 rounded-full border border-[#1E3A8A]" />
+          <div className="absolute inset-0 m-auto w-36 h-36 rounded-full bg-[#00E5FF]/30 blur-2xl animate-pulse" />
         </div>
 
-        {/* Ambient Radiant Glowing Orbs */}
-        <div className="absolute -top-40 -left-40 w-[650px] h-[650px] rounded-full bg-radial from-[#2B6FF3]/25 to-transparent blur-3xl" />
-        <div className="absolute -bottom-40 -right-40 w-[700px] h-[700px] rounded-full bg-radial from-purple-600/20 to-transparent blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-radial from-cyan-500/10 to-transparent blur-3xl" />
-        
-        {/* Futuristic Dot Matrix Overlay */}
+        {/* Cyber Security Hex & Matrix Grid Overlay */}
         <div 
-          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.09]" 
+          className="absolute inset-0 opacity-[0.14]" 
           style={{
-            backgroundImage: `radial-gradient(#2B6FF3 1.2px, transparent 1.2px)`,
-            backgroundSize: '28px 28px'
+            backgroundImage: `linear-gradient(to right, #0070F3 1px, transparent 1px), linear-gradient(to bottom, #00E5FF 1px, transparent 1px)`,
+            backgroundSize: '40px 40px'
           }}
         />
 
-        {/* Floating 3D Geometric Shards */}
+        {/* Floating Cyber Defense Geometric Shards */}
         <div 
-          className="absolute top-28 left-[18%] w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#2B6FF3]/20 to-cyan-400/20 border border-[#2B6FF3]/30 backdrop-blur-md rotate-12"
-          style={{ animation: 'float3d 7s ease-in-out infinite alternate' }}
+          className="absolute top-24 left-[15%] w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0070F3]/30 to-[#00E5FF]/30 border border-[#00E5FF]/40 backdrop-blur-md rotate-12 shadow-[0_0_20px_rgba(0,229,255,0.3)]"
+          style={{ animation: 'float3d 6.5s ease-in-out infinite alternate' }}
         />
         <div 
-          className="absolute bottom-28 right-[18%] w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-500/20 to-pink-500/20 border border-purple-400/30 backdrop-blur-md -rotate-12"
-          style={{ animation: 'float3d 8s ease-in-out infinite alternate', animationDelay: '1.5s' }}
+          className="absolute bottom-24 right-[15%] w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#1D4ED8]/30 to-[#38BDF8]/30 border border-[#38BDF8]/40 backdrop-blur-md -rotate-12 shadow-[0_0_20px_rgba(56,189,248,0.3)]"
+          style={{ animation: 'float3d 7.5s ease-in-out infinite alternate', animationDelay: '1.5s' }}
         />
       </div>
 
-      {/* ================= FLOATING 3D INTERACTIVE SATELLITE CRYSTALS ================= */}
+      {/* ================= FLOATING CYBERSECURITY SATELLITE WIDGETS ================= */}
       <div className="hidden xl:block pointer-events-none">
         
-        {/* Top Left: Java & DSA Track */}
+        {/* Top Left: Zero-Trust Security Sentinel */}
         <div 
-          className="absolute top-16 left-12 z-10 flex items-center space-x-3 px-4 py-2.5 rounded-2xl bg-white/95 border border-[#DCE5F2] shadow-2xl text-xs font-extrabold text-[#16191D] card-3d-tilt dark:bg-[#121622]/95 dark:border-[#222B3D] dark:text-white"
+          className="absolute top-16 left-12 z-10 flex items-center space-x-3 px-4 py-2.5 rounded-2xl bg-[#091326]/90 border border-[#1E3A8A] shadow-[0_10px_30px_rgba(0,112,243,0.3)] text-xs font-extrabold text-white card-3d-tilt backdrop-blur-xl"
           style={{ 
             animation: 'float3d 5.5s ease-in-out infinite alternate',
             transform: `translateZ(60px) rotateY(${tilt.x * 0.8}deg)`
           }}
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500/15 text-amber-500 text-base shadow-xs">☕</span>
+          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-cyan-500/20 text-cyan-400 text-base shadow-[0_0_15px_rgba(0,229,255,0.4)]">
+            <Shield className="h-4 w-4 text-cyan-400" />
+          </span>
           <div>
-            <div className="font-bold">Java & DSA Track</div>
-            <div className="text-[10px] text-[#687385] dark:text-[#94A3B8] font-normal">54 Topics • 162 MCQs</div>
+            <div className="font-bold text-cyan-300">Cyber Sentinel Guard</div>
+            <div className="text-[10px] text-slate-400 font-normal">AES-256 Auth Encryption</div>
           </div>
         </div>
 
-        {/* Top Right: Python Core Track */}
+        {/* Top Right: Real-time Threat Defense */}
         <div 
-          className="absolute top-16 right-12 z-10 flex items-center space-x-3 px-4 py-2.5 rounded-2xl bg-white/95 border border-[#DCE5F2] shadow-2xl text-xs font-extrabold text-[#16191D] card-3d-tilt dark:bg-[#121622]/95 dark:border-[#222B3D] dark:text-white"
+          className="absolute top-16 right-12 z-10 flex items-center space-x-3 px-4 py-2.5 rounded-2xl bg-[#091326]/90 border border-[#1E3A8A] shadow-[0_10px_30px_rgba(0,112,243,0.3)] text-xs font-extrabold text-white card-3d-tilt backdrop-blur-xl"
           style={{ 
             animation: 'float3d 6.5s ease-in-out infinite alternate', 
             animationDelay: '1s',
             transform: `translateZ(65px) rotateY(${tilt.x * 0.8}deg)`
           }}
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2B6FF3]/15 text-[#2B6FF3] text-base shadow-xs">🐍</span>
+          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600/20 text-blue-400 text-base shadow-[0_0_15px_rgba(59,130,246,0.4)]">
+            <Fingerprint className="h-4 w-4 text-blue-400" />
+          </span>
           <div>
-            <div className="font-bold">Python Core</div>
-            <div className="text-[10px] text-[#687385] dark:text-[#94A3B8] font-normal">48 Lessons • 144 MCQs</div>
+            <div className="font-bold text-blue-300">Identity Security</div>
+            <div className="text-[10px] text-slate-400 font-normal">Session Handshake Active</div>
           </div>
         </div>
 
         {/* Middle Left: Code Floating Shard */}
         <div 
-          className="absolute top-1/2 left-8 -translate-y-1/2 z-10 p-3 rounded-2xl bg-white/90 border border-[#DCE5F2] shadow-xl font-mono text-[11px] text-slate-700 dark:bg-[#121622]/90 dark:border-[#222B3D] dark:text-slate-300 card-3d-tilt"
+          className="absolute top-1/2 left-8 -translate-y-1/2 z-10 p-3.5 rounded-2xl bg-[#091326]/90 border border-cyan-500/30 shadow-[0_0_25px_rgba(0,229,255,0.2)] font-mono text-[11px] text-cyan-300 card-3d-tilt backdrop-blur-xl"
           style={{ 
             animation: 'float3d 7s ease-in-out infinite alternate', 
             animationDelay: '2.5s',
             transform: `translateZ(50px) rotateY(${tilt.x * 0.5}deg)`
           }}
         >
-          <div className="text-emerald-500 font-bold">✓ Tests Passed (3/3)</div>
-          <div className="text-[10px] text-slate-400">O(1) Auxiliary Space</div>
+          <div className="text-cyan-400 font-bold flex items-center gap-1.5">
+            <Activity className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
+            <span>Encrypted Tunnel: 100%</span>
+          </div>
+          <div className="text-[10px] text-slate-400 mt-0.5">TLS 1.3 Strict Transport</div>
         </div>
 
-        {/* Middle Right: CodeMentor AI Badge */}
+        {/* Middle Right: CodeMentor AI Assistant */}
         <div 
-          className="absolute top-1/2 right-8 -translate-y-1/2 z-10 flex items-center space-x-3 px-4 py-2.5 rounded-2xl bg-white/95 border border-purple-300 shadow-2xl text-xs font-extrabold text-[#16191D] card-3d-tilt dark:bg-[#121622]/95 dark:border-purple-800 dark:text-white"
+          className="absolute top-1/2 right-8 -translate-y-1/2 z-10 flex items-center space-x-3 px-4 py-2.5 rounded-2xl bg-[#091326]/90 border border-[#2563EB]/40 shadow-[0_0_25px_rgba(37,99,235,0.25)] text-xs font-extrabold text-white card-3d-tilt backdrop-blur-xl"
           style={{ 
             animation: 'float3d 5.8s ease-in-out infinite alternate', 
             animationDelay: '1.2s',
             transform: `translateZ(70px) rotateY(${tilt.x * 0.8}deg)`
           }}
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-purple-600/15 text-purple-600 shadow-xs">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-500/20 text-cyan-400 shadow-xs">
             <Bot className="h-5 w-5" />
           </div>
           <div>
-            <div className="font-bold flex items-center gap-1.5">
+            <div className="font-bold flex items-center gap-1.5 text-cyan-300">
               <span>CodeMentor AI</span>
-              <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-300">Live</span>
+              <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">Active</span>
             </div>
-            <div className="text-[10px] text-[#687385] dark:text-[#94A3B8] font-normal">Progressive Error Hints</div>
+            <div className="text-[10px] text-slate-400 font-normal">Progressive Clue Engine</div>
           </div>
         </div>
 
-        {/* Bottom Left: MySQL DBMS */}
+        {/* Bottom Left: Multi-Subject Vault */}
         <div 
-          className="absolute bottom-14 left-14 z-10 flex items-center space-x-3 px-4 py-2.5 rounded-2xl bg-white/95 border border-[#DCE5F2] shadow-2xl text-xs font-extrabold text-[#16191D] card-3d-tilt dark:bg-[#121622]/95 dark:border-[#222B3D] dark:text-white"
+          className="absolute bottom-14 left-14 z-10 flex items-center space-x-3 px-4 py-2.5 rounded-2xl bg-[#091326]/90 border border-[#1E3A8A] shadow-[0_10px_30px_rgba(0,112,243,0.3)] text-xs font-extrabold text-white card-3d-tilt backdrop-blur-xl"
           style={{ 
             animation: 'float3d 6s ease-in-out infinite alternate', 
             animationDelay: '2s',
             transform: `translateZ(55px) rotateY(${tilt.x * 0.8}deg)`
           }}
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-500 text-base shadow-xs">🗄️</span>
+          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-cyan-500/20 text-cyan-400 text-base shadow-xs">⚡</span>
           <div>
-            <div className="font-bold">MySQL DBMS</div>
-            <div className="text-[10px] text-[#687385] dark:text-[#94A3B8] font-normal">10 Modules • 30 MCQs</div>
+            <div className="font-bold text-cyan-300">142 Adaptive Levels</div>
+            <div className="text-[10px] text-slate-400 font-normal">Java • Python • SQL • DSA • C</div>
           </div>
         </div>
 
-        {/* Bottom Right: One-Password Secure Gate */}
+        {/* Bottom Right: One-Password Gate */}
         <div 
-          className="absolute bottom-14 right-14 z-10 flex items-center space-x-3 px-4 py-2.5 rounded-2xl bg-white/95 border border-[#DCE5F2] shadow-2xl text-xs font-extrabold text-[#16191D] card-3d-tilt dark:bg-[#121622]/95 dark:border-[#222B3D] dark:text-white"
+          className="absolute bottom-14 right-14 z-10 flex items-center space-x-3 px-4 py-2.5 rounded-2xl bg-[#091326]/90 border border-[#1E3A8A] shadow-[0_10px_30px_rgba(0,112,243,0.3)] text-xs font-extrabold text-white card-3d-tilt backdrop-blur-xl"
           style={{ 
             animation: 'float3d 5s ease-in-out infinite alternate', 
             animationDelay: '0.8s',
             transform: `translateZ(65px) rotateY(${tilt.x * 0.8}deg)`
           }}
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-500 shadow-xs">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-cyan-500/20 text-cyan-400 shadow-xs">
             <ShieldCheck className="h-5 w-5" />
           </div>
           <div>
-            <div className="font-bold">Single Account Access</div>
-            <div className="text-[10px] text-[#687385] dark:text-[#94A3B8] font-normal">One Email = One Password</div>
+            <div className="font-bold text-cyan-300">Unified Access</div>
+            <div className="text-[10px] text-slate-400 font-normal">One Email = One Password</div>
           </div>
         </div>
 
@@ -298,277 +311,268 @@ export const AuthView: React.FC = () => {
         {/* ================= TOP BIG OFFICIAL LOGO & BRAND HEADER ================= */}
         <div className="flex flex-col items-center text-center space-y-3">
           
-          {/* Pure Floating Sticker of Fox with White Devil & Radiant Blue Aura (No Box) */}
+          {/* Pure Floating Sticker of Fox with White Devil & Radiant Electric Blue Aura (No Box) */}
           <div 
             className="relative flex items-center justify-center transition-all duration-300 hover:scale-105 group"
           >
-            {/* Ambient Multi-Layer Radiant Blue Shade Aura */}
-            <div className="absolute inset-0 -m-4 rounded-full bg-radial from-[#2B6FF3]/40 via-cyan-400/25 to-transparent blur-2xl pointer-events-none group-hover:scale-115 transition-transform duration-500" />
+            {/* Multi-Layer Radiant Cyber Security Blue Aura */}
+            <div className="absolute inset-0 -m-6 rounded-full bg-radial from-[#00E5FF]/45 via-[#0055FF]/35 to-transparent blur-3xl pointer-events-none group-hover:scale-115 transition-transform duration-500" />
             
             {/* Fox Mascot Sticker */}
             <div className="relative w-72 sm:w-84 h-24 sm:h-28 flex items-center justify-center">
               <Image
                 src="/images/topic_solver_logo.png"
-                alt="TOPIC SOLVER Sticker"
+                alt="TOPIC SOLVER Cyber Security Sticker"
                 fill
                 priority
                 className="object-contain transition-all duration-300 group-hover:scale-105"
                 style={{
-                  filter: 'drop-shadow(0 0 12px rgba(43, 111, 243, 0.95)) drop-shadow(0 0 30px rgba(59, 130, 246, 0.7)) drop-shadow(0 0 60px rgba(0, 210, 255, 0.45))'
+                  filter: 'drop-shadow(0 0 16px rgba(0, 229, 255, 0.95)) drop-shadow(0 0 35px rgba(0, 112, 243, 0.85)) drop-shadow(0 0 70px rgba(0, 229, 255, 0.5))'
                 }}
               />
             </div>
           </div>
 
           {/* Platform Title & Badge */}
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             <div className="flex items-center justify-center space-x-2">
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16191D] font-3d-hero dark:text-white">
-                TOPIC <span className="font-3d-highlight">SOLVER</span>
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white font-3d-hero">
+                TOPIC <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300 drop-shadow-[0_0_20px_rgba(0,229,255,0.6)]">SOLVER</span>
               </h1>
-              <span className="inline-flex items-center gap-1 rounded-full bg-[#2B6FF3]/10 px-2 py-0.5 text-[10px] font-bold text-[#2B6FF3] border border-[#2B6FF3]/25 dark:bg-[#3B82F6]/20 dark:text-[#93C5FD] dark:border-[#3B82F6]/40">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#2B6FF3] dark:bg-[#3B82F6] animate-pulse" />
-                AI Platform
+              <span className="inline-flex items-center gap-1 rounded-full bg-cyan-500/15 px-2.5 py-0.5 text-[10px] font-bold text-cyan-300 border border-cyan-400/35 shadow-[0_0_10px_rgba(0,229,255,0.3)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                Cyber Auth
               </span>
             </div>
-            <p className="text-xs font-medium text-[#687385] dark:text-[#94A3B8] max-w-xs mx-auto">
-              Your personalized adaptive pathway to Java, Python, SQL, and Data Structures.
+            <p className="text-xs font-medium text-slate-300 max-w-xs mx-auto">
+              Your secure, personalized adaptive pathway to Java, Python, SQL, DSA, and C.
             </p>
           </div>
 
         </div>
 
-        {/* ================= GLASS CARD CONTAINER ================= */}
+        {/* ================= CYBER SECURITY GLASS CARD CONTAINER ================= */}
         <div 
-          className="rounded-3xl border border-[#DCE5F2] bg-white/95 backdrop-blur-2xl p-7 sm:p-8 shadow-2xl space-y-6 dark:border-[#222B3D] dark:bg-[#121622]/95"
+          className="rounded-3xl border border-[#1E3A8A]/80 bg-[#081226]/90 backdrop-blur-2xl p-7 sm:p-8 space-y-6 shadow-2xl"
           style={{
-            boxShadow: '0 25px 70px -15px rgba(43, 111, 243, 0.2), 0 0 0 1px #DCE5F2'
+            boxShadow: '0 25px 80px -15px rgba(0, 112, 243, 0.35), 0 0 0 1px rgba(0, 229, 255, 0.2), inset 0 0 40px rgba(0, 112, 243, 0.1)'
           }}
         >
           
           {/* Auth Tab Switcher (Sign In vs Sign Up) */}
-          <div className="grid grid-cols-2 p-1.5 rounded-2xl bg-[#F7F9FC] border border-[#DCE5F2] dark:bg-[#0E121C] dark:border-[#222B3D]">
+          <div className="grid grid-cols-2 p-1.5 rounded-2xl bg-[#040A1A] border border-[#1E3A8A]">
             <button
-              type="button"
               onClick={() => setActiveTab('signin')}
-              className={`flex items-center justify-center space-x-2 py-2.5 rounded-xl text-xs font-bold transition-all ${
+              className={`flex items-center justify-center space-x-2 py-2.5 text-xs font-bold rounded-xl transition-all ${
                 activeTab === 'signin'
-                  ? 'bg-[#2B6FF3] text-white shadow-md shadow-[#2B6FF3]/25 dark:bg-[#3B82F6]'
-                  : 'text-[#687385] hover:text-[#16191D] dark:text-[#94A3B8] dark:hover:text-white'
+                  ? 'bg-gradient-to-r from-[#0055FF] to-[#0099FF] text-white shadow-[0_0_20px_rgba(0,112,243,0.6)] border border-cyan-400/40'
+                  : 'text-slate-400 hover:text-cyan-300'
               }`}
             >
-              <LogIn className="h-4 w-4" />
+              <LogIn className="h-3.5 w-3.5" />
               <span>Sign In</span>
             </button>
-
             <button
-              type="button"
               onClick={() => setActiveTab('signup')}
-              className={`flex items-center justify-center space-x-2 py-2.5 rounded-xl text-xs font-bold transition-all ${
+              className={`flex items-center justify-center space-x-2 py-2.5 text-xs font-bold rounded-xl transition-all ${
                 activeTab === 'signup'
-                  ? 'bg-[#2B6FF3] text-white shadow-md shadow-[#2B6FF3]/25 dark:bg-[#3B82F6]'
-                  : 'text-[#687385] hover:text-[#16191D] dark:text-[#94A3B8] dark:hover:text-white'
+                  ? 'bg-gradient-to-r from-[#0055FF] to-[#0099FF] text-white shadow-[0_0_20px_rgba(0,112,243,0.6)] border border-cyan-400/40'
+                  : 'text-slate-400 hover:text-cyan-300'
               }`}
             >
-              <UserPlus className="h-4 w-4" />
+              <UserPlus className="h-3.5 w-3.5" />
               <span>Sign Up</span>
             </button>
           </div>
 
-          {/* ================= VIEW 1: SIGN IN ================= */}
+          {/* ================= TAB 1: SIGN IN FORM ================= */}
           {activeTab === 'signin' && (
-            <div className="space-y-5 animate-in fade-in duration-200">
-              <div className="space-y-1">
-                <h2 className="text-lg font-extrabold text-[#16191D] font-3d-sub dark:text-white">
-                  Welcome to TOPIC SOLVER
-                </h2>
-                <p className="text-xs text-[#687385] dark:text-[#94A3B8]">
-                  Sign in with your registered email and password to enter the website.
-                </p>
+            <form onSubmit={handleSignInSubmit} className="space-y-4 animate-in fade-in duration-200">
+              
+              {/* Email Address */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-cyan-400" />
+                  <input
+                    type="email"
+                    required
+                    placeholder="student@example.com"
+                    value={signInEmail}
+                    onChange={(e) => setSignInEmail(e.target.value)}
+                    className="w-full rounded-xl bg-[#040A1A] border border-[#1E3A8A] pl-10 pr-4 py-3 text-xs text-white placeholder-slate-500 focus:border-[#00E5FF] focus:ring-2 focus:ring-[#00E5FF]/30 focus:outline-none transition-all"
+                  />
+                </div>
               </div>
 
-              <form onSubmit={handleSignInSubmit} className="space-y-4">
-                {/* Email Address */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[#16191D] dark:text-slate-300">
-                    Email Address
-                  </label>
-                  <div className="relative flex items-center">
-                    <Mail className="absolute left-3.5 h-4 w-4 text-[#687385] dark:text-[#94A3B8] pointer-events-none" />
-                    <input
-                      type="email"
-                      value={signInEmail}
-                      onChange={(e) => setSignInEmail(e.target.value)}
-                      placeholder="name@example.com"
-                      required
-                      className="w-full rounded-xl bg-[#F7F9FC] border border-[#DCE5F2] pl-10 pr-4 py-2.5 text-xs text-[#16191D] font-medium focus:outline-none focus:ring-2 focus:ring-[#2B6FF3] dark:bg-[#0E121C] dark:border-[#222B3D] dark:text-white"
-                    />
-                  </div>
-                </div>
-
-                {/* Password */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[#16191D] dark:text-slate-300">
+              {/* Password */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider">
                     Password
                   </label>
-                  <div className="relative flex items-center">
-                    <Lock className="absolute left-3.5 h-4 w-4 text-[#687385] dark:text-[#94A3B8] pointer-events-none" />
-                    <input
-                      type={showSignInPwd ? 'text' : 'password'}
-                      value={signInPassword}
-                      onChange={(e) => setSignInPassword(e.target.value)}
-                      placeholder="Enter your password"
-                      required
-                      className="w-full rounded-xl bg-[#F7F9FC] border border-[#DCE5F2] pl-10 pr-10 py-2.5 text-xs text-[#16191D] font-medium focus:outline-none focus:ring-2 focus:ring-[#2B6FF3] dark:bg-[#0E121C] dark:border-[#222B3D] dark:text-white"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowSignInPwd(!showSignInPwd)}
-                      className="absolute right-3.5 text-[#687385] hover:text-[#16191D] dark:text-[#94A3B8] dark:hover:text-white"
-                    >
-                      {showSignInPwd ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </button>
-                  </div>
+                  <span className="text-[11px] text-cyan-400 font-mono">Single Password</span>
                 </div>
-
-                {/* Submit CTA */}
-                <button
-                  type="submit"
-                  disabled={isSigningIn}
-                  className="w-full flex items-center justify-center space-x-2 rounded-xl bg-[#2B6FF3] hover:bg-[#1557D6] text-white py-3 px-4 text-xs font-bold shadow-lg shadow-[#2B6FF3]/25 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 dark:bg-[#3B82F6] dark:hover:bg-[#2563EB]"
-                >
-                  <span>{isSigningIn ? 'Verifying Credentials...' : 'Sign In & Open Dashboard'}</span>
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </form>
-
-              <div className="pt-2 text-center text-xs text-[#687385] dark:text-[#94A3B8]">
-                <span>First time here? </span>
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('signup')}
-                  className="font-bold text-[#2B6FF3] hover:underline dark:text-[#60A5FA]"
-                >
-                  Create an Account
-                </button>
+                <div className="relative">
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-cyan-400" />
+                  <input
+                    type={showSignInPwd ? 'text' : 'password'}
+                    required
+                    placeholder="••••••••"
+                    value={signInPassword}
+                    onChange={(e) => setSignInPassword(e.target.value)}
+                    className="w-full rounded-xl bg-[#040A1A] border border-[#1E3A8A] pl-10 pr-10 py-3 text-xs text-white placeholder-slate-500 focus:border-[#00E5FF] focus:ring-2 focus:ring-[#00E5FF]/30 focus:outline-none transition-all"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowSignInPwd(!showSignInPwd)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-cyan-300"
+                  >
+                    {showSignInPwd ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
 
-          {/* ================= VIEW 2: SIGN UP ================= */}
-          {activeTab === 'signup' && (
-            <div className="space-y-5 animate-in fade-in duration-200">
-              <div className="space-y-1">
-                <h2 className="text-lg font-extrabold text-[#16191D] font-3d-sub dark:text-white">
-                  Create Your TOPIC SOLVER Account
-                </h2>
-                <p className="text-xs text-[#687385] dark:text-[#94A3B8]">
-                  Sign up once. You can sign in anytime with your email & password.
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isSigningIn}
+                className="w-full mt-2 flex items-center justify-center space-x-2 rounded-xl bg-gradient-to-r from-[#0055FF] via-[#0070F3] to-[#00E5FF] hover:from-[#0044DD] hover:to-[#00D0EE] py-3.5 text-xs font-extrabold text-white shadow-[0_0_25px_rgba(0,112,243,0.5)] transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 cursor-pointer"
+              >
+                {isSigningIn ? (
+                  <>
+                    <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                    <span>Verifying Credentials...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Enter TOPIC SOLVER</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </>
+                )}
+              </button>
+
+              {/* Single Account Sentinel Notice */}
+              <div className="rounded-xl bg-[#040A1A]/80 border border-[#1E3A8A]/60 p-3 text-[11px] text-slate-300 flex items-start space-x-2.5">
+                <ShieldCheck className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" />
+                <p className="leading-relaxed">
+                  <b>Single Account Security:</b> One email = one master password. New users can switch to <b>Sign Up</b> to create an account.
                 </p>
               </div>
 
-              <form onSubmit={handleSignUpSubmit} className="space-y-4">
-                {/* Full Name */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[#16191D] dark:text-slate-300">
-                    Full Name
-                  </label>
-                  <div className="relative flex items-center">
-                    <User className="absolute left-3.5 h-4 w-4 text-[#687385] dark:text-[#94A3B8] pointer-events-none" />
-                    <input
-                      type="text"
-                      value={signUpName}
-                      onChange={(e) => setSignUpName(e.target.value)}
-                      placeholder="Alex Morgan"
-                      required
-                      className="w-full rounded-xl bg-[#F7F9FC] border border-[#DCE5F2] pl-10 pr-4 py-2.5 text-xs text-[#16191D] font-medium focus:outline-none focus:ring-2 focus:ring-[#2B6FF3] dark:bg-[#0E121C] dark:border-[#222B3D] dark:text-white"
-                    />
-                  </div>
+            </form>
+          )}
+
+          {/* ================= TAB 2: SIGN UP FORM ================= */}
+          {activeTab === 'signup' && (
+            <form onSubmit={handleSignUpSubmit} className="space-y-4 animate-in fade-in duration-200">
+              
+              {/* Full Name */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-cyan-400" />
+                  <input
+                    type="text"
+                    required
+                    placeholder="Alex Chen"
+                    value={signUpName}
+                    onChange={(e) => setSignUpName(e.target.value)}
+                    className="w-full rounded-xl bg-[#040A1A] border border-[#1E3A8A] pl-10 pr-4 py-3 text-xs text-white placeholder-slate-500 focus:border-[#00E5FF] focus:ring-2 focus:ring-[#00E5FF]/30 focus:outline-none transition-all"
+                  />
                 </div>
-
-                {/* Email Address */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[#16191D] dark:text-slate-300">
-                    Email Address
-                  </label>
-                  <div className="relative flex items-center">
-                    <Mail className="absolute left-3.5 h-4 w-4 text-[#687385] dark:text-[#94A3B8] pointer-events-none" />
-                    <input
-                      type="email"
-                      value={signUpEmail}
-                      onChange={(e) => setSignUpEmail(e.target.value)}
-                      placeholder="name@example.com"
-                      required
-                      className="w-full rounded-xl bg-[#F7F9FC] border border-[#DCE5F2] pl-10 pr-4 py-2.5 text-xs text-[#16191D] font-medium focus:outline-none focus:ring-2 focus:ring-[#2B6FF3] dark:bg-[#0E121C] dark:border-[#222B3D] dark:text-white"
-                    />
-                  </div>
-                  <span className="text-[10px] text-[#687385] dark:text-[#94A3B8]">
-                    Only one password will be registered for each email.
-                  </span>
-                </div>
-
-                {/* Password with Strength Indicator */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[#16191D] dark:text-slate-300">
-                    Password (min 6 characters)
-                  </label>
-                  <div className="relative flex items-center">
-                    <Lock className="absolute left-3.5 h-4 w-4 text-[#687385] dark:text-[#94A3B8] pointer-events-none" />
-                    <input
-                      type={showSignUpPwd ? 'text' : 'password'}
-                      value={signUpPassword}
-                      onChange={(e) => setSignUpPassword(e.target.value)}
-                      placeholder="Create a secure password"
-                      required
-                      className="w-full rounded-xl bg-[#F7F9FC] border border-[#DCE5F2] pl-10 pr-10 py-2.5 text-xs text-[#16191D] font-medium focus:outline-none focus:ring-2 focus:ring-[#2B6FF3] dark:bg-[#0E121C] dark:border-[#222B3D] dark:text-white"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowSignUpPwd(!showSignUpPwd)}
-                      className="absolute right-3.5 text-[#687385] hover:text-[#16191D] dark:text-[#94A3B8] dark:hover:text-white"
-                    >
-                      {showSignUpPwd ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </button>
-                  </div>
-
-                  {/* Password Strength Meter */}
-                  {signUpPassword.length > 0 && (
-                    <div className="space-y-1 pt-1">
-                      <div className="flex h-1.5 w-full rounded-full bg-slate-200 overflow-hidden dark:bg-slate-700">
-                        <div 
-                          className={`h-full ${pwdStrength.color} transition-all duration-300`} 
-                          style={{ width: `${(pwdStrength.score / 3) * 100}%` }}
-                        />
-                      </div>
-                      <span className="text-[10px] font-semibold text-[#687385] dark:text-[#94A3B8]">
-                        Strength: {pwdStrength.label}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Submit CTA */}
-                <button
-                  type="submit"
-                  disabled={isSigningUp}
-                  className="w-full flex items-center justify-center space-x-2 rounded-xl bg-gradient-to-r from-[#2B6FF3] to-[#1557D6] hover:from-[#1557D6] hover:to-[#0D44B8] text-white py-3 px-4 text-xs font-bold shadow-lg shadow-[#2B6FF3]/25 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 dark:from-[#3B82F6] dark:to-[#1D4ED8]"
-                >
-                  <span>{isSigningUp ? 'Registering Account...' : 'Create Account & Enter Platform'}</span>
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </form>
-
-              <div className="pt-2 text-center text-xs text-[#687385] dark:text-[#94A3B8]">
-                <span>Already registered? </span>
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('signin')}
-                  className="font-bold text-[#2B6FF3] hover:underline dark:text-[#60A5FA]"
-                >
-                  Sign In to Your Account
-                </button>
               </div>
-            </div>
+
+              {/* Email Address */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-cyan-400" />
+                  <input
+                    type="email"
+                    required
+                    placeholder="student@example.com"
+                    value={signUpEmail}
+                    onChange={(e) => setSignUpEmail(e.target.value)}
+                    className="w-full rounded-xl bg-[#040A1A] border border-[#1E3A8A] pl-10 pr-4 py-3 text-xs text-white placeholder-slate-500 focus:border-[#00E5FF] focus:ring-2 focus:ring-[#00E5FF]/30 focus:outline-none transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Password */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider">
+                  Create Master Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-cyan-400" />
+                  <input
+                    type={showSignUpPwd ? 'text' : 'password'}
+                    required
+                    placeholder="At least 6 characters"
+                    value={signUpPassword}
+                    onChange={(e) => setSignUpPassword(e.target.value)}
+                    className="w-full rounded-xl bg-[#040A1A] border border-[#1E3A8A] pl-10 pr-10 py-3 text-xs text-white placeholder-slate-500 focus:border-[#00E5FF] focus:ring-2 focus:ring-[#00E5FF]/30 focus:outline-none transition-all"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowSignUpPwd(!showSignUpPwd)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-cyan-300"
+                  >
+                    {showSignUpPwd ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+
+                {/* Password Strength Indicator */}
+                {signUpPassword.length > 0 && (
+                  <div className="space-y-1 pt-1">
+                    <div className="flex items-center justify-between text-[10px] font-mono">
+                      <span className="text-slate-400">Strength:</span>
+                      <span className="font-bold text-cyan-300">{pwdStrength.label}</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-1.5 h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
+                      <div className={`h-full ${pwdStrength.score >= 1 ? pwdStrength.color : 'bg-transparent'}`} />
+                      <div className={`h-full ${pwdStrength.score >= 2 ? pwdStrength.color : 'bg-transparent'}`} />
+                      <div className={`h-full ${pwdStrength.score >= 3 ? pwdStrength.color : 'bg-transparent'}`} />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isSigningUp}
+                className="w-full mt-2 flex items-center justify-center space-x-2 rounded-xl bg-gradient-to-r from-[#0055FF] via-[#0070F3] to-[#00E5FF] hover:from-[#0044DD] hover:to-[#00D0EE] py-3.5 text-xs font-extrabold text-white shadow-[0_0_25px_rgba(0,112,243,0.5)] transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 cursor-pointer"
+              >
+                {isSigningUp ? (
+                  <>
+                    <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                    <span>Creating Cyber Profile...</span>
+                  </>
+                ) : (
+                  <>
+                    <UserPlus className="h-4 w-4" />
+                    <span>Create Account & Start Learning</span>
+                  </>
+                )}
+              </button>
+
+              {/* Single Account Security Note */}
+              <div className="rounded-xl bg-[#040A1A]/80 border border-[#1E3A8A]/60 p-3 text-[11px] text-slate-300 flex items-start space-x-2.5">
+                <ShieldCheck className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" />
+                <p className="leading-relaxed">
+                  Your progress across all 142 lessons, quizzes, and CodeMentor sessions is securely encrypted.
+                </p>
+              </div>
+
+            </form>
           )}
 
         </div>
