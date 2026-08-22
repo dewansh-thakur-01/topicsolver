@@ -27,6 +27,7 @@ interface AuthState {
   signIn: (email: string, password: string) => { success: boolean; message: string };
   signUp: (name: string, email: string, password: string) => { success: boolean; message: string; alreadyRegistered?: boolean };
   signOut: () => void;
+  updateUser: (updates: Partial<AuthUser>) => void;
 }
 
 // Simple hash generator for client persistent security
@@ -165,6 +166,23 @@ export const useAuthStore = create<AuthState>()(
           user: null,
           token: null,
           isAuthenticated: false
+        });
+      },
+
+      updateUser: (updates: Partial<AuthUser>) => {
+        set((state) => {
+          if (!state.user) return state;
+          const updatedUser = { ...state.user, ...updates };
+          return {
+            user: updatedUser,
+            registeredAccounts: {
+              ...state.registeredAccounts,
+              [updatedUser.email]: {
+                ...state.registeredAccounts[updatedUser.email],
+                name: updatedUser.name
+              }
+            }
+          };
         });
       }
     }),

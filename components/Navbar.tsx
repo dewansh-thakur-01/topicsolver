@@ -158,24 +158,32 @@ export const Navbar: React.FC = () => {
             {/* Separator */}
             <div className="hidden sm:block h-4 w-px bg-[#DCE5F2] dark:bg-[#222B3D]" />
 
-            {/* Student Profile Avatar & Quick Sign Out */}
-            <div className="flex items-center space-x-1.5">
+            {/* Student Username Badge & Custom Avatar */}
+            <div className="flex items-center space-x-2">
               <Link
                 href="/profile"
-                className="relative flex items-center space-x-1.5 rounded-full p-0.5 hover:ring-2 hover:ring-[#2B6FF3]/40 transition-all group"
-                title={`${user?.name || profile.name} (${user?.email || profile.level})`}
+                className="flex items-center space-x-2 rounded-xl py-1 px-2 bg-[#F1F4F9] hover:bg-[#E2E8F0] border border-[#DCE5F2] transition-all group dark:bg-[#151926] dark:border-[#222B3D] dark:hover:bg-[#1E2436]"
+                title={`Profile: ${user?.name || profile.name} (${user?.email || profile.email})`}
               >
-                <img
-                  src={profile.avatar}
-                  alt={user?.name || profile.name}
-                  className="h-7.5 w-7.5 rounded-full border border-[#DCE5F2] object-cover ring-1 ring-[#DCE5F2] shadow-xs dark:border-[#222B3D] dark:ring-[#3B82F6]/30"
-                />
-                <div className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#090C12]" />
+                {/* Custom Avatar / Photo */}
+                <div className="relative shrink-0">
+                  <img
+                    src={user?.avatar || profile.avatar}
+                    alt={user?.name || profile.name}
+                    className="h-6.5 w-6.5 rounded-full border border-[#DCE5F2] object-cover ring-1 ring-[#DCE5F2] shadow-xs dark:border-[#222B3D] dark:ring-[#3B82F6]/30"
+                  />
+                  <div className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#090C12]" />
+                </div>
+
+                {/* Display Username */}
+                <span className="hidden sm:inline text-xs font-bold text-[#16191D] group-hover:text-[#2B6FF3] transition-colors max-w-[110px] truncate dark:text-white dark:group-hover:text-[#60A5FA]">
+                  {user?.name || profile.name || 'User'}
+                </span>
               </Link>
 
               <button
                 onClick={() => signOut()}
-                className="flex items-center space-x-1 px-2 py-1 rounded-xl text-[#687385] hover:text-rose-600 hover:bg-rose-50 transition-all border border-transparent hover:border-rose-200 dark:text-[#94A3B8] dark:hover:text-rose-400 dark:hover:bg-rose-950/40 dark:hover:border-rose-800"
+                className="flex items-center space-x-1 px-2 py-1 rounded-xl text-[#687385] hover:text-rose-600 hover:bg-rose-50 transition-all border border-transparent hover:border-rose-200 dark:text-[#94A3B8] dark:hover:text-rose-400 dark:hover:bg-rose-950/40 dark:hover:border-rose-800 cursor-pointer"
                 title="Sign Out of Topic Solver"
               >
                 <LogOut className="h-3.5 w-3.5" />

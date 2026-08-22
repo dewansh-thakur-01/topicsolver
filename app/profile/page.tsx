@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useTopicSolverStore, computeSkillInsights } from '@/lib/useTopicSolverStore';
+import { useAuthStore } from '@/lib/useAuthStore';
 import { PersonaSwitcher } from '@/components/PersonaSwitcher';
 import { MasteryBar } from '@/components/MasteryBar';
 import { LanguageSelector } from '@/components/LanguageSelector';
@@ -29,23 +30,88 @@ import {
   Globe,
   Code2,
   Database,
-  Cpu
+  Cpu,
+  Camera,
+  Upload,
+  Image as ImageIcon,
+  Check
 } from 'lucide-react';
 
+const PRESET_AVATARS = [
+  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1628157582853-a796fa650a6a?w=150&auto=format&fit=crop&q=80'
+];
+
 export default function ProfilePage() {
+  const { user, updateUser } = useAuthStore();
   const { 
     profile, 
+    updateProfile,
     activeSubject, 
     completedLessons, 
     practiceStatus, 
     language 
   } = useTopicSolverStore();
 
-  const [name, setName] = useState(profile.name || 'Kailash');
-  const [email, setEmail] = useState(profile.email || 'kailash@domain.com');
+  const [name, setName] = useState(user?.name || profile.name || 'User');
+  const [email, setEmail] = useState(user?.email || profile.email || 'user@example.com');
+  const [avatar, setAvatar] = useState(user?.avatar || profile.avatar);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (user?.name) setName(user.name);
+    if (user?.email) setEmail(user.email);
+    if (user?.avatar) setAvatar(user.avatar);
+  }, [user]);
+
+  // Handle user uploading their own custom image from their device
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Check file size (< 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image size must be less than 5MB.');
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select a valid image file (PNG, JPG, WebP).');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+      setAvatar(dataUrl);
+      updateProfile({ avatar: dataUrl });
+      updateUser({ avatar: dataUrl });
+      toast.success('Custom profile photo uploaded successfully!');
+    };
+    reader.onerror = () => {
+      toast.error('Failed to read image file.');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSelectPreset = (presetUrl: string) => {
+    setAvatar(presetUrl);
+    updateProfile({ avatar: presetUrl });
+    updateUser({ avatar: presetUrl });
+    toast.success('Avatar updated!');
+  };
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    const cleanName = name.trim() || 'User';
+    const cleanEmail = email.trim();
+    
+    updateProfile({ name: cleanName, email: cleanEmail, avatar });
+    updateUser({ name: cleanName, email: cleanEmail, avatar });
     toast.success(getTranslation(language, 'profile.savedSuccess'));
   };
 
@@ -69,12 +135,32 @@ export default function ProfilePage() {
       <div className="rounded-3xl border border-[#2D3748] bg-gradient-to-r from-[#121620] via-[#161B26] to-[#121620] p-6 sm:p-8 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 -mt-8 -mr-8 h-48 w-48 rounded-full bg-[#2B6FF3]/10 blur-3xl pointer-events-none" />
         
-        <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 text-center sm:text-left relative z-10">
-          <img
-            src={profile.avatar}
-            alt={profile.name}
-            className="h-24 w-24 rounded-2xl border-2 border-[#2B6FF3] object-cover ring-4 ring-[#2B6FF3]/20 shadow-xl"
-          />
+        <div className="flex flex-col sm:flex-row items-center space-y-5 sm:space-y-0 sm:space-x-6 text-center sm:text-left relative z-10">
+          
+          {/* Interactive User Avatar with Device Photo Upload Overlay */}
+          <div className="relative group shrink-0">
+            <img
+              src={avatar || profile.avatar}
+              alt={name}
+              className="h-24 w-24 rounded-2xl border-2 border-[#2B6FF3] object-cover ring-4 ring-[#2B6FF3]/20 shadow-xl"
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="absolute inset-0 rounded-2xl bg-black/70 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white transition-opacity duration-200 cursor-pointer shadow-inner"
+              title="Upload your own profile photo"
+            >
+              <Camera className="h-6 w-6 text-white mb-1" />
+              <span className="text-[10px] font-bold tracking-tight">Change Photo</span>
+            </button>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageUpload}
+              accept="image/*"
+              className="hidden"
+            />
+          </div>
 
           <div className="space-y-2 flex-1">
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
@@ -92,6 +178,17 @@ export default function ProfilePage() {
               <Mail className="h-3.5 w-3.5" />
               <span>{email}</span>
             </p>
+
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold border border-white/20 transition-all cursor-pointer shadow-sm"
+              >
+                <Upload className="h-3.5 w-3.5 text-[#60A5FA]" />
+                <span>Upload Custom Image</span>
+              </button>
+            </div>
 
             <p className="text-xs text-slate-300 pt-1">
               {getTranslation(language, 'profile.activeFocus')}: <span className="text-[#60A5FA] font-semibold">{profile.currentFocusTopicName}</span> • {getTranslation(language, 'profile.difficulty')}: <span className="text-amber-300 font-semibold">{profile.currentDifficulty}</span>
@@ -369,19 +466,95 @@ export default function ProfilePage() {
       </div>
 
       {/* Edit Profile Form */}
-      <div className="rounded-2xl border border-[#DCE5F2] bg-white p-6 space-y-4 shadow-xs dark:border-[#222B3D] dark:bg-[#121622]">
-        <h3 className="text-sm font-bold text-[#16191D] tracking-tight dark:text-white">
-          {getTranslation(language, 'profile.editTitle')}
-        </h3>
-        <form onSubmit={handleSave} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="rounded-2xl border border-[#DCE5F2] bg-white p-6 space-y-6 shadow-xs dark:border-[#222B3D] dark:bg-[#121622]">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-bold text-[#16191D] tracking-tight flex items-center gap-2 dark:text-white">
+            <User className="h-4 w-4 text-[#2B6FF3] dark:text-[#60A5FA]" />
+            <span>{getTranslation(language, 'profile.editTitle')}</span>
+          </h3>
+          <span className="text-[11px] text-[#687385] dark:text-[#94A3B8]">
+            Customize your display username and profile picture
+          </span>
+        </div>
+
+        {/* Profile Picture Customizer */}
+        <div className="space-y-3 pt-1 border-t border-[#DCE5F2] dark:border-[#222B3D]">
+          <label className="text-xs font-semibold text-[#16191D] dark:text-slate-200">
+            Profile Avatar / Custom Photo
+          </label>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="relative group shrink-0">
+              <img
+                src={avatar || profile.avatar}
+                alt={name}
+                className="h-16 w-16 rounded-2xl border border-[#DCE5F2] object-cover ring-2 ring-[#2B6FF3]/20 shadow-md dark:border-[#222B3D]"
+              />
+            </div>
+            
+            <div className="space-y-2 flex-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-[#2B6FF3] hover:bg-[#1557D6] text-white text-xs font-bold shadow-xs transition-all cursor-pointer dark:bg-[#3B82F6] dark:hover:bg-[#2563EB]"
+                >
+                  <Upload className="h-3.5 w-3.5" />
+                  <span>Upload Photo from Computer</span>
+                </button>
+              </div>
+              <p className="text-[11px] text-[#687385] dark:text-[#94A3B8]">
+                Supports PNG, JPG, GIF, WebP (Max 5MB). Photo is saved automatically.
+              </p>
+            </div>
+          </div>
+
+          {/* Quick Preset Avatars */}
+          <div className="space-y-1.5 pt-2">
+            <span className="text-[11px] font-semibold text-[#687385] dark:text-[#94A3B8]">
+              Or choose a default developer avatar:
+            </span>
+            <div className="flex flex-wrap gap-2.5">
+              {PRESET_AVATARS.map((presetUrl, idx) => {
+                const isSelected = avatar === presetUrl;
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => handleSelectPreset(presetUrl)}
+                    className={`relative rounded-xl overflow-hidden p-0.5 border transition-all cursor-pointer ${
+                      isSelected 
+                        ? 'border-[#2B6FF3] ring-2 ring-[#2B6FF3] scale-105' 
+                        : 'border-[#DCE5F2] hover:border-[#2B6FF3]/50 dark:border-[#222B3D]'
+                    }`}
+                  >
+                    <img
+                      src={presetUrl}
+                      alt={`Preset ${idx + 1}`}
+                      className="h-10 w-10 rounded-lg object-cover"
+                    />
+                    {isSelected && (
+                      <div className="absolute inset-0 bg-[#2B6FF3]/40 flex items-center justify-center">
+                        <Check className="h-4 w-4 text-white stroke-[3]" />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Username & Email Form */}
+        <form onSubmit={handleSave} className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-[#DCE5F2] dark:border-[#222B3D]">
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-[#16191D] dark:text-slate-200">
-              {getTranslation(language, 'profile.displayName')}
+              {getTranslation(language, 'profile.displayName')} (Username)
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your username"
               className="w-full rounded-xl bg-[#F7F9FC] px-4 py-2.5 text-xs text-[#16191D] border border-[#DCE5F2] focus:outline-none focus:ring-2 focus:ring-[#2B6FF3] focus:bg-white dark:bg-[#0E121C] dark:border-[#222B3D] dark:text-white dark:focus:ring-[#3B82F6]"
             />
           </div>
@@ -394,6 +567,7 @@ export default function ProfilePage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="user@example.com"
               className="w-full rounded-xl bg-[#F7F9FC] px-4 py-2.5 text-xs text-[#16191D] border border-[#DCE5F2] focus:outline-none focus:ring-2 focus:ring-[#2B6FF3] focus:bg-white dark:bg-[#0E121C] dark:border-[#222B3D] dark:text-white dark:focus:ring-[#3B82F6]"
             />
           </div>
@@ -401,7 +575,7 @@ export default function ProfilePage() {
           <div className="sm:col-span-2 pt-2">
             <button
               type="submit"
-              className="inline-flex items-center space-x-2 rounded-xl bg-[#2B6FF3] hover:bg-[#1557D6] px-5 py-2.5 text-xs font-bold text-white shadow-sm transition-all hover:scale-105 dark:bg-[#3B82F6] dark:hover:bg-[#2563EB]"
+              className="inline-flex items-center space-x-2 rounded-xl bg-[#2B6FF3] hover:bg-[#1557D6] px-5 py-2.5 text-xs font-bold text-white shadow-sm transition-all hover:scale-105 dark:bg-[#3B82F6] dark:hover:bg-[#2563EB] cursor-pointer"
             >
               <Save className="h-3.5 w-3.5" />
               <span>{getTranslation(language, 'profile.saveBtn')}</span>

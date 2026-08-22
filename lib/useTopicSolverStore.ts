@@ -281,6 +281,7 @@ interface TopicSolverStore {
   searchModalOpen: boolean;
 
   // Actions
+  updateProfile: (updates: Partial<StudentProfile>) => void;
   setPersona: (persona: 'strong' | 'developing' | 'beginner') => void;
   setActiveSubject: (subject: 'java' | 'python' | 'sql' | 'dsa' | 'c') => void;
   setLanguage: (lang: Language) => void;
@@ -337,6 +338,15 @@ export const useTopicSolverStore = create<TopicSolverStore>()(
         'prob-combine-two-tables': { solved: true, notes: 'Applied LEFT JOIN to retain null records.' }
       },
       searchModalOpen: false,
+
+      updateProfile: (updates: Partial<StudentProfile>) => {
+        set((state) => ({
+          profile: {
+            ...state.profile,
+            ...updates
+          }
+        }));
+      },
 
       setPersona: (persona: 'strong' | 'developing' | 'beginner') => {
         const selected = DEMO_PERSONAS[persona];
