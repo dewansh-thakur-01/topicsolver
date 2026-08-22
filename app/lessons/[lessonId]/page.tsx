@@ -328,14 +328,29 @@ export default function LessonPlayerPage({ params }: PageProps) {
             </div>
 
             {foundTopic.content.youtubeVideoId ? (
-              <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-slate-950 border border-[#DCE5F2] shadow-md dark:border-[#222B3D]">
-                <iframe
-                  src={`https://www.youtube.com/embed/${foundTopic.content.youtubeVideoId}?rel=0&modestbranding=1`}
-                  title={foundTopic.title}
-                  className="h-full w-full border-0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+              <div className="space-y-2.5">
+                <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-slate-950 border border-[#DCE5F2] shadow-md dark:border-[#222B3D]">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${foundTopic.content.youtubeVideoId}?rel=0&modestbranding=1`}
+                    title={foundTopic.title}
+                    className="h-full w-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                {foundTopic.content.youtubeUrl && (
+                  <div className="flex justify-end">
+                    <a
+                      href={foundTopic.content.youtubeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1.5 text-xs text-rose-600 hover:text-rose-700 font-semibold transition-colors dark:text-rose-400 dark:hover:text-rose-300"
+                    >
+                      <Play className="h-3 w-3 fill-current" />
+                      <span>Watch Full Lesson on YouTube ↗</span>
+                    </a>
+                  </div>
+                )}
               </div>
             ) : foundTopic.content.youtubeUrl ? (
               <div className="rounded-2xl border border-[#DCE5F2] bg-[#F7F9FC] p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 dark:bg-[#0E121C] dark:border-[#222B3D]">

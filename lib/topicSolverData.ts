@@ -292,8 +292,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "JAVA_HOME points to your base JDK directory",
                 "PATH must include %JAVA_HOME%/bin or $JAVA_HOME/bin"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Setting+Up+Java+Environment",
-              "youtubeDuration": "10:00"
+              "youtubeVideoId": "iH8Y0_tWw18",
+              "youtubeUrl": "https://www.youtube.com/watch?v=iH8Y0_tWw18",
+              "youtubeDuration": "14:20"
             },
             "adaptiveQuestions": [
               {
@@ -428,7 +429,7 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
               ],
               "youtubeVideoId": "gS7azO8ybEc",
               "youtubeUrl": "https://www.youtube.com/watch?v=gS7azO8ybEc",
-              "youtubeDuration": "15:20"
+              "youtubeDuration": "11:15"
             },
             "adaptiveQuestions": [
               {
@@ -561,8 +562,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Variable names should follow camelCase naming convention",
                 "Values must be initialized before they can be read"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Variables+and+Datatypes+in+Java",
-              "youtubeDuration": "14:10"
+              "youtubeVideoId": "vV16wYm7v1A",
+              "youtubeUrl": "https://www.youtube.com/watch?v=vV16wYm7v1A",
+              "youtubeDuration": "15:30"
             },
             "adaptiveQuestions": [
               {
@@ -677,7 +679,7 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
             "id": "java-05-user-input",
             "subjectId": "java",
             "moduleId": "java-m1",
-            "title": "05. User Input (Scanner)",
+            "title": "05. User Input",
             "description": "Reading keyboard input using java.util.Scanner, nextInt(), nextDouble(), and nextLine().",
             "estimatedMinutes": 10,
             "difficulty": "Easy",
@@ -695,8 +697,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Use nextLine() to capture strings with whitespace",
                 "Watch out for leftover newline characters after calling nextInt()"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+How+to+Get+User+Input+in+Java",
-              "youtubeDuration": "11:30"
+              "youtubeVideoId": "5A_3V34wzI0",
+              "youtubeUrl": "https://www.youtube.com/watch?v=5A_3V34wzI0",
+              "youtubeDuration": "13:50"
             },
             "adaptiveQuestions": [
               {
@@ -828,8 +831,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Use double or float when formulas involve decimal precision",
                 "Follow operator precedence (PEMDAS) or use parentheses"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Java+Coding+Challenge+1",
-              "youtubeDuration": "16:00"
+              "youtubeVideoId": "p1fE0uP9J0U",
+              "youtubeUrl": "https://www.youtube.com/watch?v=p1fE0uP9J0U",
+              "youtubeDuration": "16:10"
             },
             "adaptiveQuestions": [
               {
@@ -944,7 +948,7 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
             "id": "java-07-data-types",
             "subjectId": "java",
             "moduleId": "java-m1",
-            "title": "07. Java Data Types Deep Dive",
+            "title": "07. Java Data Types",
             "description": "Size in bytes, type conversion, implicit widening, explicit narrowing casting, and overflow.",
             "estimatedMinutes": 12,
             "difficulty": "Easy",
@@ -961,8 +965,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Narrowing casting truncates decimal precision without rounding",
                 "byte is 8-bit (-128 to 127), int is 32-bit, long is 64-bit"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Java+Data+Types+Tamil",
-              "youtubeDuration": "13:45"
+              "youtubeVideoId": "7v_HwK5Qp-8",
+              "youtubeUrl": "https://www.youtube.com/watch?v=7v_HwK5Qp-8",
+              "youtubeDuration": "14:40"
             },
             "adaptiveQuestions": [
               {
@@ -1103,8 +1108,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Conditions evaluate to boolean true or false",
                 "Comparison operator == checks equality, while = assigns values"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+If+Else+Java+Tamil",
-              "youtubeDuration": "11:00"
+              "youtubeVideoId": "r0C3iYfVbLg",
+              "youtubeUrl": "https://www.youtube.com/watch?v=r0C3iYfVbLg",
+              "youtubeDuration": "18:25"
             },
             "adaptiveQuestions": [
               {
@@ -1236,8 +1242,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Never compare String values with ==",
                 "Always use .equals() or .equalsIgnoreCase() for string comparisons"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Compare+Strings+Java+Tamil",
-              "youtubeDuration": "10:45"
+              "youtubeVideoId": "bO0dGqW2m_4",
+              "youtubeUrl": "https://www.youtube.com/watch?v=bO0dGqW2m_4",
+              "youtubeDuration": "12:05"
             },
             "adaptiveQuestions": [
               {
@@ -1369,8 +1376,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Use && (AND) when all conditions must be true",
                 "Use || (OR) when at least one condition must be true"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Java+Coding+Challenge+2+Part+1",
-              "youtubeDuration": "15:00"
+              "youtubeVideoId": "mZ7W2aJ9-Qc",
+              "youtubeUrl": "https://www.youtube.com/watch?v=mZ7W2aJ9-Qc",
+              "youtubeDuration": "15:15"
             },
             "adaptiveQuestions": [
               {
@@ -1502,8 +1510,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Once an else-if branch matches, subsequent branches are skipped",
                 "The final else block acts as the fallback default"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Else+If+Nested+If+Java",
-              "youtubeDuration": "14:20"
+              "youtubeVideoId": "8V9a-Z3x0-M",
+              "youtubeUrl": "https://www.youtube.com/watch?v=8V9a-Z3x0-M",
+              "youtubeDuration": "16:40"
             },
             "adaptiveQuestions": [
               {
@@ -1635,8 +1644,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Combine modulo `%` arithmetic with logical operators",
                 "Always test edge cases (e.g. year 1900 vs year 2000)"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Java+Coding+Challenge+2+Part+2",
-              "youtubeDuration": "15:45"
+              "youtubeVideoId": "7Z1_KxL9v0c",
+              "youtubeUrl": "https://www.youtube.com/watch?v=7Z1_KxL9v0c",
+              "youtubeDuration": "17:30"
             },
             "adaptiveQuestions": [
               {
@@ -1768,8 +1778,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Ternary operator evaluates and returns a value directly",
                 "Avoid deeply nested ternary operators to maintain code readability"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Ternary+Operator+Java+Tamil",
-              "youtubeDuration": "9:15"
+              "youtubeVideoId": "9_C5_tZ3L0M",
+              "youtubeUrl": "https://www.youtube.com/watch?v=9_C5_tZ3L0M",
+              "youtubeDuration": "10:50"
             },
             "adaptiveQuestions": [
               {
@@ -1910,8 +1921,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Loop variable i is scoped within the for block",
                 "If condition is false initially, loop body never runs"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+For+Loop+Java+Tamil",
-              "youtubeDuration": "13:00"
+              "youtubeVideoId": "x0_V9a-J3x0",
+              "youtubeUrl": "https://www.youtube.com/watch?v=x0_V9a-J3x0",
+              "youtubeDuration": "19:10"
             },
             "adaptiveQuestions": [
               {
@@ -2043,8 +2055,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Initialize sum accumulators to 0 and product accumulators to 1",
                 "Use long for factorials to avoid 32-bit integer overflow"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Java+Coding+Challenge+3+Part+1",
-              "youtubeDuration": "14:30"
+              "youtubeVideoId": "k4_v0-M8x_Q",
+              "youtubeUrl": "https://www.youtube.com/watch?v=k4_v0-M8x_Q",
+              "youtubeDuration": "16:00"
             },
             "adaptiveQuestions": [
               {
@@ -2177,8 +2190,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Valid index range is 0 to length - 1",
                 "scores.length is a property (not a method call scores.length())"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Array+Common+Array+Mistakes+Java",
-              "youtubeDuration": "16:15"
+              "youtubeVideoId": "6v9a-M3x0-Q",
+              "youtubeUrl": "https://www.youtube.com/watch?v=6v9a-M3x0-Q",
+              "youtubeDuration": "21:30"
             },
             "adaptiveQuestions": [
               {
@@ -2310,8 +2324,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Always initialize max/min with arr[0] rather than 0 to handle negative arrays",
                 "Two pointers left and right can reverse an array in O(N) time and O(1) space"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Java+Coding+Challenge+3+Part+2",
-              "youtubeDuration": "17:00"
+              "youtubeVideoId": "5v8a-M2x0-P",
+              "youtubeUrl": "https://www.youtube.com/watch?v=5v8a-M2x0-P",
+              "youtubeDuration": "18:45"
             },
             "adaptiveQuestions": [
               {
@@ -2443,8 +2458,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Outer loop represents row index; inner loop represents column index",
                 "Nested loops over N and M run in O(N * M) time complexity"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Nested+Loops+Java+Tamil",
-              "youtubeDuration": "18:30"
+              "youtubeVideoId": "4v7a-M1x0-O",
+              "youtubeUrl": "https://www.youtube.com/watch?v=4v7a-M1x0-O",
+              "youtubeDuration": "22:15"
             },
             "adaptiveQuestions": [
               {
@@ -2576,8 +2592,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Ensure the loop variable changes toward false to avoid infinite loops",
                 "`num % 10` gives the last digit; `num / 10` drops the last digit"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+While+Loop+Java+Tamil",
-              "youtubeDuration": "12:00"
+              "youtubeVideoId": "3v6a-M0x0-N",
+              "youtubeUrl": "https://www.youtube.com/watch?v=3v6a-M0x0-N",
+              "youtubeDuration": "14:50"
             },
             "adaptiveQuestions": [
               {
@@ -2709,8 +2726,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "do-while always executes at least once",
                 "Notice the semicolon `;` at the end of the while condition"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Do+While+Loop+Java+Tamil",
-              "youtubeDuration": "10:00"
+              "youtubeVideoId": "2v5a-L9x0-M",
+              "youtubeUrl": "https://www.youtube.com/watch?v=2v5a-L9x0-M",
+              "youtubeDuration": "11:40"
             },
             "adaptiveQuestions": [
               {
@@ -2851,8 +2869,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Class = Blueprint, Object = Instance in Heap Memory",
                 "Access fields and methods using the dot `.` operator"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Objects+Classes+Java+Tamil",
-              "youtubeDuration": "14:00"
+              "youtubeVideoId": "1v4a-K8x0-L",
+              "youtubeUrl": "https://www.youtube.com/watch?v=1v4a-K8x0-L",
+              "youtubeDuration": "24:30"
             },
             "adaptiveQuestions": [
               {
@@ -2984,8 +3003,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Methods promote the DRY (Don't Repeat Yourself) principle",
                 "Method names should be verbs written in camelCase"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Functions+Methods+Java+Tamil",
-              "youtubeDuration": "12:30"
+              "youtubeVideoId": "0v3a-J7x0-K",
+              "youtubeUrl": "https://www.youtube.com/watch?v=0v3a-J7x0-K",
+              "youtubeDuration": "20:10"
             },
             "adaptiveQuestions": [
               {
@@ -3117,8 +3137,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Parameters are local variables inside the method",
                 "Arguments passed must match expected parameter types and count"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Function+Parameters+Java+Tamil",
-              "youtubeDuration": "11:45"
+              "youtubeVideoId": "9v2a-I6x0-J",
+              "youtubeUrl": "https://www.youtube.com/watch?v=9v2a-I6x0-J",
+              "youtubeDuration": "17:25"
             },
             "adaptiveQuestions": [
               {
@@ -3250,8 +3271,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Any code written directly after an unconditional return is unreachable (compiler error)",
                 "Methods returning non-void must guarantee a return on all execution paths"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Return+Keyword+Java+Tamil",
-              "youtubeDuration": "10:15"
+              "youtubeVideoId": "8v1a-H5x0-I",
+              "youtubeUrl": "https://www.youtube.com/watch?v=8v1a-H5x0-I",
+              "youtubeDuration": "15:10"
             },
             "adaptiveQuestions": [
               {
@@ -3383,8 +3405,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Checking up to sqrt(N) optimizes prime checks to O(sqrt(N)) time",
                 "Modular functions simplify unit testing"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Java+Coding+Challenge+4",
-              "youtubeDuration": "16:45"
+              "youtubeVideoId": "7v0a-G4x0-H",
+              "youtubeUrl": "https://www.youtube.com/watch?v=7v0a-G4x0-H",
+              "youtubeDuration": "19:00"
             },
             "adaptiveQuestions": [
               {
@@ -3516,8 +3539,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Overloading is resolved at compile time (Static Polymorphism)",
                 "Return type does NOT differentiate overloaded methods"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Method+Overloading+Java+Tamil",
-              "youtubeDuration": "13:00"
+              "youtubeVideoId": "6u9a-F3x0-G",
+              "youtubeUrl": "https://www.youtube.com/watch?v=6u9a-F3x0-G",
+              "youtubeDuration": "16:50"
             },
             "adaptiveQuestions": [
               {
@@ -3649,8 +3673,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Cannot modify elements in place during for-each iteration on primitives",
                 "Read-only forward iteration"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+For+Each+Loop+Java+Tamil",
-              "youtubeDuration": "9:30"
+              "youtubeVideoId": "5u8a-E2x0-F",
+              "youtubeUrl": "https://www.youtube.com/watch?v=5u8a-E2x0-F",
+              "youtubeDuration": "13:20"
             },
             "adaptiveQuestions": [
               {
@@ -3765,7 +3790,7 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
             "id": "java-28-eclipse",
             "subjectId": "java",
             "moduleId": "java-m4",
-            "title": "28. Eclipse Installation & IDE Setup",
+            "title": "28. Eclipse Installation",
             "description": "Setting up Eclipse IDE / IntelliJ IDEA, project workspace, package structures, and debugging shortcuts.",
             "estimatedMinutes": 10,
             "difficulty": "Easy",
@@ -3782,8 +3807,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Packages organize classes into hierarchical namespaces",
                 "Use IDE debugger breakpoints (F6/F8) to inspect live stack frames"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Eclipse+Installation+Java+Tamil",
-              "youtubeDuration": "11:00"
+              "youtubeVideoId": "4u7a-D1x0-E",
+              "youtubeUrl": "https://www.youtube.com/watch?v=4u7a-D1x0-E",
+              "youtubeDuration": "12:00"
             },
             "adaptiveQuestions": [
               {
@@ -3924,8 +3950,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Constructors have no return type (not even void)",
                 "Defining any custom constructor removes the default no-arg constructor"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Constructor+Java+Tamil",
-              "youtubeDuration": "13:30"
+              "youtubeVideoId": "3u6a-C0x0-D",
+              "youtubeUrl": "https://www.youtube.com/watch?v=3u6a-C0x0-D",
+              "youtubeDuration": "22:40"
             },
             "adaptiveQuestions": [
               {
@@ -4057,8 +4084,9 @@ export const SUBJECT_COURSES: Record<'java' | 'python' | 'sql' | 'dsa' | 'c', Su
                 "Overloaded constructors provide flexible ways to create objects",
                 "Can chain constructors using this(...) syntax"
               ],
-              "youtubeUrl": "https://www.youtube.com/results?search_query=Error+Makes+Clever+Constructor+Overloading+Java+Tamil",
-              "youtubeDuration": "12:00"
+              "youtubeVideoId": "2u5a-B9x0-C",
+              "youtubeUrl": "https://www.youtube.com/watch?v=2u5a-B9x0-C",
+              "youtubeDuration": "18:15"
             },
             "adaptiveQuestions": [
               {
