@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { useAuthStore } from '@/lib/useAuthStore';
+import { useCodeMentorStore } from '@/lib/useCodeMentorStore';
 import confetti from 'canvas-confetti';
 import { toast } from 'sonner';
 import { 
@@ -94,6 +95,8 @@ export const AuthView: React.FC = () => {
           origin: { y: 0.6 }
         });
         toast.success(res.message);
+        const userName = signInEmail.split('@')[0];
+        useCodeMentorStore.getState().openMentorWithGreeting(userName);
       } else {
         toast.error(res.message);
       }
@@ -123,6 +126,7 @@ export const AuthView: React.FC = () => {
           origin: { y: 0.55 }
         });
         toast.success(res.message);
+        useCodeMentorStore.getState().openMentorWithGreeting(signUpName.trim() || 'Learner');
       } else {
         toast.error(res.message);
         if (res.alreadyRegistered) {

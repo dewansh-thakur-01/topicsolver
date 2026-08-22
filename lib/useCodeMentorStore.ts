@@ -31,6 +31,7 @@ interface CodeMentorState {
     lang: string,
     errorFeedback: string
   ) => void;
+  openMentorWithGreeting: (userName: string) => void;
   openMentor: () => void;
   closeMentor: () => void;
   setActiveTab: (tab: 'chat' | 'inspector') => void;
@@ -46,7 +47,7 @@ interface CodeMentorState {
 const INITIAL_GREETING: ChatMessage = {
   id: 'msg-init',
   role: 'assistant',
-  content: "👋 Hi! I'm **CodeMentor**, your AI Coding & Debugging Companion on TOPIC SOLVER.\n\nAsk me anything, or try quick commands:\n• `/hint` - Progressive clue for your problem\n• `/explain` - Learn the concept intuition\n• `/debug` - Scan and fix errors in your editor code\n• `/complexity` - Time & Space analysis",
+  content: "👋 Hi! I'm **CodeMentor**, your AI Coding & Debugging Companion on TOPIC SOLVER.\n\nAsk me anything, or try quick commands:\n• /hint - Progressive clue for your problem\n• /explain - Learn the concept intuition\n• /debug - Scan and fix errors in your editor code\n• /complexity - Time & Space analysis",
   timestamp: Date.now(),
   quickActions: ['/hint', '/explain', '/debug', '/complexity']
 };
@@ -85,7 +86,7 @@ export const useCodeMentorStore = create<CodeMentorState>((set, get) => ({
   },
 
   openMentorWithProblemError: (problem, userCode, lang, errorFeedback) => {
-    const promptMsg = `🤖 **I detected an issue while running test cases for ${problem.title}**:\n\n${errorFeedback}\n\nWould you like me to explain the failure, give you a step-by-step hint, or debug your solution?`;
+    const promptMsg = '🤖 **I detected an issue while running test cases for ' + problem.title + '**:\n\n' + errorFeedback + '\n\nWould you like me to explain the failure, give you a step-by-step hint, or debug your solution?';
     
     set((state) => ({
       isOpen: true,
@@ -96,13 +97,28 @@ export const useCodeMentorStore = create<CodeMentorState>((set, get) => ({
       messages: [
         ...state.messages,
         {
-          id: `msg-err-${Date.now()}`,
+          id: 'msg-err-' + Date.now(),
           role: 'assistant',
           content: promptMsg,
           timestamp: Date.now(),
           quickActions: ['/hint', '/debug', '/explain']
         }
       ]
+    }));
+  },
+
+  openMentorWithGreeting: (userName: string) => {
+    const greetingMsg: ChatMessage = {
+      id: 'msg-welcome-' + Date.now(),
+      role: 'assistant',
+      content: '🎉 **Hello ' + userName + '! Welcome to TOPIC SOLVER!** 🚀\n\nI am **CodeMentor**, your personal AI companion. I am here to help you master coding tracks (Java, Python, SQL, DSA, C), debug your code test cases, and explain complex concepts step-by-step.\n\nFeel free to ask questions or type commands like **/hint**, **/explain**, **/debug**, or **/complexity** anytime!\n\nWhat would you like to build or learn today?',
+      timestamp: Date.now(),
+      quickActions: ['/hint', '/explain', '/debug', '/complexity']
+    };
+    set((state) => ({
+      isOpen: true,
+      activeTab: 'chat',
+      messages: [...state.messages, greetingMsg]
     }));
   },
 
@@ -135,7 +151,7 @@ export const useCodeMentorStore = create<CodeMentorState>((set, get) => ({
     if (!trimmed) return;
 
     const userMsg: ChatMessage = {
-      id: `user-${Date.now()}`,
+      id: 'user-' + Date.now(),
       role: 'user',
       content: trimmed,
       timestamp: Date.now()
@@ -151,7 +167,7 @@ export const useCodeMentorStore = create<CodeMentorState>((set, get) => ({
       const response = generateChatResponse(trimmed, code, selectedLanguage, problemContext || undefined);
 
       const botMsg: ChatMessage = {
-        id: `bot-${Date.now()}`,
+        id: 'bot-' + Date.now(),
         role: 'assistant',
         content: response.reply,
         timestamp: Date.now(),
