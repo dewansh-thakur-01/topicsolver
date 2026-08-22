@@ -83,7 +83,7 @@ export default function PracticeDirectoryPage() {
         {/* Subject Filter Buttons */}
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#2D3748] pb-4">
           <div className="flex flex-wrap items-center gap-1.5 bg-[#121620] p-1.5 rounded-2xl border border-[#2D3748]">
-            {['All', 'Java', 'Python', 'SQL', 'DSA'].map((subj) => (
+            {['All', 'Java', 'Python', 'SQL', 'DSA', 'C'].map((subj) => (
               <button
                 key={subj}
                 onClick={() => setSelectedSubject(subj)}

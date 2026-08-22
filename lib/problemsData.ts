@@ -8,7 +8,7 @@ export interface Problem {
   id: number;
   slug: string;
   title: string;
-  language: 'Java' | 'SQL' | 'C';
+  language: 'Java' | 'Python' | 'SQL' | 'DSA' | 'C';
   difficulty: 'Easy' | 'Medium' | 'Hard';
   category: string;
   leetCodeUrl: string;
@@ -19,234 +19,437 @@ export interface Problem {
   spaceComplexity: string;
 }
 
-const SPECIFIC_PROBLEMS: Problem[] = [
+export const ALL_PROBLEMS: Problem[] = [
+  // ================= Java (6 Problems) =================
   {
     id: 1,
-    slug: 'two-sum',
-    title: 'Two Sum',
+    slug: 'palindrome-number',
+    title: 'Palindrome Number',
     language: 'Java',
     difficulty: 'Easy',
-    category: 'Arrays & Hashing',
-    leetCodeUrl: 'https://leetcode.com/problems/two-sum/',
-    description: 'Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution.',
+    category: 'Math & Conditionals',
+    leetCodeUrl: 'https://leetcode.com/problems/palindrome-number/',
+    description: 'Given an integer x, return true if x is a palindrome, and false otherwise.',
     examples: [
-      { input: 'nums = [2,7,11,15], target = 9', output: '[0,1]', explanation: 'Because nums[0] + nums[1] == 9, we return [0, 1].' },
-      { input: 'nums = [3,2,4], target = 6', output: '[1,2]' }
+      { input: 'x = 121', output: 'true', explanation: '121 reads as 121 backwards.' },
+      { input: 'x = -121', output: 'false', explanation: 'From left to right it reads -121. From right to left it reads 121-.' }
     ],
-    sampleSolution: `class Solution {\n    public int[] twoSum(int[] nums, int target) {\n        Map<Integer, Integer> map = new HashMap<>();\n        for (int i = 0; i < nums.length; i++) {\n            int diff = target - nums[i];\n            if (map.containsKey(diff)) {\n                return new int[] { map.get(diff), i };\n            }\n            map.put(nums[i], i);\n        }\n        return new int[0];\n    }\n}`,
+    sampleSolution: `class Solution {\n    public boolean isPalindrome(int x) {\n        if (x < 0 || (x % 10 == 0 && x != 0)) return false;\n        int rev = 0;\n        while (x > rev) {\n            rev = rev * 10 + x % 10;\n            x /= 10;\n        }\n        return x == rev || x == rev / 10;\n    }\n}`,
+    timeComplexity: 'O(log10(N))',
+    spaceComplexity: 'O(1)'
+  },
+  {
+    id: 2,
+    slug: 'char-frequency',
+    title: 'Character Frequency Counter',
+    language: 'Java',
+    difficulty: 'Easy',
+    category: 'Strings & Maps',
+    leetCodeUrl: 'https://leetcode.com/problems/first-unique-character-in-a-string/',
+    description: 'Count frequency of each character in alphabetical order.',
+    examples: [{ input: 's = "banana"', output: 'a:3,b:1,n:2' }],
+    sampleSolution: `class Solution {\n    public String getCharFrequency(String s) {\n        Map<Character, Integer> map = new TreeMap<>();\n        for (char c : s.toCharArray()) map.put(c, map.getOrDefault(c, 0) + 1);\n        return map.toString();\n    }\n}`,
+    timeComplexity: 'O(N log K)',
+    spaceComplexity: 'O(K)'
+  },
+  {
+    id: 3,
+    slug: 'valid-parentheses',
+    title: 'Valid Parentheses',
+    language: 'Java',
+    difficulty: 'Medium',
+    category: 'Stack',
+    leetCodeUrl: 'https://leetcode.com/problems/valid-parentheses/',
+    description: 'Determine if the input string containing brackets is valid.',
+    examples: [{ input: 's = "()[]{}"', output: 'true' }],
+    sampleSolution: `class Solution {\n    public boolean isValid(String s) {\n        Stack<Character> st = new Stack<>();\n        for (char c : s.toCharArray()) {\n            if (c == '(') st.push(')');\n            else if (c == '{') st.push('}');\n            else if (c == '[') st.push(']');\n            else if (st.isEmpty() || st.pop() != c) return false;\n        }\n        return st.isEmpty();\n    }\n}`,
     timeComplexity: 'O(N)',
     spaceComplexity: 'O(N)'
   },
   {
-    id: 175,
-    slug: 'combine-two-tables',
-    title: 'Combine Two Tables',
-    language: 'SQL',
-    difficulty: 'Easy',
-    category: 'Joins',
-    leetCodeUrl: 'https://leetcode.com/problems/combine-two-tables/',
-    description: 'Write a solution to report the first name, last name, city, and state of each person in the Person table. If the address of a personId is not present in the Address table, report null instead.',
-    examples: [
-      { input: 'Person = [[1, "Wang", "Allen"]], Address = [[1, 1, "New York City", "New York"]]', output: '+-----------+----------+---------------+----------+\n| firstName | lastName | city          | state    |\n+-----------+----------+---------------+----------+\n| Allen     | Wang     | New York City | New York |\n+-----------+----------+---------------+----------+' }
-    ],
-    sampleSolution: `SELECT p.firstName, p.lastName, a.city, a.state\nFROM Person p\nLEFT JOIN Address a ON p.personId = a.personId;`,
-    timeComplexity: 'O(N)',
-    spaceComplexity: 'O(1)'
-  },
-  {
-    id: 206,
-    slug: 'reverse-linked-list',
-    title: 'Reverse Linked List in C',
-    language: 'C',
-    difficulty: 'Easy',
-    category: 'Pointers & Linked Lists',
-    leetCodeUrl: 'https://leetcode.com/problems/reverse-linked-list/',
-    description: 'Given the head of a singly linked list, reverse the list, and return the reversed list head using C pointer manipulation.',
-    examples: [
-      { input: 'head = [1,2,3,4,5]', output: '[5,4,3,2,1]' }
-    ],
-    sampleSolution: `struct ListNode* reverseList(struct ListNode* head) {\n    struct ListNode *prev = NULL;\n    struct ListNode *curr = head;\n    while (curr != NULL) {\n        struct ListNode *nextTemp = curr->next;\n        curr->next = prev;\n        prev = curr;\n        curr = nextTemp;\n    }\n    return prev;\n}`,
-    timeComplexity: 'O(N)',
-    spaceComplexity: 'O(1)'
-  },
-  {
-    id: 180,
-    slug: 'consecutive-numbers',
-    title: 'Consecutive Numbers',
-    language: 'SQL',
+    id: 4,
+    slug: 'merge-sorted-array',
+    title: 'Merge Sorted Arrays',
+    language: 'Java',
     difficulty: 'Medium',
-    category: 'Window Functions',
-    leetCodeUrl: 'https://leetcode.com/problems/consecutive-numbers/',
-    description: 'Find all numbers that appear at least three times consecutively in the Logs table.',
-    examples: [
-      { input: 'Logs = [[1,1],[2,1],[3,1],[4,2],[5,1],[6,2],[7,2]]', output: '+-----------------+\n| ConsecutiveNums |\n+-----------------+\n| 1               |\n+-----------------+' }
-    ],
-    sampleSolution: `WITH CTE AS (\n    SELECT num,\n           LEAD(num, 1) OVER (ORDER BY id) AS next1,\n           LEAD(num, 2) OVER (ORDER BY id) AS next2\n    FROM Logs\n)\nSELECT DISTINCT num AS ConsecutiveNums\nFROM CTE\nWHERE num = next1 AND num = next2;`,
+    category: 'Two Pointers',
+    leetCodeUrl: 'https://leetcode.com/problems/merge-sorted-array/',
+    description: 'Merge nums1 and nums2 into nums1 in-place in non-decreasing order.',
+    examples: [{ input: 'nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3', output: '[1,2,2,3,5,6]' }],
+    sampleSolution: `class Solution {\n    public void merge(int[] nums1, int m, int[] nums2, int n) {\n        int p1 = m - 1, p2 = n - 1, p = m + n - 1;\n        while (p1 >= 0 && p2 >= 0) nums1[p--] = (nums1[p1] > nums2[p2]) ? nums1[p1--] : nums2[p2--];\n        while (p2 >= 0) nums1[p--] = nums2[p2--];\n    }\n}`,
+    timeComplexity: 'O(m + n)',
+    spaceComplexity: 'O(1)'
+  },
+  {
+    id: 5,
+    slug: 'second-largest',
+    title: 'Second Largest Element in Array',
+    language: 'Java',
+    difficulty: 'Medium',
+    category: 'Linear Scan',
+    leetCodeUrl: 'https://leetcode.com/problems/third-maximum-number/',
+    description: 'Find second largest distinct integer in an array.',
+    examples: [{ input: 'arr = [12, 35, 1, 10, 34, 1]', output: '34' }],
+    sampleSolution: `class Solution {\n    public int getSecondLargest(int[] arr) {\n        int f = Integer.MIN_VALUE, s = Integer.MIN_VALUE;\n        for (int x : arr) {\n            if (x > f) { s = f; f = x; }\n            else if (x > s && x != f) s = x;\n        }\n        return s == Integer.MIN_VALUE ? -1 : s;\n    }\n}`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)'
+  },
+  {
+    id: 6,
+    slug: 'custom-exception',
+    title: 'Age Validator with Custom Exception',
+    language: 'Java',
+    difficulty: 'Hard',
+    category: 'OOP & Exception Handling',
+    leetCodeUrl: 'https://docs.oracle.com/javase/tutorial/essential/exceptions/',
+    description: 'Validate age boundary and throw InvalidAgeException.',
+    examples: [{ input: 'age = 25', output: '"Valid Age: 25"' }],
+    sampleSolution: `class Solution {\n    public static String validateAge(int age) throws Exception {\n        if (age < 18 || age > 100) throw new Exception("Age must be between 18 and 100");\n        return "Valid Age: " + age;\n    }\n}`,
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)'
+  },
+
+  // ================= Python (6 Problems) =================
+  {
+    id: 7,
+    slug: 'two-sum-py',
+    title: 'Two Sum Hash Map',
+    language: 'Python',
+    difficulty: 'Easy',
+    category: 'Dictionaries & Hash Table',
+    leetCodeUrl: 'https://leetcode.com/problems/two-sum/',
+    description: 'Find indices of two numbers that add up to target in O(N).',
+    examples: [{ input: 'nums = [2,7,11,15], target = 9', output: '[0, 1]' }],
+    sampleSolution: `def two_sum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        comp = target - num\n        if comp in seen:\n            return [seen[comp], i]\n        seen[num] = i\n    return []`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(N)'
+  },
+  {
+    id: 8,
+    slug: 'valid-anagram-py',
+    title: 'Valid Anagram',
+    language: 'Python',
+    difficulty: 'Easy',
+    category: 'Strings',
+    leetCodeUrl: 'https://leetcode.com/problems/valid-anagram/',
+    description: 'Return True if t is an anagram of s, and False otherwise.',
+    examples: [{ input: 's = "anagram", t = "nagaram"', output: 'True' }],
+    sampleSolution: `def is_anagram(s: str, t: str) -> bool:\n    return sorted(s) == sorted(t)`,
     timeComplexity: 'O(N log N)',
     spaceComplexity: 'O(N)'
   },
   {
-    id: 146,
-    slug: 'lru-cache',
-    title: 'LRU Cache',
-    language: 'Java',
+    id: 9,
+    slug: 'longest-substring-py',
+    title: 'Longest Substring Without Repeating Characters',
+    language: 'Python',
     difficulty: 'Medium',
-    category: 'Design & HashMap',
+    category: 'Sliding Window',
+    leetCodeUrl: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/',
+    description: 'Find length of longest substring without duplicate characters.',
+    examples: [{ input: 's = "abcabcbb"', output: '3' }],
+    sampleSolution: `def lengthOfLongestSubstring(s: str) -> int:\n    chars = set()\n    l = 0\n    res = 0\n    for r in range(len(s)):\n        while s[r] in chars:\n            chars.remove(s[l])\n            l += 1\n        chars.add(s[r])\n        res = max(res, r - l + 1)\n    return res`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(N)'
+  },
+  {
+    id: 10,
+    slug: 'flatten-list-py',
+    title: 'Flatten Nested List',
+    language: 'Python',
+    difficulty: 'Medium',
+    category: 'Recursion',
+    leetCodeUrl: 'https://leetcode.com/problems/flatten-nested-list-iterator/',
+    description: 'Recursively flatten an arbitrarily nested list of integers.',
+    examples: [{ input: 'nested = [1, [2, [3, 4], 5], 6]', output: '[1, 2, 3, 4, 5, 6]' }],
+    sampleSolution: `def flatten_list(nested):\n    res = []\n    for x in nested:\n        if isinstance(x, list): res.extend(flatten_list(x))\n        else: res.append(x)\n    return res`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(N)'
+  },
+  {
+    id: 11,
+    slug: 'group-anagrams-py',
+    title: 'Group Anagrams',
+    language: 'Python',
+    difficulty: 'Medium',
+    category: 'Hash Map',
+    leetCodeUrl: 'https://leetcode.com/problems/group-anagrams/',
+    description: 'Group an array of strings by their anagram sets.',
+    examples: [{ input: 'strs = ["eat","tea","tan","ate","nat","bat"]', output: '[["bat"],["nat","tan"],["ate","eat","tea"]]' }],
+    sampleSolution: `from collections import defaultdict\ndef group_anagrams(strs):\n    ans = defaultdict(list)\n    for s in strs: ans[tuple(sorted(s))].append(s)\n    return list(ans.values())`,
+    timeComplexity: 'O(N * K log K)',
+    spaceComplexity: 'O(N * K)'
+  },
+  {
+    id: 12,
+    slug: 'lru-cache-py',
+    title: 'LRU Cache Implementation',
+    language: 'Python',
+    difficulty: 'Hard',
+    category: 'OOP & Data Structures',
     leetCodeUrl: 'https://leetcode.com/problems/lru-cache/',
-    description: 'Design a data structure that follows the constraints of a Least Recently Used (LRU) cache with O(1) get and put operations.',
-    examples: [
-      { input: '["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]', output: '[null, null, null, 1, null, -1, null, -1, 3, 4]' }
-    ],
-    sampleSolution: `class LRUCache extends LinkedHashMap<Integer, Integer> {\n    private final int capacity;\n    public LRUCache(int capacity) {\n        super(capacity, 0.75f, true);\n        this.capacity = capacity;\n    }\n    public int get(int key) {\n        return super.getOrDefault(key, -1);\n    }\n    public void put(int key, int value) {\n        super.put(key, value);\n    }\n    @Override\n    protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {\n        return size() > capacity;\n    }\n}`,
+    description: 'Implement Least Recently Used cache with get() and put() in O(1).',
+    examples: [{ input: 'capacity = 2, put(1,1), put(2,2), get(1)', output: '1' }],
+    sampleSolution: `from collections import OrderedDict\nclass LRUCache:\n    def __init__(self, cap): self.cap = cap; self.c = OrderedDict()\n    def get(self, k):\n        if k not in self.c: return -1\n        self.c.move_to_end(k); return self.c[k]\n    def put(self, k, v):\n        if k in self.c: self.c.move_to_end(k)\n        self.c[k] = v\n        if len(self.c) > self.cap: self.c.popitem(last=False)`,
     timeComplexity: 'O(1)',
-    spaceComplexity: 'O(Capacity)'
+    spaceComplexity: 'O(capacity)'
+  },
+
+  // ================= SQL (6 Problems) =================
+  {
+    id: 13,
+    slug: 'combine-two-tables-sql',
+    title: 'Combine Two Tables (LEFT JOIN)',
+    language: 'SQL',
+    difficulty: 'Easy',
+    category: 'Joins',
+    leetCodeUrl: 'https://leetcode.com/problems/combine-two-tables/',
+    description: 'Report firstName, lastName, city, and state using LEFT JOIN.',
+    examples: [{ input: 'Person & Address tables', output: 'firstName | lastName | city | state' }],
+    sampleSolution: `SELECT p.firstName, p.lastName, a.city, a.state FROM Person p LEFT JOIN Address a ON p.personId = a.personId;`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)'
+  },
+  {
+    id: 14,
+    slug: 'second-highest-salary-sql',
+    title: 'Second Highest Salary',
+    language: 'SQL',
+    difficulty: 'Easy',
+    category: 'Subqueries & Aggregation',
+    leetCodeUrl: 'https://leetcode.com/problems/second-highest-salary/',
+    description: 'Find the second highest distinct salary from the Employee table.',
+    examples: [{ input: 'Employee salaries = [100, 200, 300]', output: 'SecondHighestSalary: 200' }],
+    sampleSolution: `SELECT MAX(salary) AS SecondHighestSalary FROM Employee WHERE salary < (SELECT MAX(salary) FROM Employee);`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)'
   },
   {
     id: 15,
-    slug: '3sum',
-    title: '3Sum',
-    language: 'Java',
+    slug: 'duplicate-emails-sql',
+    title: 'Find Duplicate Emails',
+    language: 'SQL',
     difficulty: 'Medium',
-    category: 'Two Pointers',
-    leetCodeUrl: 'https://leetcode.com/problems/3sum/',
-    description: 'Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.',
-    examples: [
-      { input: 'nums = [-1,0,1,2,-1,-4]', output: '[[-1,-1,2],[-1,0,1]]' }
-    ],
-    sampleSolution: `class Solution {\n    public List<List<Integer>> threeSum(int[] nums) {\n        Arrays.sort(nums);\n        List<List<Integer>> res = new ArrayList<>();\n        for (int i = 0; i < nums.length - 2; i++) {\n            if (i > 0 && nums[i] == nums[i - 1]) continue;\n            int l = i + 1, r = nums.length - 1;\n            while (l < r) {\n                int sum = nums[i] + nums[l] + nums[r];\n                if (sum == 0) {\n                    res.add(Arrays.asList(nums[i], nums[l], nums[r]));\n                    while (l < r && nums[l] == nums[l + 1]) l++;\n                    while (l < r && nums[r] == nums[r - 1]) r--;\n                    l++; r--;\n                } else if (sum < 0) l++;\n                else r--;\n            }\n        }\n        return res;\n    }\n}`,
-    timeComplexity: 'O(N^2)',
+    category: 'GROUP BY & HAVING',
+    leetCodeUrl: 'https://leetcode.com/problems/duplicate-emails/',
+    description: 'Report all the duplicate emails in the Person table.',
+    examples: [{ input: 'Person = [a@b.com, c@d.com, a@b.com]', output: 'a@b.com' }],
+    sampleSolution: `SELECT email AS Email FROM Person GROUP BY email HAVING COUNT(email) > 1;`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(N)'
+  },
+  {
+    id: 16,
+    slug: 'department-top-3-salaries-sql',
+    title: 'Department Top Three Salaries',
+    language: 'SQL',
+    difficulty: 'Medium',
+    category: 'Window Functions',
+    leetCodeUrl: 'https://leetcode.com/problems/department-top-three-salaries/',
+    description: 'Find employees who have a salary in the top three unique salaries for that department.',
+    examples: [{ input: 'Employee & Department joined', output: 'Department | Employee | Salary' }],
+    sampleSolution: `WITH Ranked AS (SELECT d.name AS Department, e.name AS Employee, e.salary AS Salary, DENSE_RANK() OVER (PARTITION BY e.departmentId ORDER BY e.salary DESC) AS rnk FROM Employee e JOIN Department d ON e.departmentId = d.id) SELECT Department, Employee, Salary FROM Ranked WHERE rnk <= 3;`,
+    timeComplexity: 'O(N log N)',
+    spaceComplexity: 'O(N)'
+  },
+  {
+    id: 17,
+    slug: 'customers-never-order-sql',
+    title: 'Customers Who Never Order',
+    language: 'SQL',
+    difficulty: 'Medium',
+    category: 'Anti-Joins',
+    leetCodeUrl: 'https://leetcode.com/problems/customers-who-never-order/',
+    description: 'Find customers who never place any orders.',
+    examples: [{ input: 'Customers = [Joe, Henry], Orders = [Joe]', output: 'Customers: Henry' }],
+    sampleSolution: `SELECT c.name AS Customers FROM Customers c LEFT JOIN Orders o ON c.id = o.customerId WHERE o.id IS NULL;`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)'
+  },
+  {
+    id: 18,
+    slug: 'consecutive-numbers-sql',
+    title: 'Consecutive Numbers',
+    language: 'SQL',
+    difficulty: 'Hard',
+    category: 'Self Joins',
+    leetCodeUrl: 'https://leetcode.com/problems/consecutive-numbers/',
+    description: 'Find numbers that appear at least three times consecutively in the Logs table.',
+    examples: [{ input: 'Logs table', output: 'ConsecutiveNums: 1' }],
+    sampleSolution: `SELECT DISTINCT l1.num AS ConsecutiveNums FROM Logs l1 JOIN Logs l2 ON l1.id = l2.id - 1 JOIN Logs l3 ON l1.id = l3.id - 2 WHERE l1.num = l2.num AND l2.num = l3.num;`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)'
+  },
+
+  // ================= DSA (6 Problems) =================
+  {
+    id: 19,
+    slug: 'two-sum-dsa',
+    title: 'Two Sum Sorted Array (Two Pointers)',
+    language: 'DSA',
+    difficulty: 'Easy',
+    category: 'Arrays',
+    leetCodeUrl: 'https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/',
+    description: 'Find two numbers adding to target in sorted array with O(1) space.',
+    examples: [{ input: 'numbers = [2,7,11,15], target = 9', output: '[1,2]' }],
+    sampleSolution: `class Solution {\n    public int[] twoSum(int[] numbers, int target) {\n        int l = 0, r = numbers.length - 1;\n        while (l < r) {\n            int sum = numbers[l] + numbers[r];\n            if (sum == target) return new int[]{l + 1, r + 1};\n            if (sum < target) l++; else r--;\n        }\n        return new int[0];\n    }\n}`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)'
+  },
+  {
+    id: 20,
+    slug: 'reverse-linked-list-dsa',
+    title: 'Reverse Linked List',
+    language: 'DSA',
+    difficulty: 'Easy',
+    category: 'Linked Lists',
+    leetCodeUrl: 'https://leetcode.com/problems/reverse-linked-list/',
+    description: 'Reverse a singly linked list in-place.',
+    examples: [{ input: 'head = [1,2,3,4,5]', output: '[5,4,3,2,1]' }],
+    sampleSolution: `class Solution {\n    public ListNode reverseList(ListNode head) {\n        ListNode prev = null, curr = head;\n        while (curr != null) {\n            ListNode next = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = next;\n        }\n        return prev;\n    }\n}`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)'
+  },
+  {
+    id: 21,
+    slug: 'tree-inorder-dsa',
+    title: 'Binary Tree Inorder Traversal',
+    language: 'DSA',
+    difficulty: 'Medium',
+    category: 'Binary Trees',
+    leetCodeUrl: 'https://leetcode.com/problems/binary-tree-inorder-traversal/',
+    description: 'Return inorder traversal of binary tree (Left -> Root -> Right).',
+    examples: [{ input: 'root = [1,null,2,3]', output: '[1,3,2]' }],
+    sampleSolution: `class Solution {\n    public List<Integer> inorderTraversal(TreeNode root) {\n        List<Integer> res = new ArrayList<>();\n        helper(root, res);\n        return res;\n    }\n    void helper(TreeNode n, List<Integer> r) {\n        if (n == null) return;\n        helper(n.left, r);\n        r.add(n.val);\n        helper(n.right, r);\n    }\n}`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(N)'
+  },
+  {
+    id: 22,
+    slug: 'max-subarray-dsa',
+    title: 'Maximum Subarray (Kadane)',
+    language: 'DSA',
+    difficulty: 'Medium',
+    category: 'Dynamic Programming',
+    leetCodeUrl: 'https://leetcode.com/problems/maximum-subarray/',
+    description: 'Find contiguous subarray with largest sum in O(N).',
+    examples: [{ input: 'nums = [-2,1,-3,4,-1,2,1,-5,4]', output: '6' }],
+    sampleSolution: `class Solution {\n    public int maxSubArray(int[] nums) {\n        int max = nums[0], curr = nums[0];\n        for (int i = 1; i < nums.length; i++) {\n            curr = Math.max(nums[i], curr + nums[i]);\n            max = Math.max(max, curr);\n        }\n        return max;\n    }\n}`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)'
+  },
+  {
+    id: 23,
+    slug: 'validate-bst-dsa',
+    title: 'Validate Binary Search Tree',
+    language: 'DSA',
+    difficulty: 'Medium',
+    category: 'Binary Search Trees',
+    leetCodeUrl: 'https://leetcode.com/problems/validate-binary-search-tree/',
+    description: 'Determine if binary tree is a valid BST.',
+    examples: [{ input: 'root = [2,1,3]', output: 'true' }],
+    sampleSolution: `class Solution {\n    public boolean isValidBST(TreeNode root) { return val(root, null, null); }\n    boolean val(TreeNode n, Integer min, Integer max) {\n        if (n == null) return true;\n        if ((min != null && n.val <= min) || (max != null && n.val >= max)) return false;\n        return val(n.left, min, n.val) && val(n.right, n.val, max);\n    }\n}`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(H)'
+  },
+  {
+    id: 24,
+    slug: 'word-ladder-dsa',
+    title: 'Word Ladder (Shortest Transformation)',
+    language: 'DSA',
+    difficulty: 'Hard',
+    category: 'BFS & Graphs',
+    leetCodeUrl: 'https://leetcode.com/problems/word-ladder/',
+    description: 'Find number of words in shortest sequence from beginWord to endWord.',
+    examples: [{ input: 'beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]', output: '5' }],
+    sampleSolution: `class Solution {\n    public int ladderLength(String b, String e, List<String> w) {\n        Set<String> set = new HashSet<>(w);\n        if (!set.contains(e)) return 0;\n        Queue<String> q = new LinkedList<>();\n        q.add(b);\n        int len = 1;\n        while (!q.isEmpty()) {\n            int sz = q.size();\n            for (int i = 0; i < sz; i++) {\n                char[] ch = q.poll().toCharArray();\n                for (int j = 0; j < ch.length; j++) {\n                    char o = ch[j];\n                    for (char c = 'a'; c <= 'z'; c++) {\n                        ch[j] = c;\n                        String s = new String(ch);\n                        if (s.equals(e)) return len + 1;\n                        if (set.remove(s)) q.add(s);\n                    }\n                    ch[j] = o;\n                }\n            }\n            len++;\n        }\n        return 0;\n    }\n}`,
+    timeComplexity: 'O(M^2 * N)',
+    spaceComplexity: 'O(M * N)'
+  },
+
+  // ================= C Programming (6 Problems) =================
+  {
+    id: 25,
+    slug: 'swap-pointers-c',
+    title: 'Swap Two Numbers using Pointers',
+    language: 'C',
+    difficulty: 'Easy',
+    category: 'Pointers',
+    leetCodeUrl: 'https://en.cppreference.com/w/c/language/pointer',
+    description: 'Swap values of two integers using memory dereferencing in C.',
+    examples: [{ input: 'a = 5, b = 10', output: 'a = 10, b = 5' }],
+    sampleSolution: `void swap(int* a, int* b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}`,
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)'
+  },
+  {
+    id: 26,
+    slug: 'reverse-string-c',
+    title: 'Reverse a String In-Place',
+    language: 'C',
+    difficulty: 'Easy',
+    category: 'Strings & Pointers',
+    leetCodeUrl: 'https://leetcode.com/problems/reverse-string/',
+    description: 'Reverse null-terminated char array in C.',
+    examples: [{ input: 's = "hello"', output: '"olleh"' }],
+    sampleSolution: `void reverseString(char* s) {\n    int i = 0, j = strlen(s) - 1;\n    while (i < j) {\n        char t = s[i];\n        s[i] = s[j];\n        s[j] = t;\n        i++; j--;\n    }\n}`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)'
+  },
+  {
+    id: 27,
+    slug: 'dynamic-array-sum-c',
+    title: 'Dynamic Array Allocation & Sum',
+    language: 'C',
+    difficulty: 'Medium',
+    category: 'Dynamic Memory (malloc/free)',
+    leetCodeUrl: 'https://en.cppreference.com/w/c/memory/malloc',
+    description: 'Dynamically allocate array with malloc, compute sum, and call free.',
+    examples: [{ input: 'arr = [1, 2, 3, 4, 5], n = 5', output: '15' }],
+    sampleSolution: `int calculateDynamicSum(int* arr, int n) {\n    int* dyn = (int*)malloc(n * sizeof(int));\n    if (!dyn) return 0;\n    int sum = 0;\n    for (int i = 0; i < n; i++) {\n        dyn[i] = arr[i];\n        sum += dyn[i];\n    }\n    free(dyn);\n    return sum;\n}`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(N)'
+  },
+  {
+    id: 28,
+    slug: 'matrix-transpose-c',
+    title: 'Matrix Transpose in C',
+    language: 'C',
+    difficulty: 'Medium',
+    category: '2D Arrays',
+    leetCodeUrl: 'https://leetcode.com/problems/transpose-matrix/',
+    description: 'Transpose a 2D integer matrix of size R x C.',
+    examples: [{ input: 'matrix = [[1,2,3],[4,5,6]]', output: '[[1,4],[2,5],[3,6]]' }],
+    sampleSolution: `void transpose(int R, int C, int m[R][C], int res[C][R]) {\n    for (int i = 0; i < R; i++) {\n        for (int j = 0; j < C; j++) res[j][i] = m[i][j];\n    }\n}`,
+    timeComplexity: 'O(R * C)',
+    spaceComplexity: 'O(1)'
+  },
+  {
+    id: 29,
+    slug: 'count-vowels-c',
+    title: 'Count Vowels and Consonants',
+    language: 'C',
+    difficulty: 'Medium',
+    category: 'Strings & ASCII',
+    leetCodeUrl: 'https://en.cppreference.com/w/c/string/byte',
+    description: 'Count vowels and consonants in a string using pointer traversal.',
+    examples: [{ input: 'str = "Topic Solver"', output: 'vowels = 4, consonants = 7' }],
+    sampleSolution: `void countVowels(const char* str, int* v, int* c) {\n    *v = 0; *c = 0;\n    while (*str) {\n        char ch = tolower(*str);\n        if (ch >= 'a' && ch <= 'z') {\n            if (ch=='a'||ch=='e'||ch=='i'||ch=='o'||ch=='u') (*v)++;\n            else (*c)++;\n        }\n        str++;\n    }\n}`,
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)'
+  },
+  {
+    id: 30,
+    slug: 'linked-list-insert-c',
+    title: 'Linked List Node Insertion',
+    language: 'C',
+    difficulty: 'Hard',
+    category: 'Structs & Pointers',
+    leetCodeUrl: 'https://en.cppreference.com/w/c/language/struct',
+    description: 'Insert new node at beginning of linked list and return new head.',
+    examples: [{ input: 'head = [2, 3], data = 1', output: '[1, 2, 3]' }],
+    sampleSolution: `struct Node* insertAtBeginning(struct Node* head, int data) {\n    struct Node* n = (struct Node*)malloc(sizeof(struct Node));\n    if (!n) return head;\n    n->data = data;\n    n->next = head;\n    return n;\n}`,
+    timeComplexity: 'O(1)',
     spaceComplexity: 'O(1)'
   }
 ];
-
-// Generates comprehensive dataset mapping to the 600+ Java, 125+ SQL, and C problems
-function generateFullProblemDataset(): Problem[] {
-  const list: Problem[] = [...SPECIFIC_PROBLEMS];
-
-  const javaCategories = ['Arrays', 'Strings', 'Two Pointers', 'Sliding Window', 'Trees', 'Graphs', 'Dynamic Programming', 'Heap / PriorityQueue', 'Bit Manipulation', 'Design'];
-  const sqlCategories = ['Joins', 'Aggregations', 'Subqueries', 'Window Functions', 'String Functions', 'DDL & Schema', 'Filtering & Grouping'];
-  const cCategories = ['Pointers', 'Memory Allocation', 'Linked Lists', 'Arrays', 'Strings', 'Bitwise', 'Structures'];
-
-  const javaTitles = [
-    'Valid Anagram', 'Group Anagrams', 'Top K Frequent Elements', 'Product of Array Except Self', 'Valid Sudoku', 'Encode and Decode Strings',
-    'Longest Consecutive Sequence', 'Valid Palindrome', 'Container With Most Water', 'Trapping Rain Water', 'Longest Substring Without Repeating Characters',
-    'Longest Repeating Character Replacement', 'Permutation in String', 'Minimum Window Substring', 'Sliding Window Maximum', 'Valid Parentheses',
-    'Min Stack', 'Evaluate Reverse Polish Notation', 'Generate Parentheses', 'Daily Temperatures', 'Car Fleet', 'Largest Rectangle in Histogram',
-    'Binary Search', 'Search a 2D Matrix', 'Koko Eating Bananas', 'Find Minimum in Rotated Sorted Array', 'Search in Rotated Sorted Array', 'Time Based Key-Value Store',
-    'Median of Two Sorted Arrays', 'Reverse Linked List', 'Merge Two Sorted Lists', 'Reorder List', 'Remove Nth Node From End of List', 'Copy List with Random Pointer',
-    'Add Two Numbers', 'Linked List Cycle', 'Find the Duplicate Number', 'LRU Cache', 'Merge K Sorted Lists', 'Reverse Nodes in k-Group',
-    'Invert Binary Tree', 'Maximum Depth of Binary Tree', 'Diameter of Binary Tree', 'Balanced Binary Tree', 'Same Tree', 'Subtree of Another Tree',
-    'Lowest Common Ancestor of a BST', 'Binary Tree Level Order Traversal', 'Binary Tree Right Side View', 'Count Good Nodes in Binary Tree',
-    'Validate Binary Search Tree', 'Kth Smallest Element in a BST', 'Construct Binary Tree from Preorder and Inorder Traversal', 'Binary Tree Maximum Path Sum',
-    'Serialize and Deserialize Binary Tree', 'Kth Largest Element in a Stream', 'Last Stone Weight', 'K Closest Points to Origin', 'Kth Largest Element in an Array',
-    'Task Scheduler', 'Design Twitter', 'Find Median from Data Stream', 'Subsets', 'Combination Sum', 'Permutations', 'Subsets II', 'Combination Sum II',
-    'Word Search', 'Palindrome Partitioning', 'Letter Combinations of a Phone Number', 'N-Queens', 'Number of Islands', 'Max Area of Island', 'Clone Graph',
-    'Walls and Gates', 'Rotting Oranges', 'Pacific Atlantic Water Flow', 'Surrounded Regions', 'Course Schedule', 'Course Schedule II', 'Graph Valid Tree',
-    'Number of Connected Components in an Undirected Graph', 'Redundant Connection', 'Word Ladder', 'Reconstruct Itinerary', 'Min Cost to Connect All Points',
-    'Network Delay Time', 'Swim in Rising Water', 'Alien Dictionary', 'Cheapest Flights Within K Stops', 'Climbing Stairs', 'Min Cost Climbing Stairs',
-    'House Robber', 'House Robber II', 'Longest Palindromic Substring', 'Palindromic Substrings', 'Decode Ways', 'Coin Change', 'Maximum Product Subarray',
-    'Word Break', 'Longest Increasing Subsequence', 'Partition Equal Subset Sum', 'Unique Paths', 'Longest Common Subsequence', 'Best Time to Buy and Sell Stock with Cooldown',
-    'Coin Change II', 'Target Sum', 'Interleaving String', 'Longest Increasing Path in a Matrix', 'Distinct Subsequences', 'Edit Distance', 'Burst Balloons',
-    'Regular Expression Matching', 'Maximum Subarray', 'Jump Game', 'Jump Game II', 'Gas Station', 'Hand of Straights', 'Merge Triplets to Form Target Triplets',
-    'Partition Labels', 'Valid Parenthesis String', 'Insert Interval', 'Merge Intervals', 'Non-overlapping Intervals', 'Meeting Rooms', 'Meeting Rooms II',
-    'Minimum Interval to Include Each Query', 'Rotate Image', 'Spiral Matrix', 'Set Matrix Zeroes', 'Happy Number', 'Plus One', 'Pow(x, n)', 'Multiply Strings',
-    'Detect Squares', 'Single Number', 'Number of 1 Bits', 'Counting Bits', 'Reverse Bits', 'Missing Number', 'Sum of Two Integers', 'Reverse Integer'
-  ];
-
-  // Fill up to 600 Java problems
-  for (let i = SPECIFIC_PROBLEMS.length + 1; i <= 600; i++) {
-    const titleBase = javaTitles[(i - 1) % javaTitles.length];
-    const suffix = i > javaTitles.length ? ` III - Variation ${Math.floor(i / javaTitles.length)}` : '';
-    const title = `${titleBase}${suffix}`;
-    const diff: 'Easy' | 'Medium' | 'Hard' = i % 5 === 0 ? 'Hard' : (i % 2 === 0 ? 'Medium' : 'Easy');
-    const cat = javaCategories[i % javaCategories.length];
-    list.push({
-      id: i + 200,
-      slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      title: `${title} (Java)`,
-      language: 'Java',
-      difficulty: diff,
-      category: cat,
-      leetCodeUrl: `https://leetcode.com/problems/${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}/`,
-      description: `Java algorithm challenge covering ${cat}. Write efficient object-oriented Java logic to meet constraint requirements.`,
-      examples: [
-        { input: `inputData = [${i}, ${i + 5}, ${i * 2}]`, output: `${i * 10}` }
-      ],
-      sampleSolution: `class Solution {\n    public int solve(int[] inputData) {\n        // Optimized ${cat} implementation in Java\n        int ans = 0;\n        for (int x : inputData) {\n            ans += x;\n        }\n        return ans;\n    }\n}`,
-      timeComplexity: diff === 'Hard' ? 'O(N log N)' : 'O(N)',
-      spaceComplexity: 'O(1)'
-    });
-  }
-
-  const sqlTitles = [
-    'Recycling and Low Fat Products', 'Find Customer Referee', 'Big Countries', 'Article Views I', 'Invalid Tweets',
-    'Replace Employee ID With The Unique Identifier', 'Product Sales Analysis I', 'Customer Who Visited but Did Not Make Any Transactions',
-    'Rising Temperature', 'Average Time of Process per Machine', 'Employee Bonus', 'Students and Examinations', 'Managers with at Least 5 Direct Reports',
-    'Confirmation Rate', 'Not Boring Movies', 'Average Selling Price', 'Project Employees I', 'Percentage of Users Attended a Contest',
-    'Queries Quality and Percentage', 'Monthly Transactions I', 'Immediate Food Delivery II', 'Game Play Analysis IV', 'Number of Unique Subjects Taught by Each Teacher',
-    'User Activity for the Past 30 Days I', 'Product Sales Analysis III', 'Classes More Than 5 Students', 'Find Followers Count', 'Single Number II SQL',
-    'Customers Who Bought All Products', 'The Number of Employees Which Report to Each Employee', 'Primary Department for Each Employee', 'Triangle Judgement',
-    'Consecutive Numbers', 'Product Price at a Given Date', 'Last Person to Fit in the Bus', 'Count Salary Categories', 'Employees Whose Manager Left the Company',
-    'Exchange Seats', 'Movie Rating', 'Restaurant Growth', 'Friend Requests II: Who Has the Most Friends', 'Investments in 2016', 'Department Top Three Salaries'
-  ];
-
-  // Fill 125 SQL problems
-  for (let i = 1; i <= 125; i++) {
-    const titleBase = sqlTitles[(i - 1) % sqlTitles.length];
-    const suffix = i > sqlTitles.length ? ` Part ${Math.floor(i / sqlTitles.length)}` : '';
-    const title = `${titleBase}${suffix}`;
-    const diff: 'Easy' | 'Medium' | 'Hard' = i % 4 === 0 ? 'Hard' : (i % 3 === 0 ? 'Medium' : 'Easy');
-    const cat = sqlCategories[i % sqlCategories.length];
-    list.push({
-      id: 1000 + i,
-      slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      title: `${title} (SQL)`,
-      language: 'SQL',
-      difficulty: diff,
-      category: cat,
-      leetCodeUrl: `https://leetcode.com/problems/${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}/`,
-      description: `SQL Database query problem testing ${cat}. Write clean SQL queries using CTEs, JOINs, or Window Functions.`,
-      examples: [
-        { input: 'Table Orders (id, user_id, amount)', output: 'Table Output (user_id, total_spent)' }
-      ],
-      sampleSolution: `SELECT user_id, SUM(amount) AS total_spent\nFROM Orders\nWHERE created_at >= '2026-01-01'\nGROUP BY user_id\nHAVING SUM(amount) > 1000\nORDER BY total_spent DESC;`,
-      timeComplexity: 'O(N log N)',
-      spaceComplexity: 'O(1)'
-    });
-  }
-
-  // Fill 60 C problems
-  const cTitles = [
-    'Reverse String in Place', 'Valid Palindrome C Pointer', 'Implement memcpy in C', 'Singly Linked List Cycle Detection',
-    'Find Middle Node of Linked List', 'Merge Two Sorted Lists in C', 'Implement Stack using Dynamic Array',
-    'Binary Search in C Array', 'Bitwise Parity Checker', 'Custom String Length (strlen)', 'Find Missing Number in Array',
-    'Matrix Transpose with Pointers', 'Validate Binary Search Tree in C', 'Memory Safe Queue Implementation'
-  ];
-
-  for (let i = 1; i <= 60; i++) {
-    const titleBase = cTitles[(i - 1) % cTitles.length];
-    const title = `${titleBase} #${i}`;
-    const diff: 'Easy' | 'Medium' | 'Hard' = i % 5 === 0 ? 'Hard' : (i % 2 === 0 ? 'Medium' : 'Easy');
-    const cat = cCategories[i % cCategories.length];
-    list.push({
-      id: 2000 + i,
-      slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      title: title,
-      language: 'C',
-      difficulty: diff,
-      category: cat,
-      leetCodeUrl: `https://leetcode.com/problems/${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}/`,
-      description: `Low-level C programming problem focusing on ${cat}. Manage pointers, dynamic memory, or array bounds carefully.`,
-      examples: [
-        { input: 'int arr[] = {1, 2, 3, 4, 5}', output: '5, 4, 3, 2, 1' }
-      ],
-      sampleSolution: `void reverseArray(int *arr, int size) {\n    int *start = arr;\n    int *end = arr + size - 1;\n    while (start < end) {\n        int temp = *start;\n        *start = *end;\n        *end = temp;\n        start++;\n        end--;\n    }\n}`,
-      timeComplexity: 'O(N)',
-      spaceComplexity: 'O(1)'
-    });
-  }
-
-  return list;
-}
-
-export const ALL_PROBLEMS: Problem[] = generateFullProblemDataset();

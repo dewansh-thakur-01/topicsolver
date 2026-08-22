@@ -27,7 +27,7 @@ export const ProblemTable: React.FC<ProblemTableProps> = ({ problems }) => {
   const { problemStatus, toggleProblemSolved } = useStore();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedLanguage, setSelectedLanguage] = useState<'All' | 'Java' | 'SQL' | 'C'>('All');
+  const [selectedLanguage, setSelectedLanguage] = useState<'All' | 'Java' | 'Python' | 'SQL' | 'DSA' | 'C'>('All');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('All');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedStatus, setSelectedStatus] = useState<string>('All');
@@ -96,7 +96,9 @@ export const ProblemTable: React.FC<ProblemTableProps> = ({ problems }) => {
 
   const renderLangIcon = (lang: string) => {
     if (lang === 'Java') return <Code2 className="h-3.5 w-3.5 text-amber-400" />;
+    if (lang === 'Python') return <Code2 className="h-3.5 w-3.5 text-blue-400" />;
     if (lang === 'SQL') return <Database className="h-3.5 w-3.5 text-cyan-400" />;
+    if (lang === 'DSA') return <Code2 className="h-3.5 w-3.5 text-emerald-400" />;
     return <Cpu className="h-3.5 w-3.5 text-slate-300" />;
   };
 
@@ -109,7 +111,7 @@ export const ProblemTable: React.FC<ProblemTableProps> = ({ problems }) => {
         {/* Language Tabs */}
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#2D3748] pb-4">
           <div className="flex items-center space-x-1.5 bg-[#121620] p-1.5 rounded-xl border border-[#2D3748]">
-            {(['All', 'Java', 'SQL', 'C'] as const).map(lang => (
+            {(['All', 'Java', 'Python', 'SQL', 'DSA', 'C'] as const).map(lang => (
               <button
                 key={lang}
                 onClick={() => {

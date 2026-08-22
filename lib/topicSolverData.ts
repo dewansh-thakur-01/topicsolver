@@ -19999,357 +19999,18 @@ export const DIAGNOSTIC_ASSESSMENT_QUESTIONS = DIAGNOSTIC_QUESTIONS;
 
 export const PRACTICE_PROBLEMS: PracticeProblem[] = [
   {
-    "id": "prob-two-sum",
-    "subjectId": "dsa",
-    "topicId": "dsa-arrays",
-    "topicName": "Arrays & Hashing",
-    "title": "Two Sum",
-    "difficulty": "Easy",
-    "acceptancePercentage": 88,
-    "estimatedTime": "15 min",
-    "description": "Given an array of integers `nums` and an integer `target`, return the indices of the two numbers such that their sum equals `target`.\n\nYou may assume that each input has exactly one valid solution, and you may not use the same element twice. You can return the answer in any order.",
-    "constraints": [
-      "2 <= nums.length <= 10^4",
-      "-10^9 <= nums[i] <= 10^9",
-      "-10^9 <= target <= 10^9",
-      "Only one valid answer exists."
-    ],
-    "examples": [
-      {
-        "input": "nums = [2, 7, 11, 15], target = 9",
-        "output": "[0, 1]",
-        "explanation": "Because nums[0] + nums[1] == 2 + 7 == 9, we return indices [0, 1]."
-      },
-      {
-        "input": "nums = [3, 2, 4], target = 6",
-        "output": "[1, 2]",
-        "explanation": "nums[1] + nums[2] == 2 + 4 == 6, we return indices [1, 2]."
-      },
-      {
-        "input": "nums = [3, 3], target = 6",
-        "output": "[0, 1]",
-        "explanation": "nums[0] + nums[1] == 3 + 3 == 6, we return [0, 1]."
-      }
-    ],
-    "hints": [
-      "Can you iterate through the array and store each element in a hash table with its index?",
-      "For each element nums[i], look up if (target - nums[i]) already exists in your table in O(1) time."
-    ],
-    "starterCode": {
-      "java": "import java.util.*;\n\npublic class Solution {\n    public static void main(String[] args) {\n        // write the code here\n    }\n}",
-      "python": "def main():\n    # write the code here\n    pass\n\nif __name__ == \"__main__\":\n    main()",
-      "c": "#include <stdio.h>\n\nint main() {\n    // write the code here\n    return 0;\n}",
-      "sql": "-- write the code here\n"
-    },
-    "testCases": [
-      {
-        "id": "tc-1",
-        "input": "nums = [2, 7, 11, 15], target = 9",
-        "expectedOutput": "[0, 1]",
-        "explanation": "Standard positive array addition."
-      },
-      {
-        "id": "tc-2",
-        "input": "nums = [3, 2, 4], target = 6",
-        "expectedOutput": "[1, 2]",
-        "explanation": "Target sum at non-adjacent indices."
-      },
-      {
-        "id": "tc-3",
-        "input": "nums = [3, 3], target = 6",
-        "expectedOutput": "[0, 1]",
-        "explanation": "Duplicate values in array."
-      }
-    ],
-    "hiddenCases": [
-      {
-        "id": "hc-1",
-        "name": "Code Spacing & Structure",
-        "type": "spacing_size",
-        "description": "Checks proper code block indentation and readable line spacing.",
-        "hint": "Format your code with clean indentation."
-      },
-      {
-        "id": "hc-2",
-        "name": "Variable Naming Standard",
-        "type": "variable_naming",
-        "description": "Validates descriptive variable identifiers (e.g., target, complement, map, indices).",
-        "hint": "Avoid single-letter variable names except loop counters."
-      },
-      {
-        "id": "hc-3",
-        "name": "Negative Limits & Large Bounds",
-        "type": "edge_boundary",
-        "description": "Evaluates negative inputs nums = [-3, 4, 3, 90], target = 0.",
-        "hint": "Ensure logic handles negative numbers correctly."
-      }
-    ],
-    "solutionCode": {
-      "java": "import java.util.*;\n\npublic class Solution {\n    public static int[] twoSum(int[] nums, int target) {\n        Map<Integer, Integer> map = new HashMap<>();\n        for (int i = 0; i < nums.length; i++) {\n            int complement = target - nums[i];\n            if (map.containsKey(complement)) {\n                return new int[]{map.get(complement), i};\n            }\n            map.put(nums[i], i);\n        }\n        return new int[]{};\n    }\n}",
-      "python": "def two_sum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []"
-    }
-  },
-  {
-    "id": "c-prob-1",
-    "subjectId": "c",
-    "topicId": "c-29-pointers-intro",
-    "topicName": "Pointers & Memory",
-    "title": "Swap Two Numbers using Pointers",
-    "difficulty": "Easy",
-    "acceptancePercentage": 88,
-    "estimatedTime": "8 mins",
-    "description": "Implement a function `void swap(int *a, int *b)` that swaps the values of two integers in place in caller memory using pointer dereferencing.\n\nYour implementation must modify the actual variables referenced by the pointers without using global variables.",
-    "constraints": [
-      "Must mutate original caller memory using pointer dereferencing (*a, *b)",
-      "No global variables or static state allowed",
-      "Value range: -2^31 <= a, b <= 2^31 - 1"
-    ],
-    "examples": [
-      {
-        "input": "a = 5, b = 10",
-        "output": "a = 10, b = 5",
-        "explanation": "Values swapped in place via memory pointers."
-      },
-      {
-        "input": "a = -1, b = 100",
-        "output": "a = 100, b = -1",
-        "explanation": "Negative and positive numbers swapped correctly."
-      },
-      {
-        "input": "a = 42, b = 42",
-        "output": "a = 42, b = 42",
-        "explanation": "Identical numbers maintain consistent values."
-      }
-    ],
-    "hints": [
-      "Store *a into a temporary local integer variable temp.",
-      "Assign the dereferenced value *b into *a, then write temp into *b."
-    ],
-    "starterCode": {
-      "c": "#include <stdio.h>\n\nint main() {\n    // write the code here\n    return 0;\n}",
-      "java": "import java.util.*;\n\npublic class Solution {\n    public static void main(String[] args) {\n        // write the code here\n    }\n}",
-      "python": "def main():\n    # write the code here\n    pass\n\nif __name__ == \"__main__\":\n    main()"
-    },
-    "testCases": [
-      {
-        "id": "tc-1",
-        "input": "x = 5, y = 10",
-        "expectedOutput": "10, 5",
-        "explanation": "Initial swap verification."
-      },
-      {
-        "id": "tc-2",
-        "input": "x = -1, y = 100",
-        "expectedOutput": "100, -1",
-        "explanation": "Signed integer swap."
-      },
-      {
-        "id": "tc-3",
-        "input": "x = 0, y = 0",
-        "expectedOutput": "0, 0",
-        "explanation": "Zero values swap."
-      }
-    ],
-    "hiddenCases": [
-      {
-        "id": "hc-1",
-        "name": "Pointer Spacing & Syntax",
-        "type": "spacing_size",
-        "description": "Ensures correct pointer asterisk placement and clean spacing.",
-        "hint": "Use explicit pointer dereference operators."
-      },
-      {
-        "id": "hc-2",
-        "name": "Temporary Variable Scoping",
-        "type": "variable_naming",
-        "description": "Verifies appropriate local temporary variable declaration (temp, tempVal).",
-        "hint": "Declare a local integer to hold swap buffer."
-      },
-      {
-        "id": "hc-3",
-        "name": "Extreme Integer Range",
-        "type": "edge_boundary",
-        "description": "Tests swapping INT_MAX (2147483647) and INT_MIN (-2147483648).",
-        "hint": "Ensure no arithmetic overflow occurs."
-      }
-    ],
-    "solutionCode": {
-      "c": "void swap(int *a, int *b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}"
-    }
-  },
-  {
-    "id": "prob-reverse-linked-list",
-    "subjectId": "dsa",
-    "topicId": "dsa-linked-lists",
-    "topicName": "Linked Lists",
-    "title": "Reverse Linked List",
-    "difficulty": "Easy",
-    "acceptancePercentage": 79,
-    "estimatedTime": "15 min",
-    "description": "Given the `head` of a singly linked list, reverse the list in-place, and return the new reversed list head.\n\nCan you implement the solution both iteratively with O(1) extra space and recursively?",
-    "constraints": [
-      "The number of nodes in the list is in the range [0, 5000].",
-      "-5000 <= Node.val <= 5000",
-      "Time complexity should be O(N)."
-    ],
-    "examples": [
-      {
-        "input": "head = [1, 2, 3, 4, 5]",
-        "output": "[5, 4, 3, 2, 1]",
-        "explanation": "Pointers reversed so 5 points to 4, 4 points to 3, etc."
-      },
-      {
-        "input": "head = [1, 2]",
-        "output": "[2, 1]",
-        "explanation": "2-node list reversed."
-      },
-      {
-        "input": "head = []",
-        "output": "[]",
-        "explanation": "Empty list returns null/empty."
-      }
-    ],
-    "hints": [
-      "Maintain three pointer references: prev, curr, and next.",
-      "Before advancing curr, store curr.next so you do not lose the rest of the list."
-    ],
-    "starterCode": {
-      "java": "import java.util.*;\n\npublic class Solution {\n    public static void main(String[] args) {\n        // write the code here\n    }\n}",
-      "python": "def main():\n    # write the code here\n    pass\n\nif __name__ == \"__main__\":\n    main()",
-      "c": "#include <stdio.h>\n\nint main() {\n    // write the code here\n    return 0;\n}"
-    },
-    "testCases": [
-      {
-        "id": "tc-1",
-        "input": "head = [1, 2, 3, 4, 5]",
-        "expectedOutput": "[5, 4, 3, 2, 1]",
-        "explanation": "Multi-node list reversal."
-      },
-      {
-        "id": "tc-2",
-        "input": "head = [1, 2]",
-        "expectedOutput": "[2, 1]",
-        "explanation": "Two-node list reversal."
-      },
-      {
-        "id": "tc-3",
-        "input": "head = [1]",
-        "expectedOutput": "[1]",
-        "explanation": "Single node list remains identical."
-      }
-    ],
-    "hiddenCases": [
-      {
-        "id": "hc-1",
-        "name": "Pointer Mutation Spacing",
-        "type": "spacing_size",
-        "description": "Checks clear pointer movement loop structure.",
-        "hint": "Keep pointer updates formatted in distinct lines."
-      },
-      {
-        "id": "hc-2",
-        "name": "Pointer Identifier Naming",
-        "type": "variable_naming",
-        "description": "Checks standard linked list pointer naming (prev, curr, nextNode).",
-        "hint": "Name pointers intuitively."
-      },
-      {
-        "id": "hc-3",
-        "name": "Null / Empty Head Edge Case",
-        "type": "edge_boundary",
-        "description": "Tests passing head = null without NullPointerException.",
-        "hint": "Handle null head check gracefully."
-      }
-    ],
-    "solutionCode": {
-      "java": "public ListNode reverseList(ListNode head) {\n    ListNode prev = null;\n    ListNode curr = head;\n    while (curr != null) {\n        ListNode nextTemp = curr.next;\n        curr.next = prev;\n        prev = curr;\n        curr = nextTemp;\n    }\n    return prev;\n}"
-    }
-  },
-  {
-    "id": "prob-combine-two-tables",
-    "subjectId": "sql",
-    "topicId": "sql-joins",
-    "topicName": "Relational JOINs",
-    "title": "Combine Two Tables",
-    "difficulty": "Easy",
-    "acceptancePercentage": 82,
-    "estimatedTime": "10 min",
-    "description": "Write a SQL query to report the `firstName`, `lastName`, `city`, and `state` of each person in the `Person` table. If the address of a personId is not present in the `Address` table, report null instead.",
-    "constraints": [
-      "Person table: personId (PK), lastName, firstName",
-      "Address table: addressId (PK), personId, city, state",
-      "Person records must be preserved regardless of Address presence."
-    ],
-    "examples": [
-      {
-        "input": "Person: [(1, \"Wang\", \"Allen\"), (2, \"Alice\", \"Bob\")], Address: [(1, 2, \"New York\", \"NY\")]",
-        "output": "firstName | lastName | city | state\nAllen | Wang | NULL | NULL\nBob | Alice | New York | NY",
-        "explanation": "Allen has no Address record, so city & state are NULL."
-      },
-      {
-        "input": "Person: [(1, \"Smith\", \"John\")], Address: []",
-        "output": "John | Smith | NULL | NULL",
-        "explanation": "Empty address table yields NULL for all addresses."
-      }
-    ],
-    "hints": [
-      "Use a LEFT OUTER JOIN to retain all records from the Person table regardless of matching keys in Address."
-    ],
-    "starterCode": {
-      "sql": "-- write the code here\n"
-    },
-    "testCases": [
-      {
-        "id": "tc-1",
-        "input": "Person with matching and non-matching Address rows",
-        "expectedOutput": "Complete list with NULLs for missing addresses"
-      },
-      {
-        "id": "tc-2",
-        "input": "Address table with duplicate or zero matches",
-        "expectedOutput": "All Person records preserved"
-      }
-    ],
-    "hiddenCases": [
-      {
-        "id": "hc-1",
-        "name": "SQL Formatting & Clause Structure",
-        "type": "spacing_size",
-        "description": "Checks standard SQL keyword structure (SELECT, FROM, LEFT JOIN, ON).",
-        "hint": "Format SQL with standard uppercase keywords."
-      },
-      {
-        "id": "hc-2",
-        "name": "Explicit Table Alias Usage",
-        "type": "variable_naming",
-        "description": "Validates clear table aliases (p for Person, a for Address).",
-        "hint": "Use readable aliases to avoid column ambiguity."
-      },
-      {
-        "id": "hc-3",
-        "name": "Missing Key Preservation Check",
-        "type": "edge_boundary",
-        "description": "Checks that INNER JOIN is not mistakenly used.",
-        "hint": "A LEFT JOIN is required so unmatched persons are not omitted."
-      }
-    ],
-    "solutionCode": {
-      "sql": "SELECT p.firstName, p.lastName, a.city, a.state\nFROM Person p\nLEFT JOIN Address a ON p.personId = a.personId;"
-    }
-  },
-  {
-    "id": "prob-palindrome-number",
+    "id": "java-prob-1-palindrome",
     "subjectId": "java",
-    "topicId": "java-syntax",
-    "topicName": "Control Flow & Logic",
+    "topicId": "java-08-if-else",
+    "topicName": "Conditionals & Arithmetic",
     "title": "Palindrome Number",
     "difficulty": "Easy",
-    "acceptancePercentage": 84,
-    "estimatedTime": "10 min",
-    "description": "Given an integer `x`, return `true` if `x` is a palindrome, and `false` otherwise.\n\nAn integer is a palindrome when it reads the same backward as forward. For example, 121 is a palindrome while 123 is not.",
+    "acceptancePercentage": 86,
+    "estimatedTime": "15 min",
+    "description": "Given an integer `x`, return `true` if `x` is a **palindrome**, and `false` otherwise.\n\nAn integer is a palindrome when it reads the same forward and backward. For example, `121` is a palindrome while `123` is not.",
     "constraints": [
       "-2^31 <= x <= 2^31 - 1",
-      "Bonus: Solve it without converting the integer to a string."
+      "Challenge: Solve it without converting the integer to a string."
     ],
     "examples": [
       {
@@ -20360,69 +20021,1755 @@ export const PRACTICE_PROBLEMS: PracticeProblem[] = [
       {
         "input": "x = -121",
         "output": "false",
-        "explanation": "From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome."
+        "explanation": "From left to right, it reads -121. From right to left it becomes 121-."
       },
       {
         "input": "x = 10",
         "output": "false",
-        "explanation": "Reads 01 from right to left."
+        "explanation": "Reads 01 from right to left. Therefore not a palindrome."
       }
     ],
     "hints": [
-      "Negative numbers are never palindromes due to the leading minus sign.",
-      "Reverting the second half of the number avoids integer overflow."
+      "Negative numbers can never be palindromes due to the negative sign.",
+      "You can reverse the second half of the number by using modulo % 10 and division / 10."
     ],
     "starterCode": {
-      "java": "import java.util.*;\n\npublic class Solution {\n    public static void main(String[] args) {\n        // write the code here\n    }\n}",
-      "python": "def main():\n    # write the code here\n    pass\n\nif __name__ == \"__main__\":\n    main()",
-      "c": "#include <stdio.h>\n\nint main() {\n    // write the code here\n    return 0;\n}"
+      "java": "public class Solution {\n    public static boolean isPalindrome(int x) {\n        // write the code here\n        return false;\n    }\n}",
+      "python": "def is_palindrome(x: int) -> bool:\n    # write the code here\n    return False",
+      "c": "#include <stdbool.h>\n\nbool isPalindrome(int x) {\n    // write the code here\n    return false;\n}",
+      "sql": "-- write the code here\n"
     },
     "testCases": [
       {
-        "id": "tc-1",
+        "id": "tc-j1-1",
         "input": "x = 121",
         "expectedOutput": "true",
-        "explanation": "Standard positive palindrome."
+        "explanation": "Standard palindrome."
       },
       {
-        "id": "tc-2",
+        "id": "tc-j1-2",
         "input": "x = -121",
         "expectedOutput": "false",
-        "explanation": "Negative numbers are not palindromes."
+        "explanation": "Negative number."
       },
       {
-        "id": "tc-3",
+        "id": "tc-j1-3",
         "input": "x = 10",
         "expectedOutput": "false",
-        "explanation": "Trailing zeroes not symmetric."
+        "explanation": "Trailing zero."
       }
     ],
     "hiddenCases": [
       {
-        "id": "hc-1",
-        "name": "Arithmetic Loop Formatting",
+        "id": "hc-j1-1",
+        "name": "Clean Arithmetic Loop",
         "type": "spacing_size",
-        "description": "Checks clean loop and arithmetic expression formatting.",
-        "hint": "Use % 10 and / 10 in clean loop."
+        "description": "Verifies clean while loop structure without redundant allocations.",
+        "hint": "Use while(x > reversed) loop."
       },
       {
-        "id": "hc-2",
-        "name": "Reversed Buffer Naming",
+        "id": "hc-j1-2",
+        "name": "Variable Naming",
         "type": "variable_naming",
-        "description": "Validates clear variable naming (reversedNum, original, digit).",
-        "hint": "Avoid ambiguous variable names."
+        "description": "Uses descriptive variables such as reversedNumber and remainder.",
+        "hint": "Name variables clearly."
       },
       {
-        "id": "hc-3",
-        "name": "Zero & Single Digit Boundary",
+        "id": "hc-j1-3",
+        "name": "Single Digit Boundary",
         "type": "edge_boundary",
-        "description": "Tests x = 0 (true) and x = 7 (true).",
-        "hint": "Any single non-negative digit is a palindrome."
+        "description": "Tests x = 0 and single digits 1-9.",
+        "hint": "Any single digit >= 0 is a palindrome."
       }
     ],
     "solutionCode": {
-      "java": "public static boolean isPalindrome(int x) {\n    if (x < 0 || (x % 10 == 0 && x != 0)) return false;\n    int revertedNumber = 0;\n    while (x > revertedNumber) {\n        revertedNumber = revertedNumber * 10 + x % 10;\n        x /= 10;\n    }\n    return x == revertedNumber || x == revertedNumber / 10;\n}"
+      "java": "public static boolean isPalindrome(int x) {\n    if (x < 0 || (x % 10 == 0 && x != 0)) return false;\n    int reversed = 0;\n    while (x > reversed) {\n        reversed = reversed * 10 + x % 10;\n        x /= 10;\n    }\n    return x == reversed || x == reversed / 10;\n}"
+    }
+  },
+  {
+    "id": "java-prob-2-char-frequency",
+    "subjectId": "java",
+    "topicId": "java-28-string-methods",
+    "topicName": "Strings & HashMaps",
+    "title": "Character Frequency Counter",
+    "difficulty": "Easy",
+    "acceptancePercentage": 89,
+    "estimatedTime": "15 min",
+    "description": "Given a string `s`, return the count of each alphanumeric character in `s` in alphabetical order as a formatted string `\"char:count\"` separated by commas.",
+    "constraints": [
+      "1 <= s.length <= 10^5",
+      "`s` consists of lowercase English letters and digits."
+    ],
+    "examples": [
+      {
+        "input": "s = \"banana\"",
+        "output": "a:3,b:1,n:2",
+        "explanation": "a appears 3 times, b appears 1 time, n appears 2 times."
+      },
+      {
+        "input": "s = \"code11\"",
+        "output": "1:2,c:1,d:1,e:1,o:1",
+        "explanation": "Digits and letters counted and sorted alphabetically."
+      }
+    ],
+    "hints": [
+      "Use a TreeMap<Character, Integer> or an integer frequency array of size 256 for O(1) lookups.",
+      "Iterate through the string with toCharArray() and update counts."
+    ],
+    "starterCode": {
+      "java": "import java.util.*;\n\npublic class Solution {\n    public static String getCharFrequency(String s) {\n        // write the code here\n        return \"\";\n    }\n}",
+      "python": "def get_char_frequency(s: str) -> str:\n    # write the code here\n    return \"\"",
+      "c": "#include <stdio.h>\n#include <string.h>\n\nchar* getCharFrequency(char* s) {\n    // write the code here\n    return \"\";\n}",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-j2-1",
+        "input": "s = \"banana\"",
+        "expectedOutput": "a:3,b:1,n:2",
+        "explanation": "Standard word frequency."
+      },
+      {
+        "id": "tc-j2-2",
+        "input": "s = \"a\"",
+        "expectedOutput": "a:1",
+        "explanation": "Single character."
+      },
+      {
+        "id": "tc-j2-3",
+        "input": "s = \"topic\"",
+        "expectedOutput": "c:1,i:1,o:1,p:1,t:1",
+        "explanation": "All unique characters."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-j2-1",
+        "name": "Alphabetical Sorting",
+        "type": "structure",
+        "description": "Verifies natural alphabetical ordering.",
+        "hint": "Sort keys or use TreeMap."
+      },
+      {
+        "id": "hc-j2-2",
+        "name": "Variable Naming",
+        "type": "variable_naming",
+        "description": "Uses descriptive map or frequency array names.",
+        "hint": "Use freqMap or countArray."
+      }
+    ],
+    "solutionCode": {
+      "java": "public static String getCharFrequency(String s) {\n    Map<Character, Integer> map = new TreeMap<>();\n    for (char c : s.toCharArray()) map.put(c, map.getOrDefault(c, 0) + 1);\n    StringBuilder sb = new StringBuilder();\n    for (var entry : map.entrySet()) {\n        if (sb.length() > 0) sb.append(\",\");\n        sb.append(entry.getKey()).append(\":\").append(entry.getValue());\n    }\n    return sb.toString();\n}"
+    }
+  },
+  {
+    "id": "java-prob-3-valid-parentheses",
+    "subjectId": "java",
+    "topicId": "java-20-arrays",
+    "topicName": "Stack & Collections",
+    "title": "Valid Parentheses Checker",
+    "difficulty": "Medium",
+    "acceptancePercentage": 78,
+    "estimatedTime": "20 min",
+    "description": "Given a string `s` containing just the characters `'('`, `')'`, `'{'`, `'}'`, `'['` and `']'`, determine if the input string is valid.\n\nAn input string is valid if:\n1. Open brackets must be closed by the same type of brackets.\n2. Open brackets must be closed in the correct order.\n3. Every close bracket has a corresponding open bracket of the same type.",
+    "constraints": [
+      "1 <= s.length <= 10^4",
+      "`s` consists of parentheses only `'()[]{}'`."
+    ],
+    "examples": [
+      {
+        "input": "s = \"()\"",
+        "output": "true",
+        "explanation": "Matching pair."
+      },
+      {
+        "input": "s = \"()[]{}\"",
+        "output": "true",
+        "explanation": "All consecutive pairs match."
+      },
+      {
+        "input": "s = \"(]\"",
+        "output": "false",
+        "explanation": "Mismatched bracket types."
+      }
+    ],
+    "hints": [
+      "A Stack (Last In, First Out) is ideal for tracking open brackets.",
+      "Push expected closing brackets onto the stack when you see opening brackets."
+    ],
+    "starterCode": {
+      "java": "import java.util.*;\n\npublic class Solution {\n    public static boolean isValid(String s) {\n        // write the code here\n        return false;\n    }\n}",
+      "python": "def is_valid(s: str) -> bool:\n    # write the code here\n    return False",
+      "c": "#include <stdbool.h>\n\nbool isValid(char* s) {\n    // write the code here\n    return false;\n}",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-j3-1",
+        "input": "s = \"()\"",
+        "expectedOutput": "true",
+        "explanation": "Simple parenthesis."
+      },
+      {
+        "id": "tc-j3-2",
+        "input": "s = \"([{}])\"",
+        "expectedOutput": "true",
+        "explanation": "Nested balanced brackets."
+      },
+      {
+        "id": "tc-j3-3",
+        "input": "s = \"([)]\"",
+        "expectedOutput": "false",
+        "explanation": "Interleaved incorrect order."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-j3-1",
+        "name": "Empty Stack Underflow",
+        "type": "edge_boundary",
+        "description": "Handles closing bracket when stack is empty without throwing exception.",
+        "hint": "Check stack.isEmpty() before pop."
+      },
+      {
+        "id": "hc-j3-2",
+        "name": "Unclosed Open Bracket",
+        "type": "edge_boundary",
+        "description": "Handles single open bracket like '(' returning false.",
+        "hint": "Ensure stack is empty at end."
+      }
+    ],
+    "solutionCode": {
+      "java": "public static boolean isValid(String s) {\n    Stack<Character> stack = new Stack<>();\n    for (char c : s.toCharArray()) {\n        if (c == '(') stack.push(')');\n        else if (c == '{') stack.push('}');\n        else if (c == '[') stack.push(']');\n        else if (stack.isEmpty() || stack.pop() != c) return false;\n    }\n    return stack.isEmpty();\n}"
+    }
+  },
+  {
+    "id": "java-prob-4-merge-sorted",
+    "subjectId": "java",
+    "topicId": "java-16-arrays-mistakes",
+    "topicName": "Array Two-Pointers",
+    "title": "Merge Sorted Arrays",
+    "difficulty": "Medium",
+    "acceptancePercentage": 74,
+    "estimatedTime": "20 min",
+    "description": "You are given two integer arrays `nums1` and `nums2`, sorted in non-decreasing order, and two integers `m` and `n`, representing the number of elements in `nums1` and `nums2` respectively.\n\nMerge `nums1` and `nums2` into a single array sorted in non-decreasing order.",
+    "constraints": [
+      "nums1.length == m + n",
+      "nums2.length == n",
+      "0 <= m, n <= 200"
+    ],
+    "examples": [
+      {
+        "input": "nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3",
+        "output": "[1,2,2,3,5,6]",
+        "explanation": "Merged elements in sorted order."
+      },
+      {
+        "input": "nums1 = [1], m = 1, nums2 = [], n = 0",
+        "output": "[1]",
+        "explanation": "Single element array."
+      }
+    ],
+    "hints": [
+      "Fill nums1 from the back (index m + n - 1) to avoid overwriting elements."
+    ],
+    "starterCode": {
+      "java": "public class Solution {\n    public static void merge(int[] nums1, int m, int[] nums2, int n) {\n        // write the code here\n    }\n}",
+      "python": "def merge(nums1: list, m: int, nums2: list, n: int) -> None:\n    # write the code here\n    pass",
+      "c": "void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {\n    // write the code here\n}",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-j4-1",
+        "input": "nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3",
+        "expectedOutput": "[1,2,2,3,5,6]",
+        "explanation": "Standard merge."
+      },
+      {
+        "id": "tc-j4-2",
+        "input": "nums1 = [0], m = 0, nums2 = [1], n = 1",
+        "expectedOutput": "[1]",
+        "explanation": "m is 0."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-j4-1",
+        "name": "In-Place Backward Placement",
+        "type": "structure",
+        "description": "Verifies O(m+n) time and O(1) extra space.",
+        "hint": "Pointer from m+n-1 downwards."
+      }
+    ],
+    "solutionCode": {
+      "java": "public static void merge(int[] nums1, int m, int[] nums2, int n) {\n    int p1 = m - 1, p2 = n - 1, p = m + n - 1;\n    while (p1 >= 0 && p2 >= 0) {\n        nums1[p--] = (nums1[p1] > nums2[p2]) ? nums1[p1--] : nums2[p2--];\n    }\n    while (p2 >= 0) nums1[p--] = nums2[p2--];\n}"
+    }
+  },
+  {
+    "id": "java-prob-5-second-largest",
+    "subjectId": "java",
+    "topicId": "java-14-for-loop",
+    "topicName": "Loops & Linear Scan",
+    "title": "Second Largest Element in Array",
+    "difficulty": "Medium",
+    "acceptancePercentage": 81,
+    "estimatedTime": "15 min",
+    "description": "Given an array of integers `arr`, find and return the **second largest distinct** integer in the array. If no second largest element exists (e.g. all elements are identical or length < 2), return `-1`.",
+    "constraints": [
+      "1 <= arr.length <= 10^5",
+      "-10^9 <= arr[i] <= 10^9"
+    ],
+    "examples": [
+      {
+        "input": "arr = [12, 35, 1, 10, 34, 1]",
+        "output": "34",
+        "explanation": "Largest is 35, second largest is 34."
+      },
+      {
+        "input": "arr = [10, 10, 10]",
+        "output": "-1",
+        "explanation": "No distinct second largest element exists."
+      }
+    ],
+    "hints": [
+      "Maintain two variables: firstMax and secondMax initialized to Integer.MIN_VALUE.",
+      "Update in a single pass of O(N) time."
+    ],
+    "starterCode": {
+      "java": "public class Solution {\n    public static int getSecondLargest(int[] arr) {\n        // write the code here\n        return -1;\n    }\n}",
+      "python": "def get_second_largest(arr: list) -> int:\n    # write the code here\n    return -1",
+      "c": "int getSecondLargest(int* arr, int arrSize) {\n    // write the code here\n    return -1;\n}",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-j5-1",
+        "input": "arr = [12, 35, 1, 10, 34, 1]",
+        "expectedOutput": "34",
+        "explanation": "Distinct elements."
+      },
+      {
+        "id": "tc-j5-2",
+        "input": "arr = [10, 5]",
+        "expectedOutput": "5",
+        "explanation": "Two elements."
+      },
+      {
+        "id": "tc-j5-3",
+        "input": "arr = [10, 10, 10]",
+        "expectedOutput": "-1",
+        "explanation": "Identical elements."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-j5-1",
+        "name": "Negative Numbers",
+        "type": "edge_boundary",
+        "description": "Handles arrays with negative values like [-5, -2, -8].",
+        "hint": "Initialize with Integer.MIN_VALUE."
+      }
+    ],
+    "solutionCode": {
+      "java": "public static int getSecondLargest(int[] arr) {\n    int first = Integer.MIN_VALUE, second = Integer.MIN_VALUE;\n    for (int num : arr) {\n        if (num > first) {\n            second = first;\n            first = num;\n        } else if (num > second && num != first) {\n            second = num;\n        }\n    }\n    return (second == Integer.MIN_VALUE) ? -1 : second;\n}"
+    }
+  },
+  {
+    "id": "java-prob-6-custom-exception",
+    "subjectId": "java",
+    "topicId": "java-47-custom-exception",
+    "topicName": "Exception Handling & Validation",
+    "title": "Age Validator with Custom Exception",
+    "difficulty": "Hard",
+    "acceptancePercentage": 72,
+    "estimatedTime": "25 min",
+    "description": "Write a validation method `validateAge(int age)` that throws an `InvalidAgeException` with message `\"Age must be between 18 and 100\"` if `age < 18` or `age > 100`. If valid, return `\"Valid Age: [age]\"`.",
+    "constraints": [
+      "-100 <= age <= 200"
+    ],
+    "examples": [
+      {
+        "input": "age = 25",
+        "output": "\"Valid Age: 25\"",
+        "explanation": "Age within valid range [18, 100]."
+      },
+      {
+        "input": "age = 15",
+        "output": "\"InvalidAgeException: Age must be between 18 and 100\"",
+        "explanation": "Underage condition triggers exception."
+      }
+    ],
+    "hints": [
+      "Create a static nested class InvalidAgeException extending Exception or RuntimeException.",
+      "Check the boundary conditions and throw new InvalidAgeException(...) accordingly."
+    ],
+    "starterCode": {
+      "java": "public class Solution {\n    // Define InvalidAgeException\n    public static String validateAge(int age) throws Exception {\n        // write the code here\n        return \"\";\n    }\n}",
+      "python": "def validate_age(age: int) -> str:\n    # write the code here\n    return \"\"",
+      "c": "char* validateAge(int age) {\n    // write the code here\n    return \"\";\n}",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-j6-1",
+        "input": "age = 25",
+        "expectedOutput": "\"Valid Age: 25\"",
+        "explanation": "Normal valid age."
+      },
+      {
+        "id": "tc-j6-2",
+        "input": "age = 18",
+        "expectedOutput": "\"Valid Age: 18\"",
+        "explanation": "Lower boundary 18."
+      },
+      {
+        "id": "tc-j6-3",
+        "input": "age = 100",
+        "expectedOutput": "\"Valid Age: 100\"",
+        "explanation": "Upper boundary 100."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-j6-1",
+        "name": "Negative Age Validation",
+        "type": "edge_boundary",
+        "description": "Throws exception for age = -5.",
+        "hint": "Check age < 18."
+      }
+    ],
+    "solutionCode": {
+      "java": "public static class InvalidAgeException extends Exception {\n    public InvalidAgeException(String msg) { super(msg); }\n}\npublic static String validateAge(int age) throws InvalidAgeException {\n    if (age < 18 || age > 100) throw new InvalidAgeException(\"Age must be between 18 and 100\");\n    return \"Valid Age: \" + age;\n}"
+    }
+  },
+  {
+    "id": "py-prob-1-two-sum",
+    "subjectId": "python",
+    "topicId": "py-06-dict",
+    "topicName": "Dictionaries & Hash Lookup",
+    "title": "Two Sum Hash Map",
+    "difficulty": "Easy",
+    "acceptancePercentage": 91,
+    "estimatedTime": "15 min",
+    "description": "Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target` using a Python dictionary for O(N) lookup.",
+    "constraints": [
+      "2 <= len(nums) <= 10^4",
+      "-10^9 <= nums[i] <= 10^9"
+    ],
+    "examples": [
+      {
+        "input": "nums = [2, 7, 11, 15], target = 9",
+        "output": "[0, 1]",
+        "explanation": "nums[0] + nums[1] = 2 + 7 = 9."
+      },
+      {
+        "input": "nums = [3, 2, 4], target = 6",
+        "output": "[1, 2]",
+        "explanation": "nums[1] + nums[2] = 2 + 4 = 6."
+      }
+    ],
+    "hints": [
+      "Use a dict seen = {} to store value -> index."
+    ],
+    "starterCode": {
+      "python": "def two_sum(nums: list[int], target: int) -> list[int]:\n    # write the code here\n    return []",
+      "java": "public class Solution { public static int[] twoSum(int[] nums, int target) { return new int[0]; } }",
+      "c": "int* twoSum(int* nums, int numsSize, int target, int* returnSize) { return 0; }",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-p1-1",
+        "input": "nums = [2, 7, 11, 15], target = 9",
+        "expectedOutput": "[0, 1]",
+        "explanation": "First pair."
+      },
+      {
+        "id": "tc-p1-2",
+        "input": "nums = [3, 2, 4], target = 6",
+        "expectedOutput": "[1, 2]",
+        "explanation": "Non-adjacent pair."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-p1-1",
+        "name": "O(N) Time Complexity",
+        "type": "structure",
+        "description": "Ensures single-pass dictionary lookup.",
+        "hint": "Check complement in seen dictionary."
+      }
+    ],
+    "solutionCode": {
+      "python": "def two_sum(nums: list[int], target: int) -> list[int]:\n    seen = {}\n    for i, num in enumerate(nums):\n        comp = target - num\n        if comp in seen:\n            return [seen[comp], i]\n        seen[num] = i\n    return []"
+    }
+  },
+  {
+    "id": "py-prob-2-valid-anagram",
+    "subjectId": "python",
+    "topicId": "py-04-strings",
+    "topicName": "Strings & Frequency Maps",
+    "title": "Valid Anagram",
+    "difficulty": "Easy",
+    "acceptancePercentage": 88,
+    "estimatedTime": "15 min",
+    "description": "Given two strings `s` and `t`, return `True` if `t` is an anagram of `s`, and `False` otherwise.\n\nAn Anagram is a word formed by rearranging the letters of a different word, using all the original letters exactly once.",
+    "constraints": [
+      "1 <= len(s), len(t) <= 5 * 10^4",
+      "`s` and `t` consist of lowercase English letters."
+    ],
+    "examples": [
+      {
+        "input": "s = \"anagram\", t = \"nagaram\"",
+        "output": "True",
+        "explanation": "All characters match exactly in frequency."
+      },
+      {
+        "input": "s = \"rat\", t = \"car\"",
+        "output": "False",
+        "explanation": "Characters do not match."
+      }
+    ],
+    "hints": [
+      "Compare collections.Counter(s) == collections.Counter(t) or sorted(s) == sorted(t)."
+    ],
+    "starterCode": {
+      "python": "def is_anagram(s: str, t: str) -> bool:\n    # write the code here\n    return False",
+      "java": "public class Solution { public static boolean isAnagram(String s, String t) { return false; } }",
+      "c": "bool isAnagram(char* s, char* t) { return false; }",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-p2-1",
+        "input": "s = \"anagram\", t = \"nagaram\"",
+        "expectedOutput": "True",
+        "explanation": "Valid anagram."
+      },
+      {
+        "id": "tc-p2-2",
+        "input": "s = \"rat\", t = \"car\"",
+        "expectedOutput": "False",
+        "explanation": "Different letters."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-p2-1",
+        "name": "Length Pre-check",
+        "type": "edge_boundary",
+        "description": "Returns False immediately if lengths differ.",
+        "hint": "if len(s) != len(t): return False"
+      }
+    ],
+    "solutionCode": {
+      "python": "def is_anagram(s: str, t: str) -> bool:\n    if len(s) != len(t):\n        return False\n    count = {}\n    for c in s:\n        count[c] = count.get(c, 0) + 1\n    for c in t:\n        if c not in count or count[c] == 0:\n            return False\n        count[c] -= 1\n    return True"
+    }
+  },
+  {
+    "id": "py-prob-3-longest-substring",
+    "subjectId": "python",
+    "topicId": "py-08-while-loop",
+    "topicName": "Sliding Window Technique",
+    "title": "Longest Substring Without Repeating Characters",
+    "difficulty": "Medium",
+    "acceptancePercentage": 76,
+    "estimatedTime": "20 min",
+    "description": "Given a string `s`, find the length of the **longest substring** without repeating characters.",
+    "constraints": [
+      "0 <= len(s) <= 5 * 10^4",
+      "`s` consists of English letters, digits, symbols and spaces."
+    ],
+    "examples": [
+      {
+        "input": "s = \"abcabcbb\"",
+        "output": "3",
+        "explanation": "The answer is 'abc', with length of 3."
+      },
+      {
+        "input": "s = \"bbbbb\"",
+        "output": "1",
+        "explanation": "The answer is 'b', with length of 1."
+      },
+      {
+        "input": "s = \"pwwkew\"",
+        "output": "3",
+        "explanation": "The answer is 'wke', with length of 3."
+      }
+    ],
+    "hints": [
+      "Use a sliding window with two pointers left and right, and a set to store visited characters."
+    ],
+    "starterCode": {
+      "python": "def length_of_longest_substring(s: str) -> int:\n    # write the code here\n    return 0",
+      "java": "public class Solution { public static int lengthOfLongestSubstring(String s) { return 0; } }",
+      "c": "int lengthOfLongestSubstring(char* s) { return 0; }",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-p3-1",
+        "input": "s = \"abcabcbb\"",
+        "expectedOutput": "3",
+        "explanation": "Window 'abc'."
+      },
+      {
+        "id": "tc-p3-2",
+        "input": "s = \"bbbbb\"",
+        "expectedOutput": "1",
+        "explanation": "Single repeated character."
+      },
+      {
+        "id": "tc-p3-3",
+        "input": "s = \"\"",
+        "expectedOutput": "0",
+        "explanation": "Empty string."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-p3-1",
+        "name": "Empty String & Single Space",
+        "type": "edge_boundary",
+        "description": "Handles s = '' and s = ' ' correctly.",
+        "hint": "Check len(s) <= 1."
+      }
+    ],
+    "solutionCode": {
+      "python": "def length_of_longest_substring(s: str) -> int:\n    char_set = set()\n    left = 0\n    max_len = 0\n    for right in range(len(s)):\n        while s[right] in char_set:\n            char_set.remove(s[left])\n            left += 1\n        char_set.add(s[right])\n        max_len = max(max_len, right - left + 1)\n    return max_len"
+    }
+  },
+  {
+    "id": "py-prob-4-flatten-list",
+    "subjectId": "python",
+    "topicId": "py-11-recursion",
+    "topicName": "Recursion & Nested Structures",
+    "title": "Flatten Nested List",
+    "difficulty": "Medium",
+    "acceptancePercentage": 83,
+    "estimatedTime": "20 min",
+    "description": "Write a recursive function `flatten_list(nested_list)` that takes an arbitrarily deeply nested list of integers and returns a flattened 1D list.",
+    "constraints": [
+      "0 <= len(nested_list) <= 1000",
+      "Nesting depth <= 100"
+    ],
+    "examples": [
+      {
+        "input": "nested = [1, [2, [3, 4], 5], 6]",
+        "output": "[1, 2, 3, 4, 5, 6]",
+        "explanation": "All inner lists unnested."
+      },
+      {
+        "input": "nested = [[[]]]",
+        "output": "[]",
+        "explanation": "Empty nested structure."
+      }
+    ],
+    "hints": [
+      "Check if each item is isinstance(item, list). If so, recursively flatten it; otherwise append."
+    ],
+    "starterCode": {
+      "python": "def flatten_list(nested: list) -> list:\n    # write the code here\n    return []",
+      "java": "public class Solution { public static List<Integer> flatten(List<Object> nested) { return new ArrayList<>(); } }",
+      "c": "// Flatten list in C\n",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-p4-1",
+        "input": "nested = [1, [2, [3, 4], 5], 6]",
+        "expectedOutput": "[1, 2, 3, 4, 5, 6]",
+        "explanation": "Standard nested list."
+      },
+      {
+        "id": "tc-p4-2",
+        "input": "nested = []",
+        "expectedOutput": "[]",
+        "explanation": "Empty input."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-p4-1",
+        "name": "Deep Nesting",
+        "type": "edge_boundary",
+        "description": "Tests deep linear nesting [[[[[1]]]]].",
+        "hint": "Base case for non-list items."
+      }
+    ],
+    "solutionCode": {
+      "python": "def flatten_list(nested: list) -> list:\n    result = []\n    for item in nested:\n        if isinstance(item, list):\n            result.extend(flatten_list(item))\n        else:\n            result.append(item)\n    return result"
+    }
+  },
+  {
+    "id": "py-prob-5-group-anagrams",
+    "subjectId": "python",
+    "topicId": "py-06-dict",
+    "topicName": "Hash Maps & Sorting",
+    "title": "Group Anagrams",
+    "difficulty": "Medium",
+    "acceptancePercentage": 79,
+    "estimatedTime": "20 min",
+    "description": "Given an array of strings `strs`, group the **anagrams** together. You can return the answer in any order.",
+    "constraints": [
+      "1 <= len(strs) <= 10^4",
+      "0 <= len(strs[i]) <= 100",
+      "`strs[i]` consists of lowercase English letters."
+    ],
+    "examples": [
+      {
+        "input": "strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
+        "output": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]",
+        "explanation": "Grouped by identical character sets."
+      },
+      {
+        "input": "strs = [\"\"]",
+        "output": "[[\"\"]]",
+        "explanation": "Empty string."
+      }
+    ],
+    "hints": [
+      "Sort each string to use as a dictionary key: tuple(sorted(s))."
+    ],
+    "starterCode": {
+      "python": "def group_anagrams(strs: list[str]) -> list[list[str]]:\n    # write the code here\n    return []",
+      "java": "public class Solution { public static List<List<String>> groupAnagrams(String[] strs) { return new ArrayList<>(); } }",
+      "c": "// Group anagrams in C\n",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-p5-1",
+        "input": "strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
+        "expectedOutput": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]",
+        "explanation": "Standard grouping."
+      },
+      {
+        "id": "tc-p5-2",
+        "input": "strs = [\"a\"]",
+        "expectedOutput": "[[\"a\"]]",
+        "explanation": "Single character."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-p5-1",
+        "name": "Dictionary Grouping",
+        "type": "structure",
+        "description": "Uses defaultdict(list) for clean O(N * K log K) grouping.",
+        "hint": "Key on ''.join(sorted(s))."
+      }
+    ],
+    "solutionCode": {
+      "python": "from collections import defaultdict\n\ndef group_anagrams(strs: list[str]) -> list[list[str]]:\n    ans = defaultdict(list)\n    for s in strs:\n        ans[tuple(sorted(s))].append(s)\n    return list(ans.values())"
+    }
+  },
+  {
+    "id": "py-prob-6-lru-cache",
+    "subjectId": "python",
+    "topicId": "py-15-classes",
+    "topicName": "OOP & Data Structure Design",
+    "title": "LRU Cache Design",
+    "difficulty": "Hard",
+    "acceptancePercentage": 70,
+    "estimatedTime": "30 min",
+    "description": "Design a data structure that follows the constraints of a **Least Recently Used (LRU) Cache**.\n\nImplement the `LRUCache` class with `get(key)` in O(1) and `put(key, value)` in O(1).",
+    "constraints": [
+      "1 <= capacity <= 3000",
+      "0 <= key, value <= 10^4",
+      "At most 2 * 10^5 calls will be made to get and put."
+    ],
+    "examples": [
+      {
+        "input": "LRUCache(2); put(1,1); put(2,2); get(1); put(3,3); get(2)",
+        "output": "[null, null, null, 1, null, -1]",
+        "explanation": "Key 2 was evicted because it was least recently used."
+      }
+    ],
+    "hints": [
+      "Use collections.OrderedDict or a doubly linked list combined with a hash table."
+    ],
+    "starterCode": {
+      "python": "from collections import OrderedDict\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        # write the code here\n        pass\n\n    def get(self, key: int) -> int:\n        return -1\n\n    def put(self, key: int, value: int) -> None:\n        pass",
+      "java": "class LRUCache { public LRUCache(int capacity) {} public int get(int key) { return -1; } public void put(int key, int value) {} }",
+      "c": "// LRU Cache in C\n",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-p6-1",
+        "input": "capacity = 2, operations = put(1,1), put(2,2), get(1)",
+        "expectedOutput": "1",
+        "explanation": "get(1) returns 1 and marks it as recently used."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-p6-1",
+        "name": "O(1) Eviction",
+        "type": "structure",
+        "description": "Ensures O(1) time complexity for both get and put operations.",
+        "hint": "Use OrderedDict.move_to_end()."
+      }
+    ],
+    "solutionCode": {
+      "python": "from collections import OrderedDict\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.cap = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.cap:\n            self.cache.popitem(last=False)"
+    }
+  },
+  {
+    "id": "sql-prob-1-combine-tables",
+    "subjectId": "sql",
+    "topicId": "sql-02-joins",
+    "topicName": "Relational Joins",
+    "title": "Combine Two Tables (LEFT JOIN)",
+    "difficulty": "Easy",
+    "acceptancePercentage": 89,
+    "estimatedTime": "10 min",
+    "description": "Write a SQL query to report the `firstName`, `lastName`, `city`, and `state` of each person in the `Person` table. If the address of a `personId` is not present in the `Address` table, report `null` instead.",
+    "constraints": [
+      "Person table: personId (PK), lastName, firstName",
+      "Address table: addressId (PK), personId, city, state"
+    ],
+    "examples": [
+      {
+        "input": "Person = [(1, 'Wang', 'Allen'), (2, 'Alice', 'Bob')], Address = [(1, 2, 'New York', 'NY')]",
+        "output": "Allen | Wang | NULL | NULL\nBob | Alice | New York | NY",
+        "explanation": "Allen has no address record, returning NULL."
+      }
+    ],
+    "hints": [
+      "Use a LEFT JOIN from Person to Address on Person.personId = Address.personId."
+    ],
+    "starterCode": {
+      "sql": "-- Write your PostgreSQL / MySQL query here\nSELECT \nFROM Person p\n",
+      "java": "// SQL practice problem\n",
+      "python": "# SQL practice problem\n",
+      "c": "// SQL practice problem\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-s1-1",
+        "input": "Person & Address tables joined",
+        "expectedOutput": "firstName, lastName, city, state table result",
+        "explanation": "LEFT JOIN preserves all person records."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-s1-1",
+        "name": "LEFT JOIN Usage",
+        "type": "structure",
+        "description": "Verifies correct use of LEFT OUTER JOIN.",
+        "hint": "Do not use INNER JOIN."
+      }
+    ],
+    "solutionCode": {
+      "sql": "SELECT p.firstName, p.lastName, a.city, a.state\nFROM Person p\nLEFT JOIN Address a ON p.personId = a.personId;"
+    }
+  },
+  {
+    "id": "sql-prob-2-second-highest",
+    "subjectId": "sql",
+    "topicId": "sql-01-select",
+    "topicName": "Aggregations & Subqueries",
+    "title": "Second Highest Salary",
+    "difficulty": "Easy",
+    "acceptancePercentage": 82,
+    "estimatedTime": "15 min",
+    "description": "Write a SQL query to find the second highest distinct salary from the `Employee` table. If there is no second highest salary, the query should report `null` (or NULL in SQL).",
+    "constraints": [
+      "Employee table: id (PK), salary (INT)"
+    ],
+    "examples": [
+      {
+        "input": "Employee = [(1, 100), (2, 200), (3, 300)]",
+        "output": "SecondHighestSalary: 200",
+        "explanation": "300 is highest, 200 is second highest."
+      },
+      {
+        "input": "Employee = [(1, 100)]",
+        "output": "SecondHighestSalary: NULL",
+        "explanation": "Only one record exists."
+      }
+    ],
+    "hints": [
+      "Use SELECT MAX(salary) WHERE salary < (SELECT MAX(salary) FROM Employee) or LIMIT 1 OFFSET 1."
+    ],
+    "starterCode": {
+      "sql": "-- Write your SQL query here\nSELECT \nFROM Employee;\n",
+      "java": "",
+      "python": "",
+      "c": ""
+    },
+    "testCases": [
+      {
+        "id": "tc-s2-1",
+        "input": "Employee with salaries [100, 200, 300]",
+        "expectedOutput": "200",
+        "explanation": "Distinct second highest salary."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-s2-1",
+        "name": "NULL Handling",
+        "type": "edge_boundary",
+        "description": "Returns NULL when no second salary exists.",
+        "hint": "Use IFNULL or subquery."
+      }
+    ],
+    "solutionCode": {
+      "sql": "SELECT MAX(salary) AS SecondHighestSalary\nFROM Employee\nWHERE salary < (SELECT MAX(salary) FROM Employee);"
+    }
+  },
+  {
+    "id": "sql-prob-3-duplicate-emails",
+    "subjectId": "sql",
+    "topicId": "sql-01-select",
+    "topicName": "GROUP BY & HAVING",
+    "title": "Find Duplicate Emails",
+    "difficulty": "Medium",
+    "acceptancePercentage": 85,
+    "estimatedTime": "15 min",
+    "description": "Write a SQL query to report all the duplicate emails in a table named `Person`. It is guaranteed that the email field is not NULL.",
+    "constraints": [
+      "Person table: id (PK), email (VARCHAR)"
+    ],
+    "examples": [
+      {
+        "input": "Person = [(1, 'a@b.com'), (2, 'c@d.com'), (3, 'a@b.com')]",
+        "output": "Email: 'a@b.com'",
+        "explanation": "a@b.com appears twice."
+      }
+    ],
+    "hints": [
+      "Group by email and filter with HAVING count(email) > 1."
+    ],
+    "starterCode": {
+      "sql": "-- Write your SQL query here\nSELECT \nFROM Person\nGROUP BY \n",
+      "java": "",
+      "python": "",
+      "c": ""
+    },
+    "testCases": [
+      {
+        "id": "tc-s3-1",
+        "input": "Person with duplicate emails",
+        "expectedOutput": "a@b.com",
+        "explanation": "Duplicated email found."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-s3-1",
+        "name": "HAVING Clause",
+        "type": "structure",
+        "description": "Verifies aggregation filter with HAVING count(*) > 1.",
+        "hint": "Use HAVING COUNT(email) > 1."
+      }
+    ],
+    "solutionCode": {
+      "sql": "SELECT email AS Email\nFROM Person\nGROUP BY email\nHAVING COUNT(email) > 1;"
+    }
+  },
+  {
+    "id": "sql-prob-4-department-top3",
+    "subjectId": "sql",
+    "topicId": "sql-02-joins",
+    "topicName": "Window Functions & DENSE_RANK",
+    "title": "Department Top Three Salaries",
+    "difficulty": "Medium",
+    "acceptancePercentage": 74,
+    "estimatedTime": "25 min",
+    "description": "A company's executives are interested in seeing who earns the most money in each of the company's departments. A high earner in a department is an employee who has a salary in the **top three unique salaries** for that department.\n\nWrite a SQL query to find the employees who are high earners in each of the departments.",
+    "constraints": [
+      "Employee: id, name, salary, departmentId",
+      "Department: id, name"
+    ],
+    "examples": [
+      {
+        "input": "Employee & Department records",
+        "output": "Department | Employee | Salary",
+        "explanation": "Top 3 distinct salaries per department."
+      }
+    ],
+    "hints": [
+      "Use DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) as ranking."
+    ],
+    "starterCode": {
+      "sql": "-- Write your SQL query using DENSE_RANK window function\nWITH RankedSalaries AS (\n    SELECT \n    FROM Employee\n)\nSELECT \n",
+      "java": "",
+      "python": "",
+      "c": ""
+    },
+    "testCases": [
+      {
+        "id": "tc-s4-1",
+        "input": "Department and employee tables",
+        "expectedOutput": "Department high earners",
+        "explanation": "Rank <= 3."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-s4-1",
+        "name": "Dense Rank Tie Handling",
+        "type": "structure",
+        "description": "Handles salary ties with DENSE_RANK without skipping ranks.",
+        "hint": "Use DENSE_RANK()."
+      }
+    ],
+    "solutionCode": {
+      "sql": "WITH Ranked AS (\n    SELECT d.name AS Department, e.name AS Employee, e.salary AS Salary,\n           DENSE_RANK() OVER (PARTITION BY e.departmentId ORDER BY e.salary DESC) AS rnk\n    FROM Employee e\n    JOIN Department d ON e.departmentId = d.id\n)\nSELECT Department, Employee, Salary\nFROM Ranked\nWHERE rnk <= 3;"
+    }
+  },
+  {
+    "id": "sql-prob-5-customers-never-order",
+    "subjectId": "sql",
+    "topicId": "sql-02-joins",
+    "topicName": "Subqueries & Anti-Joins",
+    "title": "Customers Who Never Order",
+    "difficulty": "Medium",
+    "acceptancePercentage": 86,
+    "estimatedTime": "15 min",
+    "description": "Write a SQL query to report all customers who never place any orders in the `Orders` table.",
+    "constraints": [
+      "Customers: id (PK), name",
+      "Orders: id (PK), customerId (FK)"
+    ],
+    "examples": [
+      {
+        "input": "Customers = [(1, 'Joe'), (2, 'Henry'), (3, 'Sam'), (4, 'Max')], Orders = [(1, 3), (2, 1)]",
+        "output": "Customers: ['Henry', 'Max']",
+        "explanation": "Henry and Max have no orders."
+      }
+    ],
+    "hints": [
+      "Use LEFT JOIN Customers c ON Orders o WHERE o.id IS NULL or WHERE c.id NOT IN (SELECT customerId FROM Orders)."
+    ],
+    "starterCode": {
+      "sql": "-- Write your SQL query here\nSELECT c.name AS Customers\nFROM Customers c\n",
+      "java": "",
+      "python": "",
+      "c": ""
+    },
+    "testCases": [
+      {
+        "id": "tc-s5-1",
+        "input": "Customers and Orders table",
+        "expectedOutput": "Henry, Max",
+        "explanation": "Customers without orders."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-s5-1",
+        "name": "NULL Safety in Subquery",
+        "type": "edge_boundary",
+        "description": "Handles NULLs in Orders table safely.",
+        "hint": "WHERE o.customerId IS NULL."
+      }
+    ],
+    "solutionCode": {
+      "sql": "SELECT c.name AS Customers\nFROM Customers c\nLEFT JOIN Orders o ON c.id = o.customerId\nWHERE o.id IS NULL;"
+    }
+  },
+  {
+    "id": "sql-prob-6-consecutive-numbers",
+    "subjectId": "sql",
+    "topicId": "sql-02-joins",
+    "topicName": "Self Joins & Lead/Lag",
+    "title": "Consecutive Numbers",
+    "difficulty": "Hard",
+    "acceptancePercentage": 70,
+    "estimatedTime": "25 min",
+    "description": "Find all numbers that appear at least **three times consecutively** in a `Logs` table with columns `id` and `num`.",
+    "constraints": [
+      "Logs: id (PK, auto-increment), num (INT)"
+    ],
+    "examples": [
+      {
+        "input": "Logs = [(1, 1), (2, 1), (3, 1), (4, 2), (5, 1), (6, 2), (7, 2)]",
+        "output": "ConsecutiveNums: 1",
+        "explanation": "1 is the only number that appears consecutively for at least three IDs."
+      }
+    ],
+    "hints": [
+      "Join Logs l1 with Logs l2 ON l1.id = l2.id - 1 and Logs l3 ON l1.id = l3.id - 2."
+    ],
+    "starterCode": {
+      "sql": "-- Write your SQL query here\nSELECT DISTINCT \nFROM Logs l1, Logs l2, Logs l3\nWHERE \n",
+      "java": "",
+      "python": "",
+      "c": ""
+    },
+    "testCases": [
+      {
+        "id": "tc-s6-1",
+        "input": "Logs with consecutive numbers",
+        "expectedOutput": "1",
+        "explanation": "Triple consecutive 1s."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-s6-1",
+        "name": "DISTINCT Results",
+        "type": "structure",
+        "description": "Returns distinct consecutive numbers without duplicates.",
+        "hint": "Use SELECT DISTINCT num."
+      }
+    ],
+    "solutionCode": {
+      "sql": "SELECT DISTINCT l1.num AS ConsecutiveNums\nFROM Logs l1\nJOIN Logs l2 ON l1.id = l2.id - 1\nJOIN Logs l3 ON l1.id = l3.id - 2\nWHERE l1.num = l2.num AND l2.num = l3.num;"
+    }
+  },
+  {
+    "id": "dsa-prob-1-two-sum",
+    "subjectId": "dsa",
+    "topicId": "dsa-01-intro",
+    "topicName": "Array Two-Pointers",
+    "title": "Two Sum Sorted Array",
+    "difficulty": "Easy",
+    "acceptancePercentage": 89,
+    "estimatedTime": "15 min",
+    "description": "Given a 1-indexed array of integers `numbers` that is already **sorted in non-decreasing order**, find two numbers such that they add up to a specific `target` number in O(N) time and O(1) space.",
+    "constraints": [
+      "2 <= numbers.length <= 3 * 10^4",
+      "-1000 <= numbers[i] <= 1000",
+      "numbers is sorted in non-decreasing order."
+    ],
+    "examples": [
+      {
+        "input": "numbers = [2,7,11,15], target = 9",
+        "output": "[1,2]",
+        "explanation": "The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2."
+      },
+      {
+        "input": "numbers = [2,3,4], target = 6",
+        "output": "[1,3]",
+        "explanation": "2 + 4 = 6. index1 = 1, index2 = 3."
+      }
+    ],
+    "hints": [
+      "Use two pointers at left = 0 and right = len - 1."
+    ],
+    "starterCode": {
+      "java": "public class Solution {\n    public static int[] twoSum(int[] numbers, int target) {\n        // write the code here\n        return new int[0];\n    }\n}",
+      "python": "def two_sum(numbers: list[int], target: int) -> list[int]:\n    # write the code here\n    return []",
+      "c": "int* twoSum(int* numbers, int numbersSize, int target, int* returnSize) { return 0; }",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-d1-1",
+        "input": "numbers = [2,7,11,15], target = 9",
+        "expectedOutput": "[1,2]",
+        "explanation": "1-indexed target pair."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-d1-1",
+        "name": "O(1) Space Constraint",
+        "type": "structure",
+        "description": "Verifies O(1) extra space without hash map allocation.",
+        "hint": "Two pointers approach."
+      }
+    ],
+    "solutionCode": {
+      "java": "public static int[] twoSum(int[] numbers, int target) {\n    int l = 0, r = numbers.length - 1;\n    while (l < r) {\n        int sum = numbers[l] + numbers[r];\n        if (sum == target) return new int[]{l + 1, r + 1};\n        if (sum < target) l++; else r--;\n    }\n    return new int[0];\n}"
+    }
+  },
+  {
+    "id": "dsa-prob-2-reverse-linked-list",
+    "subjectId": "dsa",
+    "topicId": "dsa-07-stacks",
+    "topicName": "Linked Lists & Pointers",
+    "title": "Reverse Linked List",
+    "difficulty": "Easy",
+    "acceptancePercentage": 87,
+    "estimatedTime": "15 min",
+    "description": "Given the `head` of a singly linked list, reverse the list in-place, and return the reversed list's head.",
+    "constraints": [
+      "The number of nodes in the list is in the range [0, 5000].",
+      "-5000 <= Node.val <= 5000"
+    ],
+    "examples": [
+      {
+        "input": "head = [1,2,3,4,5]",
+        "output": "[5,4,3,2,1]",
+        "explanation": "All pointer directions reversed."
+      },
+      {
+        "input": "head = [1,2]",
+        "output": "[2,1]",
+        "explanation": "Two node list."
+      }
+    ],
+    "hints": [
+      "Maintain prev = null, curr = head. Save nextTemp = curr.next before rewiring curr.next = prev."
+    ],
+    "starterCode": {
+      "java": "public class Solution {\n    public static ListNode reverseList(ListNode head) {\n        // write the code here\n        return null;\n    }\n}",
+      "python": "def reverse_list(head):\n    # write the code here\n    return None",
+      "c": "struct ListNode* reverseList(struct ListNode* head) { return 0; }",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-d2-1",
+        "input": "head = [1,2,3,4,5]",
+        "expectedOutput": "[5,4,3,2,1]",
+        "explanation": "Standard reversal."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-d2-1",
+        "name": "Null & Single Node",
+        "type": "edge_boundary",
+        "description": "Handles head == null and head.next == null safely.",
+        "hint": "Check if head is null."
+      }
+    ],
+    "solutionCode": {
+      "java": "public static ListNode reverseList(ListNode head) {\n    ListNode prev = null, curr = head;\n    while (curr != null) {\n        ListNode next = curr.next;\n        curr.next = prev;\n        prev = curr;\n        curr = next;\n    }\n    return prev;\n}"
+    }
+  },
+  {
+    "id": "dsa-prob-3-tree-traversal",
+    "subjectId": "dsa",
+    "topicId": "dsa-13-searching",
+    "topicName": "Binary Trees & Traversal",
+    "title": "Binary Tree Inorder Traversal",
+    "difficulty": "Medium",
+    "acceptancePercentage": 80,
+    "estimatedTime": "20 min",
+    "description": "Given the `root` of a binary tree, return the **inorder traversal** of its nodes' values (Left -> Root -> Right).",
+    "constraints": [
+      "The number of nodes in the tree is in the range [0, 100].",
+      "-100 <= Node.val <= 100"
+    ],
+    "examples": [
+      {
+        "input": "root = [1,null,2,3]",
+        "output": "[1,3,2]",
+        "explanation": "Inorder visit: 1 -> 3 -> 2."
+      }
+    ],
+    "hints": [
+      "Inorder visits Left Subtree, then Root node, then Right Subtree."
+    ],
+    "starterCode": {
+      "java": "public class Solution {\n    public static List<Integer> inorderTraversal(TreeNode root) {\n        // write the code here\n        return new ArrayList<>();\n    }\n}",
+      "python": "def inorder_traversal(root):\n    # write the code here\n    return []",
+      "c": "int* inorderTraversal(struct TreeNode* root, int* returnSize) { return 0; }",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-d3-1",
+        "input": "root = [1,null,2,3]",
+        "expectedOutput": "[1,3,2]",
+        "explanation": "Standard inorder."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-d3-1",
+        "name": "Null Tree Root",
+        "type": "edge_boundary",
+        "description": "Handles empty tree returning empty list.",
+        "hint": "if root == null return empty list."
+      }
+    ],
+    "solutionCode": {
+      "java": "public static List<Integer> inorderTraversal(TreeNode root) {\n    List<Integer> res = new ArrayList<>();\n    helper(root, res);\n    return res;\n}\nprivate static void helper(TreeNode node, List<Integer> res) {\n    if (node == null) return;\n    helper(node.left, res);\n    res.add(node.val);\n    helper(node.right, res);\n}"
+    }
+  },
+  {
+    "id": "dsa-prob-4-max-subarray",
+    "subjectId": "dsa",
+    "topicId": "dsa-01-intro",
+    "topicName": "Dynamic Programming & Kadane",
+    "title": "Maximum Subarray (Kadane's Algorithm)",
+    "difficulty": "Medium",
+    "acceptancePercentage": 77,
+    "estimatedTime": "20 min",
+    "description": "Given an integer array `nums`, find the subarray with the largest sum, and return its sum in O(N) linear time.",
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "-10^4 <= nums[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
+        "output": "6",
+        "explanation": "Subarray [4,-1,2,1] has the largest sum 6."
+      },
+      {
+        "input": "nums = [1]",
+        "output": "1",
+        "explanation": "Single element."
+      },
+      {
+        "input": "nums = [5,4,-1,7,8]",
+        "output": "23",
+        "explanation": "Entire array sum."
+      }
+    ],
+    "hints": [
+      "Track currentSum = max(num, currentSum + num) at each index."
+    ],
+    "starterCode": {
+      "java": "public class Solution {\n    public static int maxSubArray(int[] nums) {\n        // write the code here\n        return 0;\n    }\n}",
+      "python": "def max_sub_array(nums: list[int]) -> int:\n    # write the code here\n    return 0",
+      "c": "int maxSubArray(int* nums, int numsSize) { return 0; }",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-d4-1",
+        "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
+        "expectedOutput": "6",
+        "explanation": "Subarray [4,-1,2,1]."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-d4-1",
+        "name": "All Negative Numbers",
+        "type": "edge_boundary",
+        "description": "Handles arrays with only negative numbers like [-3, -2, -5].",
+        "hint": "Initialize max with nums[0]."
+      }
+    ],
+    "solutionCode": {
+      "java": "public static int maxSubArray(int[] nums) {\n    int maxSoFar = nums[0], curr = nums[0];\n    for (int i = 1; i < nums.length; i++) {\n        curr = Math.max(nums[i], curr + nums[i]);\n        maxSoFar = Math.max(maxSoFar, curr);\n    }\n    return maxSoFar;\n}"
+    }
+  },
+  {
+    "id": "dsa-prob-5-validate-bst",
+    "subjectId": "dsa",
+    "topicId": "dsa-13-searching",
+    "topicName": "Trees & Recursion",
+    "title": "Validate Binary Search Tree",
+    "difficulty": "Medium",
+    "acceptancePercentage": 73,
+    "estimatedTime": "25 min",
+    "description": "Given the `root` of a binary tree, determine if it is a **valid binary search tree (BST)**.\n\nA valid BST is defined as:\n1. The left subtree of a node contains only nodes with keys strictly less than the node's key.\n2. The right subtree contains only nodes with keys strictly greater than the node's key.\n3. Both the left and right subtrees must also be binary search trees.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [1, 10^4].",
+      "-2^31 <= Node.val <= 2^31 - 1"
+    ],
+    "examples": [
+      {
+        "input": "root = [2,1,3]",
+        "output": "true",
+        "explanation": "Left child 1 < 2, Right child 3 > 2."
+      },
+      {
+        "input": "root = [5,1,4,null,null,3,6]",
+        "output": "false",
+        "explanation": "Root's value is 5 but right child is 4."
+      }
+    ],
+    "hints": [
+      "Pass min and max bounds recursively: isValid(node, min, max)."
+    ],
+    "starterCode": {
+      "java": "public class Solution {\n    public static boolean isValidBST(TreeNode root) {\n        // write the code here\n        return false;\n    }\n}",
+      "python": "def is_valid_bst(root) -> bool:\n    # write the code here\n    return False",
+      "c": "bool isValidBST(struct TreeNode* root) { return false; }",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-d5-1",
+        "input": "root = [2,1,3]",
+        "expectedOutput": "true",
+        "explanation": "Valid BST."
+      },
+      {
+        "id": "tc-d5-2",
+        "input": "root = [5,1,4,null,null,3,6]",
+        "expectedOutput": "false",
+        "explanation": "Invalid right child."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-d5-1",
+        "name": "Integer MAX/MIN Overflows",
+        "type": "edge_boundary",
+        "description": "Handles Long.MIN_VALUE and Long.MAX_VALUE bounds for 32-bit boundary nodes.",
+        "hint": "Use Long wrapper bounds."
+      }
+    ],
+    "solutionCode": {
+      "java": "public static boolean isValidBST(TreeNode root) {\n    return validate(root, null, null);\n}\nprivate static boolean validate(TreeNode node, Integer min, Integer max) {\n    if (node == null) return true;\n    if ((min != null && node.val <= min) || (max != null && node.val >= max)) return false;\n    return validate(node.left, min, node.val) && validate(node.right, node.val, max);\n}"
+    }
+  },
+  {
+    "id": "dsa-prob-6-word-ladder",
+    "subjectId": "dsa",
+    "topicId": "dsa-18-advanced",
+    "topicName": "BFS & Graph Shortest Path",
+    "title": "Word Ladder (Shortest Transformation)",
+    "difficulty": "Hard",
+    "acceptancePercentage": 68,
+    "estimatedTime": "30 min",
+    "description": "A **transformation sequence** from word `beginWord` to word `endWord` using a dictionary `wordList` is a sequence of words `beginWord -> s1 -> s2 -> ... -> sk` such that every adjacent pair of words differs by a single letter. Return the **number of words** in the shortest transformation sequence, or `0` if no such sequence exists.",
+    "constraints": [
+      "1 <= beginWord.length <= 10",
+      "endWord.length == beginWord.length",
+      "1 <= wordList.length <= 5000"
+    ],
+    "examples": [
+      {
+        "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+        "output": "5",
+        "explanation": "Shortest sequence: 'hit' -> 'hot' -> 'dot' -> 'dog' -> 'cog' (5 words)."
+      }
+    ],
+    "hints": [
+      "Use Breadth-First Search (BFS) starting from beginWord with level counter."
+    ],
+    "starterCode": {
+      "java": "public class Solution {\n    public static int ladderLength(String beginWord, String endWord, List<String> wordList) {\n        // write the code here\n        return 0;\n    }\n}",
+      "python": "def ladder_length(beginWord: str, endWord: str, wordList: list[str]) -> int:\n    # write the code here\n    return 0",
+      "c": "// Word ladder in C\n",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-d6-1",
+        "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+        "expectedOutput": "5",
+        "explanation": "5-step word ladder."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-d6-1",
+        "name": "EndWord Missing",
+        "type": "edge_boundary",
+        "description": "Returns 0 if endWord is not in wordList.",
+        "hint": "Check if endWord in wordSet."
+      }
+    ],
+    "solutionCode": {
+      "java": "public static int ladderLength(String beginWord, String endWord, List<String> wordList) {\n    Set<String> set = new HashSet<>(wordList);\n    if (!set.contains(endWord)) return 0;\n    Queue<String> queue = new LinkedList<>();\n    queue.add(beginWord);\n    int level = 1;\n    while (!queue.isEmpty()) {\n        int size = queue.size();\n        for (int i = 0; i < size; i++) {\n            char[] word = queue.poll().toCharArray();\n            for (int j = 0; j < word.length; j++) {\n                char orig = word[j];\n                for (char c = 'a'; c <= 'z'; c++) {\n                    word[j] = c;\n                    String next = new String(word);\n                    if (next.equals(endWord)) return level + 1;\n                    if (set.remove(next)) queue.add(next);\n                }\n                word[j] = orig;\n            }\n        }\n        level++;\n    }\n    return 0;\n}"
+    }
+  },
+  {
+    "id": "c-prob-1-swap-pointers",
+    "subjectId": "c",
+    "topicId": "c-31-pointers",
+    "topicName": "Pointers & Memory Addresses",
+    "title": "Swap Two Numbers using Pointers",
+    "difficulty": "Easy",
+    "acceptancePercentage": 92,
+    "estimatedTime": "10 min",
+    "description": "Write a function in C `void swap(int* a, int* b)` that swaps the values of two integers using memory address dereferencing.",
+    "constraints": [
+      "Pointers a and b are valid non-null memory addresses."
+    ],
+    "examples": [
+      {
+        "input": "a = 5, b = 10",
+        "output": "a = 10, b = 5",
+        "explanation": "Values at addresses exchanged."
+      }
+    ],
+    "hints": [
+      "Use a temporary variable int temp = *a; *a = *b; *b = temp;"
+    ],
+    "starterCode": {
+      "c": "#include <stdio.h>\n\nvoid swap(int* a, int* b) {\n    // write the code here\n}",
+      "java": "public class Solution { public static void swap(int[] arr) { int temp = arr[0]; arr[0] = arr[1]; arr[1] = temp; } }",
+      "python": "def swap(a, b): return b, a",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-c1-1",
+        "input": "a = 5, b = 10",
+        "expectedOutput": "a = 10, b = 5",
+        "explanation": "Standard pointer swap."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-c1-1",
+        "name": "Dereference Syntax",
+        "type": "structure",
+        "description": "Verifies correct * operator dereferencing.",
+        "hint": "Use *a and *b."
+      }
+    ],
+    "solutionCode": {
+      "c": "void swap(int* a, int* b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}"
+    }
+  },
+  {
+    "id": "c-prob-2-reverse-string",
+    "subjectId": "c",
+    "topicId": "c-24-strings",
+    "topicName": "Strings & Pointer Arithmetic",
+    "title": "Reverse a String In-Place",
+    "difficulty": "Easy",
+    "acceptancePercentage": 88,
+    "estimatedTime": "15 min",
+    "description": "Write a C function `void reverseString(char* s)` that reverses a null-terminated string in-place using two pointers or indices.",
+    "constraints": [
+      "1 <= strlen(s) <= 10^4",
+      "s contains ASCII characters."
+    ],
+    "examples": [
+      {
+        "input": "s = \"hello\"",
+        "output": "\"olleh\"",
+        "explanation": "Characters reversed in memory."
+      }
+    ],
+    "hints": [
+      "Find length with strlen(s), then swap s[i] and s[len - 1 - i]."
+    ],
+    "starterCode": {
+      "c": "#include <stdio.h>\n#include <string.h>\n\nvoid reverseString(char* s) {\n    // write the code here\n}",
+      "java": "public class Solution { public static String reverseString(String s) { return new StringBuilder(s).reverse().toString(); } }",
+      "python": "def reverse_string(s: str) -> str: return s[::-1]",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-c2-1",
+        "input": "s = \"hello\"",
+        "expectedOutput": "\"olleh\"",
+        "explanation": "Odd length string."
+      },
+      {
+        "id": "tc-c2-2",
+        "input": "s = \"code\"",
+        "expectedOutput": "\"edoc\"",
+        "explanation": "Even length string."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-c2-1",
+        "name": "Single Character",
+        "type": "edge_boundary",
+        "description": "Handles s = 'a' without memory corruption.",
+        "hint": "Check len > 1."
+      }
+    ],
+    "solutionCode": {
+      "c": "void reverseString(char* s) {\n    int i = 0, j = strlen(s) - 1;\n    while (i < j) {\n        char temp = s[i];\n        s[i] = s[j];\n        s[j] = temp;\n        i++; j--;\n    }\n}"
+    }
+  },
+  {
+    "id": "c-prob-3-dynamic-array-sum",
+    "subjectId": "c",
+    "topicId": "c-35-dynamic-memory",
+    "topicName": "Dynamic Memory Allocation",
+    "title": "Dynamic Array Allocation & Sum",
+    "difficulty": "Medium",
+    "acceptancePercentage": 81,
+    "estimatedTime": "20 min",
+    "description": "Write a C function `int calculateDynamicSum(int* arr, int n)` that dynamically allocates an integer array of size `n` using `malloc()`, copies the input values, computes their sum, and properly frees the allocated memory using `free()`.",
+    "constraints": [
+      "1 <= n <= 10^5",
+      "-10^4 <= arr[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "arr = [1, 2, 3, 4, 5], n = 5",
+        "output": "15",
+        "explanation": "Sum = 1 + 2 + 3 + 4 + 5 = 15."
+      }
+    ],
+    "hints": [
+      "Allocate with int* dyn = (int*)malloc(n * sizeof(int)); and always call free(dyn); before returning."
+    ],
+    "starterCode": {
+      "c": "#include <stdio.h>\n#include <stdlib.h>\n\nint calculateDynamicSum(int* arr, int n) {\n    // write the code here\n    return 0;\n}",
+      "java": "public class Solution { public static int calculateSum(int[] arr) { int sum = 0; for (int x : arr) sum += x; return sum; } }",
+      "python": "def calculate_sum(arr: list) -> int: return sum(arr)",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-c3-1",
+        "input": "arr = [1, 2, 3, 4, 5], n = 5",
+        "expectedOutput": "15",
+        "explanation": "Array sum 15."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-c3-1",
+        "name": "Memory Deallocation",
+        "type": "structure",
+        "description": "Verifies free(ptr) is called to prevent memory leaks.",
+        "hint": "Call free(dyn);"
+      }
+    ],
+    "solutionCode": {
+      "c": "int calculateDynamicSum(int* arr, int n) {\n    int* dyn = (int*)malloc(n * sizeof(int));\n    if (!dyn) return 0;\n    int sum = 0;\n    for (int i = 0; i < n; i++) {\n        dyn[i] = arr[i];\n        sum += dyn[i];\n    }\n    free(dyn);\n    return sum;\n}"
+    }
+  },
+  {
+    "id": "c-prob-4-matrix-transpose",
+    "subjectId": "c",
+    "topicId": "c-23-2d-arrays",
+    "topicName": "2D Arrays & Matrices",
+    "title": "Matrix Transpose",
+    "difficulty": "Medium",
+    "acceptancePercentage": 84,
+    "estimatedTime": "20 min",
+    "description": "Given a 2D integer array `matrix` of dimensions `R x C`, write a C function to compute its transpose (swapping row and column indices `matrix[i][j] -> transposed[j][i]`).",
+    "constraints": [
+      "1 <= R, C <= 100"
+    ],
+    "examples": [
+      {
+        "input": "matrix = [[1,2,3],[4,5,6]]",
+        "output": "[[1,4],[2,5],[3,6]]",
+        "explanation": "2x3 matrix transposed to 3x2."
+      }
+    ],
+    "hints": [
+      "transposed[j][i] = matrix[i][j] in nested loops."
+    ],
+    "starterCode": {
+      "c": "#include <stdio.h>\n\nvoid transpose(int R, int C, int matrix[R][C], int result[C][R]) {\n    // write the code here\n}",
+      "java": "public class Solution { public static int[][] transpose(int[][] matrix) { return matrix; } }",
+      "python": "def transpose(matrix: list[list[int]]) -> list[list[int]]: return [list(x) for x in zip(*matrix)]",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-c4-1",
+        "input": "matrix = [[1,2,3],[4,5,6]]",
+        "expectedOutput": "[[1,4],[2,5],[3,6]]",
+        "explanation": "2x3 transposed."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-c4-1",
+        "name": "Square & Rectangular Matrix",
+        "type": "edge_boundary",
+        "description": "Handles both square (3x3) and rectangular (2x4) matrices.",
+        "hint": "Loop bounds i < R and j < C."
+      }
+    ],
+    "solutionCode": {
+      "c": "void transpose(int R, int C, int matrix[R][C], int result[C][R]) {\n    for (int i = 0; i < R; i++) {\n        for (int j = 0; j < C; j++) {\n            result[j][i] = matrix[i][j];\n        }\n    }\n}"
+    }
+  },
+  {
+    "id": "c-prob-5-count-vowels",
+    "subjectId": "c",
+    "topicId": "c-24-strings",
+    "topicName": "Strings & ASCII Manipulation",
+    "title": "Count Vowels and Consonants",
+    "difficulty": "Medium",
+    "acceptancePercentage": 86,
+    "estimatedTime": "15 min",
+    "description": "Write a C function `void countVowelsAndConsonants(const char* str, int* vowels, int* consonants)` that iterates through a string using a pointer and counts the total number of vowels (A, E, I, O, U case-insensitive) and consonants.",
+    "constraints": [
+      "1 <= strlen(str) <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "str = \"Topic Solver\"",
+        "output": "vowels: 4, consonants: 7",
+        "explanation": "o, i, o, e = 4 vowels; T, p, c, S, l, v, r = 7 consonants."
+      }
+    ],
+    "hints": [
+      "Use tolower(*str) and check if char is within 'a'..'z'."
+    ],
+    "starterCode": {
+      "c": "#include <stdio.h>\n#include <ctype.h>\n\nvoid countVowelsAndConsonants(const char* str, int* vowels, int* consonants) {\n    // write the code here\n}",
+      "java": "public class Solution { public static int[] count(String str) { return new int[]{0, 0}; } }",
+      "python": "def count_vowels_consonants(s: str) -> tuple: return (0, 0)",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-c5-1",
+        "input": "str = \"Topic Solver\"",
+        "expectedOutput": "vowels = 4, consonants = 7",
+        "explanation": "Mixed case string."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-c5-1",
+        "name": "Spaces and Punctuation",
+        "type": "edge_boundary",
+        "description": "Ignores spaces, commas, and digits.",
+        "hint": "Check isalpha(c)."
+      }
+    ],
+    "solutionCode": {
+      "c": "void countVowelsAndConsonants(const char* str, int* vowels, int* consonants) {\n    *vowels = 0;\n    *consonants = 0;\n    while (*str) {\n        char c = tolower(*str);\n        if (c >= 'a' && c <= 'z') {\n            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') (*vowels)++;\n            else (*consonants)++;\n        }\n        str++;\n    }\n}"
+    }
+  },
+  {
+    "id": "c-prob-6-linked-list-insert",
+    "subjectId": "c",
+    "topicId": "c-38-structs-intro",
+    "topicName": "Structs & Linked Lists",
+    "title": "Linked List Node Insertion at Beginning",
+    "difficulty": "Hard",
+    "acceptancePercentage": 75,
+    "estimatedTime": "25 min",
+    "description": "Write a C function `struct Node* insertAtBeginning(struct Node* head, int data)` that creates a new heap-allocated `struct Node`, assigns `data`, links it as the new head, and returns the updated head pointer.",
+    "constraints": [
+      "struct Node { int data; struct Node* next; };"
+    ],
+    "examples": [
+      {
+        "input": "head = [2, 3], data = 1",
+        "output": "[1, 2, 3]",
+        "explanation": "1 inserted at the beginning."
+      }
+    ],
+    "hints": [
+      "newNode = (struct Node*)malloc(sizeof(struct Node)); newNode->data = data; newNode->next = head; return newNode;"
+    ],
+    "starterCode": {
+      "c": "#include <stdio.h>\n#include <stdlib.h>\n\nstruct Node {\n    int data;\n    struct Node* next;\n};\n\nstruct Node* insertAtBeginning(struct Node* head, int data) {\n    // write the code here\n    return NULL;\n}",
+      "java": "public class Solution { public static ListNode insert(ListNode head, int data) { return new ListNode(data, head); } }",
+      "python": "def insert_at_beginning(head, data): return Node(data, head)",
+      "sql": "-- write the code here\n"
+    },
+    "testCases": [
+      {
+        "id": "tc-c6-1",
+        "input": "head = [2, 3], data = 1",
+        "expectedOutput": "[1, 2, 3]",
+        "explanation": "Standard insertion."
+      }
+    ],
+    "hiddenCases": [
+      {
+        "id": "hc-c6-1",
+        "name": "Empty Head Insertion",
+        "type": "edge_boundary",
+        "description": "Handles head == NULL returning single-node list [data].",
+        "hint": "newNode->next = head works even if head is NULL."
+      }
+    ],
+    "solutionCode": {
+      "c": "struct Node* insertAtBeginning(struct Node* head, int data) {\n    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));\n    if (!newNode) return head;\n    newNode->data = data;\n    newNode->next = head;\n    return newNode;\n}"
     }
   }
 ];
-
