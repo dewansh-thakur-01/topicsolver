@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { AdaptiveQuestion } from '@/lib/topicSolverData';
 import { useTopicSolverStore } from '@/lib/useTopicSolverStore';
 import { DifficultyDecision } from '@/lib/adaptiveEngine';
-import { prepareRandomizedQuiz, generateMistakeClue } from '@/lib/quizRandomizer';
+import { prepareRandomizedQuiz, getReplacementQuestion, generateMistakeClue } from '@/lib/quizRandomizer';
 import { getTranslation } from '@/lib/translations';
 import confetti from 'canvas-confetti';
 import { toast } from 'sonner';
@@ -14,16 +14,17 @@ import {
   Sparkles, 
   ArrowRight, 
   Zap, 
-  Brain,
-  Award,
-  Lock,
-  Unlock,
-  RotateCcw,
-  AlertTriangle,
-  Lightbulb,
-  HelpCircle,
-  TrendingUp,
-  ShieldAlert
+  Brain, 
+  Award, 
+  Lock, 
+  Unlock, 
+  RotateCcw, 
+  AlertTriangle, 
+  Lightbulb, 
+  HelpCircle, 
+  TrendingUp, 
+  ShieldAlert,
+  RefreshCw
 } from 'lucide-react';
 
 interface AdaptiveQuizCardProps {
@@ -45,8 +46,9 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
 }) => {
   const { recordQuizResult, markLessonComplete, profile, language } = useTopicSolverStore();
 
-  // Passing criteria is strictly 80%
+  // Passing criteria is strictly 80% (4 out of 5)
   const PASSING_THRESHOLD = 80;
+  const QUIZ_QUESTION_COUNT = 5;
 
   const [attemptCount, setAttemptCount] = useState(1);
   const [activeQuizQuestions, setActiveQuizQuestions] = useState<AdaptiveQuestion[]>([]);
@@ -57,11 +59,12 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
   const [correctCount, setCorrectCount] = useState(0);
   const [quizFinished, setQuizFinished] = useState(false);
   const [mistakeClue, setMistakeClue] = useState<string | null>(null);
+  const [failedQuestionIds, setFailedQuestionIds] = useState<string[]>([]);
 
-  // Initialize randomized quiz batch on mount or retake
-  const initializeQuizBatch = (attempt: number) => {
-    const randomized = prepareRandomizedQuiz(rawQuestions, topicName, 5);
-    setActiveQuizQuestions(randomized.length > 0 ? randomized : rawQuestions);
+  // Initialize randomized quiz batch of 5 questions
+  const initializeQuizBatch = (attempt: number, excludeIds: string[] = []) => {
+    const randomized = prepareRandomizedQuiz(rawQuestions, topicName, QUIZ_QUESTION_COUNT, excludeIds);
+    setActiveQuizQuestions(randomized.length > 0 ? randomized : rawQuestions.slice(0, QUIZ_QUESTION_COUNT));
     setCurrentQIndex(0);
     setSelectedOption(null);
     setIsSubmitted(false);
@@ -72,7 +75,7 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
   };
 
   useEffect(() => {
-    initializeQuizBatch(attemptCount);
+    initializeQuizBatch(attemptCount, failedQuestionIds);
   }, [topicId, rawQuestions]);
 
   const question = activeQuizQuestions[currentQIndex] || activeQuizQuestions[0];
@@ -103,6 +106,9 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
       });
       toast.success(getTranslation(language, 'quiz.correctChoice'));
     } else {
+      // Record failed question ID so subsequent retakes or replacements avoid it
+      setFailedQuestionIds(prev => Array.from(new Set([...prev, question.id])));
+      
       // Generate non-spoiler mistake clue
       const clue = generateMistakeClue(question, selectedOption);
       setMistakeClue(clue);
@@ -111,6 +117,25 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
 
     const decision = recordQuizResult(topicId, topicName, isCorrect, question.difficulty);
     setLastDecision(decision);
+  };
+
+  // Dynamically swap the failed question with a fresh question from the same topic
+  const handleSwapFailedQuestion = () => {
+    const currentBatchIds = activeQuizQuestions.map(q => q.id);
+    const replacement = getReplacementQuestion(rawQuestions, currentBatchIds, question.id);
+
+    if (replacement) {
+      const updatedQuestions = [...activeQuizQuestions];
+      updatedQuestions[currentQIndex] = replacement;
+      setActiveQuizQuestions(updatedQuestions);
+      setSelectedOption(null);
+      setIsSubmitted(false);
+      setLastDecision(null);
+      setMistakeClue(null);
+      toast.info(getTranslation(language, 'quiz.swappedNotice'));
+    } else {
+      toast.info('No additional question variations available for this topic.');
+    }
   };
 
   const handleNext = () => {
@@ -123,7 +148,7 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
       setLastDecision(null);
       setMistakeClue(null);
     } else {
-      // Quiz Finished: Evaluate 80% passing criteria
+      // Quiz Finished: Evaluate 80% passing criteria (4 out of 5)
       const total = activeQuizQuestions.length;
       const finalAccuracy = Math.round((correctCount / total) * 100);
       const passed = finalAccuracy >= PASSING_THRESHOLD;
@@ -151,9 +176,11 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
   };
 
   const handleRetakeQuiz = () => {
-    setAttemptCount(prev => prev + 1);
-    initializeQuizBatch(attemptCount + 1);
-    toast.info('New randomized question set generated! Good luck! 🚀');
+    const nextAttempt = attemptCount + 1;
+    setAttemptCount(nextAttempt);
+    // Exclude previously failed questions to guarantee a fresh set of changed questions from the topic
+    initializeQuizBatch(nextAttempt, failedQuestionIds);
+    toast.info('New randomized question set generated for this topic! 🚀');
   };
 
   const isCorrect = selectedOption === question.correctOptionIndex;
@@ -231,7 +258,7 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
 
           <div className="flex items-center justify-between text-[10px] text-[#687385] dark:text-[#94A3B8] font-mono">
             <span>0%</span>
-            <span className="font-bold text-amber-600 dark:text-amber-400">80% Threshold</span>
+            <span className="font-bold text-amber-600 dark:text-amber-400">80% Passing Threshold (4/5)</span>
             <span>100%</span>
           </div>
         </div>
@@ -309,8 +336,8 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
         {/* Multi-step progress track */}
         <div className="space-y-1">
           <div className="flex items-center justify-between text-[11px] text-[#687385] font-mono dark:text-[#94A3B8]">
-            <span>{getTranslation(language, 'quiz.question')} {currentQIndex + 1}/{activeQuizQuestions.length}</span>
-            <span className="text-[#16191D] font-bold dark:text-white">{getTranslation(language, 'quiz.score')}: {correctCount} (Need ≥ 80%)</span>
+            <span>{getTranslation(language, 'quiz.question')} {currentQIndex + 1}/{activeQuizQuestions.length} (5 MCQs Required)</span>
+            <span className="text-[#16191D] font-bold dark:text-white">{getTranslation(language, 'quiz.score')}: {correctCount}/5 (Need ≥ 4/5)</span>
           </div>
           <div className="h-2 w-full rounded-full bg-[#F7F9FC] border border-[#DCE5F2] overflow-hidden dark:bg-[#0E121C] dark:border-[#222B3D]">
             <div 
@@ -387,9 +414,9 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
         )}
       </div>
 
-      {/* Non-Spoiler Mistake Clue & Feedback */}
+      {/* Non-Spoiler Mistake Clue & Remediation */}
       {isSubmitted && (
-        <div className={`rounded-2xl p-4 sm:p-5 border text-xs leading-relaxed space-y-2.5 animate-in fade-in duration-200 ${
+        <div className={`rounded-2xl p-4 sm:p-5 border text-xs leading-relaxed space-y-3 animate-in fade-in duration-200 ${
           isCorrect 
             ? 'bg-emerald-50/80 border-emerald-300 text-emerald-900 dark:bg-emerald-950/40 dark:border-emerald-700/50 dark:text-emerald-200' 
             : 'bg-amber-50/80 border-amber-300 text-amber-900 dark:bg-amber-950/40 dark:border-amber-700/50 dark:text-amber-200'
@@ -412,8 +439,15 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
           </p>
 
           {!isCorrect && (
-            <div className="pt-2 border-t border-amber-200/60 dark:border-amber-800/40 text-[11px] text-amber-800 dark:text-amber-300 font-medium">
-              <span>Note: The direct answer is concealed so you can master the concept on your retake!</span>
+            <div className="pt-2 border-t border-amber-200/60 dark:border-amber-800/40 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-[11px] text-amber-800 dark:text-amber-300">
+              <span className="font-medium">Direct answer concealed. Want to try a different question on this topic?</span>
+              <button
+                onClick={handleSwapFailedQuestion}
+                className="inline-flex items-center space-x-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white px-3.5 py-1.5 font-bold shadow-xs transition-all hover:scale-105 active:scale-95 shrink-0"
+              >
+                <RefreshCw className="h-3.5 w-3.5" />
+                <span>{getTranslation(language, 'quiz.swapQuestion')}</span>
+              </button>
             </div>
           )}
 
@@ -427,24 +461,36 @@ export const AdaptiveQuizCard: React.FC<AdaptiveQuizCardProps> = ({
       )}
 
       {/* Action Footer */}
-      <div className="pt-4 border-t border-[#DCE5F2] flex items-center justify-between dark:border-[#222B3D]">
+      <div className="pt-4 border-t border-[#DCE5F2] flex flex-col sm:flex-row items-center justify-between gap-3 dark:border-[#222B3D]">
         {!isSubmitted ? (
           <button
             onClick={handleSubmit}
             disabled={selectedOption === null}
-            className="flex items-center space-x-2 rounded-xl bg-[#2B6FF3] hover:bg-[#1557D6] px-6 py-2.5 text-xs font-semibold text-white shadow-xs disabled:opacity-40 transition-all hover:scale-[1.01] dark:bg-[#3B82F6] dark:hover:bg-[#2563EB]"
+            className="w-full sm:w-auto flex items-center justify-center space-x-2 rounded-xl bg-[#2B6FF3] hover:bg-[#1557D6] px-6 py-2.5 text-xs font-semibold text-white shadow-xs disabled:opacity-40 transition-all hover:scale-[1.01] dark:bg-[#3B82F6] dark:hover:bg-[#2563EB]"
           >
             <Sparkles className="h-4 w-4" />
             <span>{getTranslation(language, 'quiz.submitAnswer')}</span>
           </button>
         ) : (
-          <button
-            onClick={handleNext}
-            className="flex items-center space-x-2 rounded-xl bg-[#2B6FF3] hover:bg-[#1557D6] px-6 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:scale-105 dark:bg-[#3B82F6] dark:hover:bg-[#2563EB]"
-          >
-            <span>{currentQIndex < activeQuizQuestions.length - 1 ? getTranslation(language, 'quiz.nextQuestion') : getTranslation(language, 'quiz.viewResults')}</span>
-            <ArrowRight className="h-4 w-4 ml-1" />
-          </button>
+          <div className="w-full sm:w-auto flex items-center gap-2.5">
+            {!isCorrect && (
+              <button
+                onClick={handleSwapFailedQuestion}
+                className="flex items-center space-x-1.5 rounded-xl bg-white border border-[#DCE5F2] hover:bg-[#F7F9FC] text-[#16191D] px-4 py-2.5 text-xs font-semibold transition-all dark:bg-[#0E121C] dark:border-[#222B3D] dark:text-white"
+              >
+                <RefreshCw className="h-3.5 w-3.5 text-amber-500" />
+                <span>{getTranslation(language, 'quiz.swapQuestion')}</span>
+              </button>
+            )}
+
+            <button
+              onClick={handleNext}
+              className="flex-1 sm:flex-none flex items-center justify-center space-x-2 rounded-xl bg-[#2B6FF3] hover:bg-[#1557D6] px-6 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:scale-105 dark:bg-[#3B82F6] dark:hover:bg-[#2563EB]"
+            >
+              <span>{currentQIndex < activeQuizQuestions.length - 1 ? `${getTranslation(language, 'quiz.nextQuestion')} (Q${currentQIndex + 2}/5)` : getTranslation(language, 'quiz.viewResults')}</span>
+              <ArrowRight className="h-4 w-4 ml-1" />
+            </button>
+          </div>
         )}
 
         <div className="text-[11px] font-mono text-[#687385] dark:text-[#94A3B8]">

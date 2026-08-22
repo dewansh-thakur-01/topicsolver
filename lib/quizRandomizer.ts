@@ -1,4 +1,4 @@
-import { AdaptiveQuestion, TopicLesson } from './topicSolverData';
+import { AdaptiveQuestion } from './topicSolverData';
 
 /**
  * Fisher-Yates In-Place Shuffle for pure randomness
@@ -13,63 +13,90 @@ export function shuffleArray<T>(array: T[]): T[] {
 }
 
 /**
- * Generates dynamic conceptual variants of questions to mix into retake quizzes
+ * Randomizes option order of a single question and updates correctOptionIndex accordingly
  */
-function createVariantQuestion(baseQ: AdaptiveQuestion, variantNum: number): AdaptiveQuestion {
+export function randomizeQuestionOptions(q: AdaptiveQuestion): AdaptiveQuestion {
+  if (!q.options || q.options.length < 2 || q.correctOptionIndex === undefined) {
+    return { ...q };
+  }
+
+  const correctText = q.options[q.correctOptionIndex];
+  const optionsWithIndices = q.options.map((opt, i) => ({ opt, originalIndex: i }));
+  const shuffledOptions = shuffleArray(optionsWithIndices);
+
+  const newCorrectIndex = shuffledOptions.findIndex(o => o.opt === correctText);
+
   return {
-    ...baseQ,
-    id: `${baseQ.id}-var-${variantNum}`,
-    question: baseQ.question.replace(/\?$/, ` (Variant Check ${variantNum})?`),
+    ...q,
+    options: shuffledOptions.map(o => o.opt),
+    correctOptionIndex: newCorrectIndex !== -1 ? newCorrectIndex : q.correctOptionIndex
   };
 }
 
 /**
- * Prepares a fresh, randomized question batch for a topic assessment.
- * Ensures questions are shuffled, mixes new/variant questions with base questions,
- * and shuffles option orders while preserving the correct option tracking.
+ * Prepares a fresh, randomized question batch of 5 questions for a topic assessment.
+ * Automatically excludes previously failed questions when retaking to ensure fresh questions from the topic bank.
  */
 export function prepareRandomizedQuiz(
   topicQuestions: AdaptiveQuestion[],
   topicTitle: string,
-  targetCount: number = 5
+  targetCount: number = 5,
+  excludeQuestionIds: string[] = []
 ): AdaptiveQuestion[] {
   if (!topicQuestions || topicQuestions.length === 0) return [];
 
-  // 1. Create a pool with base questions and generated conceptual variations
-  const pool: AdaptiveQuestion[] = [];
-  topicQuestions.forEach((q, idx) => {
-    pool.push(q);
-    // Add a randomized variant
-    pool.push(createVariantQuestion(q, idx + 1));
-  });
+  // Filter out excluded/previously failed questions first if enough questions remain
+  let candidatePool = topicQuestions.filter(q => !excludeQuestionIds.includes(q.id));
 
-  // 2. Shuffle the entire question pool
-  const shuffledPool = shuffleArray(pool);
+  // If candidate pool is smaller than targetCount, backfill from original pool while shuffling
+  if (candidatePool.length < targetCount) {
+    candidatePool = [...candidatePool, ...topicQuestions.filter(q => excludeQuestionIds.includes(q.id))];
+  }
 
-  // 3. Select targetCount questions (or pool length if smaller)
+  // Shuffle candidate pool
+  const shuffledPool = shuffleArray(candidatePool);
+
+  // Take targetCount (5) questions
   const selectedBatch = shuffledPool.slice(0, Math.min(targetCount, shuffledPool.length));
 
-  // 4. For each selected question, shuffle the options and adjust correctOptionIndex accordingly
-  const randomizedQuestions: AdaptiveQuestion[] = selectedBatch.map((q) => {
-    if (!q.options || q.options.length < 2 || q.correctOptionIndex === undefined) {
-      return q;
+  // Randomize options for each selected question
+  const preparedQuestions = selectedBatch.map(q => randomizeQuestionOptions(q));
+
+  return shuffleArray(preparedQuestions);
+}
+
+/**
+ * Retrieves a brand new, unused replacement question from the same topic
+ * when a student answers a question incorrectly.
+ */
+export function getReplacementQuestion(
+  topicQuestions: AdaptiveQuestion[],
+  currentBatchQuestionIds: string[],
+  failedQuestionId: string
+): AdaptiveQuestion | null {
+  if (!topicQuestions || topicQuestions.length === 0) return null;
+
+  // Look for any question in the topic pool that is NOT in the current quiz batch
+  const availableUnused = topicQuestions.filter(
+    q => !currentBatchQuestionIds.includes(q.id) && q.id !== failedQuestionId
+  );
+
+  let selectedQ: AdaptiveQuestion;
+
+  if (availableUnused.length > 0) {
+    // Pick one at random from unused questions
+    selectedQ = availableUnused[Math.floor(Math.random() * availableUnused.length)];
+  } else {
+    // Fallback: pick another question from the topic that is different from failedQuestionId
+    const otherQuestions = topicQuestions.filter(q => q.id !== failedQuestionId);
+    if (otherQuestions.length > 0) {
+      selectedQ = otherQuestions[Math.floor(Math.random() * otherQuestions.length)];
+    } else {
+      selectedQ = topicQuestions[0];
     }
+  }
 
-    const correctText = q.options[q.correctOptionIndex];
-    const optionsWithIndices = q.options.map((opt, i) => ({ opt, originalIndex: i }));
-    const shuffledOptions = shuffleArray(optionsWithIndices);
-
-    const newCorrectIndex = shuffledOptions.findIndex(o => o.opt === correctText);
-
-    return {
-      ...q,
-      options: shuffledOptions.map(o => o.opt),
-      correctOptionIndex: newCorrectIndex !== -1 ? newCorrectIndex : q.correctOptionIndex
-    };
-  });
-
-  // 5. Finally shuffle the batch order so questions never appear in the same sequence
-  return shuffleArray(randomizedQuestions);
+  return randomizeQuestionOptions(selectedQ);
 }
 
 /**
